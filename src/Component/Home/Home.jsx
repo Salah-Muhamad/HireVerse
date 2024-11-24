@@ -1,6 +1,7 @@
 import React from "react";
 import OrangePart from "../../assets/Images/Vector.svg";
 import Person from "../../assets/Images/person.svg";
+import Person2 from "../../assets/Images/person2.svg";
 import Bullets from "../../assets/Images/Group 1.svg";
 import Frame from "../../assets/Images/Frame 24.svg";
 import Bag from "../../assets/Images/bag.svg";
@@ -16,8 +17,20 @@ import Line from "../../assets/Images/line.svg";
 import Feature1 from "../../assets/Images/Feature1.svg";
 import Feature2 from "../../assets/Images/Feature2.svg";
 import Correct from "../../assets/Images/correct.svg";
+import Microsoft from "../../assets/Images/Microsoft.svg";
+import Google from "../../assets/Images/Google.svg";
+import Tesla from "../../assets/Images/Tesla.svg";
+import Amazon from "../../assets/Images/Amazon.svg";
+import Apple from "../../assets/Images/Apple.svg";
+import Location from "../../assets/Images/MapPin.svg";
+import ArrowUpRight from "../../assets/Images/arrow-up-right.svg";
+import CenterFrame from "../../assets/Images/ArrowFrame.svg";
+import Wordpress from "../../assets/Images/Wordpress.svg";
 
 import App from "../../App";
+import TopCompanies from "../TopCompanies/TopCompanies";
+import Jobs from "../Jobs/Jobs";
+
 export default function Home() {
   return (
     <>
@@ -241,21 +254,278 @@ export default function Home() {
           <div className="flex gap-6 w-[484px] mb-7 font-light">
             <img src={Correct} alt="" />
             <p className="text-[#002D59] leading-6 font-sf_pro_text text-[18px]">
-            The AI system ranks applicants based on how well their
-            CV aligns with the job posting.
+              The AI system ranks applicants based on how well their CV aligns
+              with the job posting.
             </p>
           </div>
           <div className="flex gap-6 w-[484px] mb-7 font-light">
             <img src={Correct} alt="" />
             <p className="text-[#002D59] leading-6 font-sf_pro_text text-[18px]">
-            Companies receive AI-powered insights to help them
-            quickly evaluate and select the best candidates.
+              Companies receive AI-powered insights to help them quickly
+              evaluate and select the best candidates.
             </p>
           </div>
         </div>
-
         <div>
           <img src={Feature2} alt="" />
+        </div>
+      </div>
+      {/* End Of section 3 & 4 */}
+
+      {/* Start Of Section 5*/}
+      <div className="flex justify-around items-center mb-8">
+        <p className="font-sf_pro_display text-5xl font-normal">
+          Top <span className="text-[#0146B1]">Companies</span>
+        </p>
+        <div className="flex items-center gap-3">
+          <div>
+            <img src={CenterFrame} alt="" />
+          </div>
+          <p className="font-bai_jamjuree text-[#0B2B82] underline  underline-offset-1">
+            Browse All
+          </p>
+          <div>
+            <img src={ArrowUpRight} alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div className="ms-14  grid grid-cols-3">
+        <TopCompanies
+          icon={Microsoft}
+          companyName={"Microsoft"}
+          position={"Software Engineering"}
+          locationIcon={Location}
+          location={"USA, UK, India"}
+        />
+        <TopCompanies
+          icon={Google}
+          companyName={"Google"}
+          position={"Tech"}
+          locationIcon={Location}
+          location={"Canada, Germany"}
+        />
+        <TopCompanies
+          icon={Tesla}
+          companyName={"Tesla"}
+          position={"Electric Vehicles"}
+          locationIcon={Location}
+          location={"Singapore, UAE"}
+        />
+        <TopCompanies
+          icon={Amazon}
+          companyName={"Amazon"}
+          position={"Software Engineering"}
+          locationIcon={Location}
+          location={"Seattle, USAUSA, UK, India"}
+        />
+        <TopCompanies
+          icon={Tesla}
+          companyName={"Tesla"}
+          position={"Electric Vehicles"}
+          locationIcon={Location}
+          location={"Singapore, UAE"}
+        />
+        <TopCompanies
+          icon={Apple}
+          companyName={"Apple"}
+          position={"Design & Development"}
+          locationIcon={Location}
+          location={"Cupertino, USA"}
+        />
+        <TopCompanies
+          icon={Tesla}
+          companyName={"Tesla"}
+          position={"Electric Vehicles"}
+          locationIcon={Location}
+          location={"Singapore, UAE"}
+        />
+        <TopCompanies
+          icon={Microsoft}
+          companyName={"Microsoft"}
+          position={"Software Engineering"}
+          locationIcon={Location}
+          location={"USA, UK, India"}
+        />
+        <TopCompanies
+          icon={Google}
+          companyName={"Google"}
+          position={"Tech"}
+          locationIcon={Location}
+          location={"Canada, Germany"}
+        />
+      </div>
+      {/* End of Section 5 */}
+
+      {/* Start Of Section 6 */}
+      <div className="flex justify-around items-center mb-8">
+        <p className="font-sf_pro_display text-5xl font-normal">
+          Latest <span className="text-[#0146B1]">Jobs </span>Post
+        </p>
+        <div className="flex items-center gap-3">
+          <div>
+            <img src={CenterFrame} alt="" />
+          </div>
+          <p className="font-bai_jamjuree text-[#0B2B82] underline  underline-offset-1">
+            Browse All
+          </p>
+          <div>
+            <img src={ArrowUpRight} alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 ms-10">
+        <Jobs
+          salary={"2500k"}
+          date={"8 Dec, 2023"}
+          jobType={"Full time"}
+          icon={Wordpress}
+          jobTitle={"Digital Marketer"}
+          location={"London, United Kingdom"}
+          description={
+            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
+          }
+        />
+        <Jobs
+          salary={"2500k"}
+          date={"8 Dec, 2023"}
+          jobType={"Full time"}
+          icon={Wordpress}
+          jobTitle={"Digital Marketer"}
+          location={"London, United Kingdom"}
+          description={
+            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
+          }
+        />
+        <Jobs
+          salary={"2500k"}
+          date={"8 Dec, 2023"}
+          jobType={"Full time"}
+          icon={Wordpress}
+          jobTitle={"Digital Marketer"}
+          location={"London, United Kingdom"}
+          description={
+            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
+          }
+        />
+        <Jobs
+          salary={"2500k"}
+          date={"8 Dec, 2023"}
+          jobType={"Full time"}
+          icon={Wordpress}
+          jobTitle={"Digital Marketer"}
+          location={"London, United Kingdom"}
+          description={
+            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
+          }
+        />
+        <Jobs
+          salary={"2500k"}
+          date={"8 Dec, 2023"}
+          jobType={"Full time"}
+          icon={Wordpress}
+          jobTitle={"Digital Marketer"}
+          location={"London, United Kingdom"}
+          description={
+            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
+          }
+        />
+        <Jobs
+          salary={"2500k"}
+          date={"8 Dec, 2023"}
+          jobType={"Full time"}
+          icon={Wordpress}
+          jobTitle={"Digital Marketer"}
+          location={"London, United Kingdom"}
+          description={
+            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
+          }
+        />
+        <Jobs
+          salary={"2500k"}
+          date={"8 Dec, 2023"}
+          jobType={"Full time"}
+          icon={Wordpress}
+          jobTitle={"Digital Marketer"}
+          location={"London, United Kingdom"}
+          description={
+            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
+          }
+        />
+        <Jobs
+          salary={"2500k"}
+          date={"8 Dec, 2023"}
+          jobType={"Full time"}
+          icon={Wordpress}
+          jobTitle={"Digital Marketer"}
+          location={"London, United Kingdom"}
+          description={
+            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
+          }
+        />
+        <Jobs
+          salary={"2500k"}
+          date={"8 Dec, 2023"}
+          jobType={"Full time"}
+          icon={Wordpress}
+          jobTitle={"Digital Marketer"}
+          location={"London, United Kingdom"}
+          description={
+            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
+          }
+        />
+        <Jobs
+          salary={"2500k"}
+          date={"8 Dec, 2023"}
+          jobType={"Full time"}
+          icon={Wordpress}
+          jobTitle={"Digital Marketer"}
+          location={"London, United Kingdom"}
+          description={
+            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
+          }
+        />
+        <Jobs
+          salary={"2500k"}
+          date={"8 Dec, 2023"}
+          jobType={"Full time"}
+          icon={Wordpress}
+          jobTitle={"Digital Marketer"}
+          location={"London, United Kingdom"}
+          description={
+            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
+          }
+        />
+      </div>
+      {/* End Of Section 6 */}
+
+      {/* Start Of Section 7 */}
+
+      <div className="bg-[#F1F2F4] h-[587px] mt-16 flex items-center justify-center ">
+        <div className="w-3/4 bg-[#143567] h-[427px] rounded-3xl flex items-center p-8 ps-16 overflow-hidden">
+          {/* Text content */}
+          <div className="text-white flex-1">
+            <p className="font-sf_pro_text text-4xl font-bold mb-8">
+              Explore New Jobs Now
+            </p>
+            <p className="font-bai_jamjuree text-xl font-normal leading-6">
+              Browse the latest job openings across various sectors with
+              personalized recommendations and advanced filters. Finding a job
+              that matches your skills and goals has never been easier. Start
+              your journey today!
+            </p>
+            <button className="mt-10 w-48 h-12 bg-white text-[#0B2B82] font-semibold text-xl rounded-lg">Get Started</button>
+          </div>
+
+          {/* Image */}
+          <div className="flex-1">
+            <img
+              src={Person2}
+              alt=""
+              className="w-full h-auto rounded-3xl object-cover"
+            />
+          </div>
         </div>
       </div>
     </>
