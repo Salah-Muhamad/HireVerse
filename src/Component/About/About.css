@@ -7,26 +7,9 @@
 }
 .background::before{
     content: '';
-
     position: absolute;
     width: 100%;
     height: 25vh;
     background-image: url('src/assets/Images/aboutbackground.svg');
     opacity: 4%;
-}
-.vision{
-    background-image:url('src/assets/Images/aboutvector1.svg') ;
-    background-size: cover;
-    background-position: center;
-    width: 197.83px;
-    height: 79.04px;
-    font-family: SF Pro Text;
-}
-.Achivements{
-    background-image:url('src/assets/Images/aboutvector2.svg') ;
-    background-size: cover;
-    background-position: center;
-    width: 197.83px;
-    height: 79.04px;
-    font-family: SF Pro Text;
 }
