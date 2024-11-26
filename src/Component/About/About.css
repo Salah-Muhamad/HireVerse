@@ -1,0 +1,15 @@
+.background{
+    height: 25vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.background::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 25vh;
+    background-image: url('src/assets/Images/aboutbackground.svg');
+    opacity: 4%;
+}
