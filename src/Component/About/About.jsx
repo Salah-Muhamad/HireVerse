@@ -10,8 +10,8 @@ import AboutImageCard from "../AboutImageCard/AboutImageCard";
 export default function About() {
   return (
     <div>
-      <div className="background mb-28">
-        <div className="content">
+      <div className="background mb-28 ">
+        <div className="content pt-44 pb-10">
           <h2
             className="
           aboutlogo font-bold	text-2xl	font-sf_pro_display leading-10 text-[color:#143567]	mb-1.3 text-center"
