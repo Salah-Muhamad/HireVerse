@@ -4,9 +4,6 @@ import logo from "../../assets/Images/Microsoftlogo.svg";
 import location from "../../assets/Images/location.svg";
 import salary from "../../assets/Images/salary.svg";
 import line2 from "../../assets/Images/Line 27.svg";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 import RelatedJob from "../RelatedJob/RelatedJob";
 
 export default function JobDetails() {
