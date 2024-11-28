@@ -1,15 +1,27 @@
 
 import React, { useState } from "react";
 import jobs from "../../assets/Images/jobs.svg";
-import search from'../../assets/Images/searchicon.svg'
+import search from '../../assets/Images/searchicon.svg';
 import dashline from "../../assets/Images/Vector 11.svg";
 import Job from "../Job/Job";
-import logo from '../../assets/Images/Microsoftlogo.svg'
+import logo from '../../assets/Images/Microsoftlogo.svg';
 
 export default function JobsPage() {
-  const [openDropdown, setOpenDropdown] = useState(null);
+  // Initialize state for dropdowns with all set to false (closed)
+  const [dropdownStates, setDropdownStates] = useState({
+    location: false,
+    jobType: false,
+    priceRange: false,
+    experienceLevel: false,
+    workinghours: false
+  });
+
+  // Toggle function to open or close a specific dropdown
   const toggleDropdown = (dropdownName) => {
-    setOpenDropdown((prev) => (prev === dropdownName ? null : dropdownName));
+    setDropdownStates((prev) => ({
+      ...prev,
+      [dropdownName]: !prev[dropdownName]
+    }));
   };
 
   return (
@@ -47,13 +59,11 @@ export default function JobsPage() {
               className="flex items-center gap-2 cursor-pointer justify-between"
               onClick={() => toggleDropdown("location")}
             >
-              <span className="font-sf_pro_text font-semibold mb-2">
-                Location
-              </span>
+              <span className="font-sf_pro_text font-semibold mb-2">Location</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className={`h-7 w-7 transition-transform duration-300 transform mr-9 ${
-                  openDropdown === "location" ? "rotate-180" : ""
+                  dropdownStates.location ? "rotate-180" : ""
                 }`}
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -65,27 +75,18 @@ export default function JobsPage() {
                 />
               </svg>
             </div>
-            {openDropdown === "location" && (
+            {dropdownStates.location && (
               <form className="mt-3">
                 <div className="flex gap-3 mb-3">
-                  <input
-                    type="checkbox"
-                    className="accent-[#0C2E82] w-4 h-4 mt-1"
-                  />
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
                   <p className="font-sf_pro_text text-sm">Remote</p>
                 </div>
                 <div className="flex gap-3 mb-3">
-                  <input
-                    type="checkbox"
-                    className="accent-[#0C2E82] w-4 h-4 mt-1"
-                  />
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
                   <p className="font-sf_pro_text text-sm">On-Site</p>
                 </div>
                 <div className="flex gap-3 mb-3">
-                  <input
-                    type="checkbox"
-                    className="accent-[#0C2E82] w-4 h-4 mt-1"
-                  />
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
                   <p className="font-sf_pro_text text-sm">Hybrid</p>
                 </div>
               </form>
@@ -98,13 +99,11 @@ export default function JobsPage() {
               className="flex items-center gap-2 cursor-pointer justify-between"
               onClick={() => toggleDropdown("jobType")}
             >
-              <span className="font-sf_pro_text font-semibold mb-2">
-                Job Type
-              </span>
+              <span className="font-sf_pro_text font-semibold mb-2">Job Type</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className={`h-7 w-7 transition-transform duration-300 transform mr-9 ${
-                  openDropdown === "jobType" ? "rotate-180" : ""
+                  dropdownStates.jobType ? "rotate-180" : ""
                 }`}
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -116,46 +115,35 @@ export default function JobsPage() {
                 />
               </svg>
             </div>
-            {openDropdown === "jobType" && (
+            {dropdownStates.jobType && (
               <form className="mt-3">
                 <div className="flex gap-3 mb-3">
-                  <input
-                    type="checkbox"
-                    className="accent-[#0C2E82] w-4 h-4 mt-1"
-                  />
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
                   <p className="font-sf_pro_text text-sm">Internship</p>
                 </div>
                 <div className="flex gap-3 mb-3">
-                  <input
-                    type="checkbox"
-                    className="accent-[#0C2E82] w-4 h-4 mt-1"
-                  />
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
                   <p className="font-sf_pro_text text-sm">Full-Time</p>
                 </div>
                 <div className="flex gap-3 mb-3">
-                  <input
-                    type="checkbox"
-                    className="accent-[#0C2E82] w-4 h-4 mt-1"
-                  />
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
                   <p className="font-sf_pro_text text-sm">Part-Time</p>
                 </div>
               </form>
             )}
           </div>
 
-          
+          {/* Price Range Dropdown */}
           <div className="part4 ml-4 mt-2 mb-3 border-b-2">
             <div
               className="flex items-center gap-2 cursor-pointer justify-between"
               onClick={() => toggleDropdown("priceRange")}
             >
-              <span className="font-sf_pro_text font-semibold mb-2">
-                Price Range
-              </span>
+              <span className="font-sf_pro_text font-semibold mb-2">Price Range</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className={`h-7 w-7 transition-transform duration-300 transform mr-9 ${
-                  openDropdown === "priceRange" ? "rotate-180" : ""
+                  dropdownStates.priceRange ? "rotate-180" : ""
                 }`}
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -167,95 +155,75 @@ export default function JobsPage() {
                 />
               </svg>
             </div>
-            {openDropdown === "priceRange" && (
+            {dropdownStates.priceRange && (
               <form className="mt-3">
                 <div className="flex gap-3 mb-3">
-                  <input
-                    type="checkbox"
-                    className="accent-[#0C2E82] w-4 h-4 mt-1"
-                  />
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
                   <p className="font-sf_pro_text text-sm">Under $100</p>
                 </div>
                 <div className="flex gap-3 mb-3">
-                  <input
-                    type="checkbox"
-                    className="accent-[#0C2E82] w-4 h-4 mt-1"
-                  />
-                  <p className="font-sf_pro_text text-sm">$100 - $500</p>
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
+                  <p className="font-sf_pro_text text-sm">Under $200</p>
                 </div>
                 <div className="flex gap-3 mb-3">
-                  <input
-                    type="checkbox"
-                    className="accent-[#0C2E82] w-4 h-4 mt-1"
-                  />
-                  <p className="font-sf_pro_text text-sm">$500 - $1k</p>
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
+                  <p className="font-sf_pro_text text-sm">Under $300</p>
                 </div>
               </form>
             )}
           </div>
-            {/*Experience Level*/}
-            <div className="part4 ml-4 mt-2 mb-3 border-b-2">
+
+          {/* Experience Level Dropdown */}
+          <div className="part4 ml-4 mt-2 mb-3 border-b-2">
             <div
               className="flex items-center gap-2 cursor-pointer justify-between"
               onClick={() => toggleDropdown("experienceLevel")}
             >
-  <span className="font-sf_pro_text font-semibold mb-2">
-    Experience Level
-  </span>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className={`h-7 w-7 transition-transform duration-300 transform mr-9 ${
-      openDropdown === "experienceLevel" ? "rotate-180" : ""
-    }`}
-    viewBox="0 0 20 20"
-    fill="currentColor"
-  >
-    <path
-      fillRule="evenodd"
-      d="M5.23 7.21a.75.75 0 011.06.02L10 10.67l3.71-3.44a.75.75 0 111.04 1.08l-4 3.71a.75.75 0 01-1.04 0l-4-3.71a.75.75 0 01.02-1.06z"
-      clipRule="evenodd"
-    />
-  </svg>
-</div>
-{openDropdown === "experienceLevel" && (
-  <form className="mt-3">
-    <div className="flex gap-3 mb-3">
-      <input
-        type="checkbox"
-        className="accent-[#0C2E82] w-4 h-4 mt-1"
-      />
-      <p className="font-sf_pro_text text-sm">Entry-Level</p>
-    </div>
-    <div className="flex gap-3 mb-3">
-      <input
-        type="checkbox"
-        className="accent-[#0C2E82] w-4 h-4 mt-1"
-      />
-      <p className="font-sf_pro_text text-sm">Mid-Level</p>
-    </div>
-    <div className="flex gap-3 mb-3">
-      <input
-        type="checkbox"
-        className="accent-[#0C2E82] w-4 h-4 mt-1"
-      />
-      <p className="font-sf_pro_text text-sm">Senior-Level</p>
-    </div>
-  </form>
-)}
+              <span className="font-sf_pro_text font-semibold mb-2">Experience Level</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className={`h-7 w-7 transition-transform duration-300 transform mr-9 ${
+                  dropdownStates.experienceLevel ? "rotate-180" : ""
+                }`}
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 10.67l3.71-3.44a.75.75 0 111.04 1.08l-4 3.71a.75.75 0 01-1.04 0l-4-3.71a.75.75 0 01.02-1.06z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            {dropdownStates.experienceLevel && (
+              <form className="mt-3">
+                <div className="flex gap-3 mb-3">
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
+                  <p className="font-sf_pro_text text-sm">Entry-Level</p>
+                </div>
+                <div className="flex gap-3 mb-3">
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
+                  <p className="font-sf_pro_text text-sm">Mid-Level</p>
+                </div>
+                <div className="flex gap-3 mb-3">
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
+                  <p className="font-sf_pro_text text-sm">Senior-Level</p>
+                </div>
+              </form>
+            )}
           </div>
-          {/*Working Hours*/}
+
+          {/* Working Hours Dropdown */}
           <div className="part4 ml-4 mt-2 mb-3 border-b-2">
             <div
               className="flex items-center gap-2 cursor-pointer justify-between"
               onClick={() => toggleDropdown("workinghours")}
             >
-              <span className="font-sf_pro_text font-semibold mb-2">
-              Working Hours
-              </span>
+              <span className="font-sf_pro_text font-semibold mb-2">Working Hours</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className={`h-7 w-7 transition-transform duration-300 transform mr-9 ${
-                  openDropdown === "workinghours" ? "rotate-180" : ""
+                  dropdownStates.workinghours ? "rotate-180" : ""
                 }`}
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -267,29 +235,28 @@ export default function JobsPage() {
                 />
               </svg>
             </div>
-            {openDropdown === "workinghours" && (
+            {dropdownStates.workinghours && (
               <form className="mt-3">
                 <div className="flex gap-3 mb-3">
-                  <input
-                    type="checkbox"
-                    className="accent-[#0C2E82] w-4 h-4 mt-1"
-                  />
-                  <p className="font-sf_pro_text text-sm">Fixed schedule</p>
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
+                  <p className="font-sf_pro_text text-sm">Full-Time</p>
                 </div>
                 <div className="flex gap-3 mb-3">
-                  <input
-                    type="checkbox"
-                    className="accent-[#0C2E82] w-4 h-4 mt-1"
-                  />
-                  <p className="font-sf_pro_text text-sm">Flexible Schedule</p>
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
+                  <p className="font-sf_pro_text text-sm">Part-Time</p>
+                </div>
+                <div className="flex gap-3 mb-3">
+                  <input type="checkbox" className="accent-[#0C2E82] w-4 h-4 mt-1" />
+                  <p className="font-sf_pro_text text-sm">Freelance</p>
                 </div>
               </form>
             )}
           </div>
         </aside>
+
         <div className="content col-span-9 h-11 ">
-          <div className="search relative mb-10">
-          <input type="text" className="bg-[#FFFFFF] h-16 w-[790px] rounded-lg border-[#C5C5C5] border-2 pl-20 "
+        <div className="search relative mb-10">
+        <input type="text" className="bg-[#FFFFFF] h-16 w-[790px] rounded-lg border-[#C5C5C5] border-2 pl-20 "
           placeholder="Search for jobs by title, skills, or company"
           />
           <img src={search} className="absolute top-5 left-6" />
@@ -367,13 +334,4 @@ export default function JobsPage() {
     </>
   );
 }
-
-
-
-
-
-
-
-
-
 
