@@ -303,8 +303,63 @@ export default function JobsPage() {
           location={'NewYork'}
           site={'On-Site'}
           time={'Full-Time'}
-          salary={'$80.000 - $100.000 annually'}
-          desc={'you will be responsible for designing, developing, and maintaining scalable software ,Working closely with a cross-functional team, you’ll play a key role in delivering high-quality'}
+          salary={'•$80.000 - $100.000 annually'}
+          desc={'•you will be responsible for designing, developing, and maintaining scalable software ,Working closely with a cross-functional team, you’ll play a key role in delivering high-quality'}
+          posted={'Posted 3 Days ago'}
+          />
+          <Job 
+          logo={logo}
+          jobtitle={'Full-Stack Developer'}
+          company={'Microsoft'}
+          location={'NewYork'}
+          site={'On-Site'}
+          time={'Full-Time'}
+          salary={'•$80.000 - $100.000 annually'}
+          desc={'•you will be responsible for designing, developing, and maintaining scalable software ,Working closely with a cross-functional team, you’ll play a key role in delivering high-quality'}
+          posted={'Posted 3 Days ago'}
+          />
+          <Job 
+          logo={logo}
+          jobtitle={'Full-Stack Developer'}
+          company={'Microsoft'}
+          location={'NewYork'}
+          site={'On-Site'}
+          time={'Full-Time'}
+          salary={'•$80.000 - $100.000 annually'}
+          desc={'•you will be responsible for designing, developing, and maintaining scalable software ,Working closely with a cross-functional team, you’ll play a key role in delivering high-quality'}
+          posted={'Posted 3 Days ago'}
+          />
+          <Job 
+          logo={logo}
+          jobtitle={'Full-Stack Developer'}
+          company={'Microsoft'}
+          location={'NewYork'}
+          site={'On-Site'}
+          time={'Full-Time'}
+          salary={'•$80.000 - $100.000 annually'}
+          desc={'•you will be responsible for designing, developing, and maintaining scalable software ,Working closely with a cross-functional team, you’ll play a key role in delivering high-quality'}
+          posted={'Posted 3 Days ago'}
+          />
+          <Job 
+          logo={logo}
+          jobtitle={'Full-Stack Developer'}
+          company={'Microsoft'}
+          location={'NewYork'}
+          site={'On-Site'}
+          time={'Full-Time'}
+          salary={'•$80.000 - $100.000 annually'}
+          desc={'•you will be responsible for designing, developing, and maintaining scalable software ,Working closely with a cross-functional team, you’ll play a key role in delivering high-quality'}
+          posted={'Posted 3 Days ago'}
+          />
+          <Job 
+          logo={logo}
+          jobtitle={'Full-Stack Developer'}
+          company={'Microsoft'}
+          location={'NewYork'}
+          site={'On-Site'}
+          time={'Full-Time'}
+          salary={'•$80.000 - $100.000 annually'}
+          desc={'•you will be responsible for designing, developing, and maintaining scalable software ,Working closely with a cross-functional team, you’ll play a key role in delivering high-quality'}
           posted={'Posted 3 Days ago'}
           />
         </div>
