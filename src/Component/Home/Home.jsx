@@ -36,7 +36,7 @@ export default function Home() {
     <>
       {/* Section 1 */}
       <div className="bg-secondary flex justify-center pt-44 m-auto relative gap-44 h-[125vh]">
-        <div className=" pt-8 ms-24">
+        <div className=" pt-8 relative left-16">
           <div className="text-primary font-sf_pro_display font-bold text-5xl relative w-[620px]">
             <div className="leading-[62px] z-10 relative">
               The Smarter Way To Get Your Dream Job
