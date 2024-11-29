@@ -36,13 +36,13 @@ export default function SignUpCompany1() {
             <div >
               <h2 className="font-semi_bold">Company name</h2>
               <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[247px]">
-                <input type="text" className="   focus:outline-none ms-2 " />
+                <input type="text" className="   focus:outline-none ms-2 w-full" />
               </div>
             </div>
             <div>
               <h2 className="font-semi_bold">CEO name</h2>
               <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[247px]">
-                <input type="text" className="   focus:outline-none ms-2 " />
+                <input type="text" className="   focus:outline-none ms-2 w-full" />
               </div>
             </div>
           </div>
@@ -50,13 +50,13 @@ export default function SignUpCompany1() {
           <div className="mt-9 ms-5">
             <h2 className="font-semi_bold">Business Email</h2>
             <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[517px]">
-              <input type="text" className="   focus:outline-none ms-2 " placeholder="ex: contact@companyname.com" />
+              <input type="text" className=" w-full  focus:outline-none ms-2 " placeholder="ex: contact@companyname.com" />
             </div>
           </div>
           <div className="mt-9 ms-5">
             <h2 className="font-semi_bold">Password</h2>
             <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center justify-between  h-14 w-[517px]">
-              <input type="password" className="   focus:outline-none ms-2 " />
+              <input type="password" className=" w-full  focus:outline-none ms-2 " />
               <img src={Password} alt="" className="pe-4" />
             </div>
           </div>
