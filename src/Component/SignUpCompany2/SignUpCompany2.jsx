@@ -32,13 +32,13 @@ export default function SignUpCompany2() {
           <div>
             <h2 className="font-semi_bold">Location</h2>
             <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[247px]">
-              <input type="text" className="   focus:outline-none ms-2 " />
+              <input type="text" className="w-full   focus:outline-none ms-2 " />
             </div>
           </div>
           <div>
             <h2 className="font-semi_bold">Number Of Employees</h2>
             <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[247px]">
-              <input type="text" className="   focus:outline-none ms-2 " />
+              <input type="text" className=" w-full  focus:outline-none ms-2 " />
             </div>
           </div>
         </div>
@@ -48,7 +48,7 @@ export default function SignUpCompany2() {
           <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[517px]">
             <input
               type="text"
-              className="   focus:outline-none ms-2 "
+              className="  w-full focus:outline-none ms-2 "
               placeholder="ex: https://www.companyname.com"
             />
           </div>
@@ -62,7 +62,7 @@ export default function SignUpCompany2() {
           <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex   h-44 w-[517px]">
             <textarea
               type="password"
-              className=" resize-none  focus:outline-none ms-2  h-full w-[97%] p-2"
+              className="w-full resize-none  focus:outline-none ms-2  h-full w-[97%] p-2"
             />
           </div>
         </div>
@@ -74,7 +74,7 @@ export default function SignUpCompany2() {
           <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex   h-28 w-[517px]">
             <textarea
               type="password"
-              className=" resize-none  focus:outline-none ms-2  h-full w-[97%] p-2"
+              className=" w-full resize-none  focus:outline-none ms-2  h-full w-[97%] p-2"
             />
           </div>
         </div>
