@@ -16,7 +16,7 @@ export default function SignUpCompany1() {
             </div>
           </NavLink>
           <div className="w-80 bg-white h-12 rounded-md  flex justify-evenly text-xs items-center font-normal">
-            <p>Want to post jobs?</p>
+            <p>Want to apply for jobs?</p>
             <NavLink to={"/SignUpApplicant"}>
               <p className="text-[#0146B1]">Create an Applicant account</p>
             </NavLink>
