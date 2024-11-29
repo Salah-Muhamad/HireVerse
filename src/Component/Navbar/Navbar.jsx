@@ -21,22 +21,24 @@ export default function Navbar() {
             </div>
           </NavLink>
 
-          <div className="flex gap-8 font-bai_jamjuree text-base font-semibold items-center mt-1">
+          <div className="flex gap-8 font-bai_jamjuree text-base font-semibold items-center mt-1 h-[4.375rem]">
+          
             <NavLink
               to={"JobsPage"}
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#0146B1]" 
+                  ? "text-[#0146B1] flex items-center h-[4.375rem] border-b-2 border-[#0146B1]" 
                   : ""
               }
             >
               Jobs
             </NavLink>
+
             <NavLink
               to={"Companies"}
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#0146B1]" 
+                  ? "text-[#0146B1] flex items-center h-[4.375rem] border-b-2 border-[#0146B1]" 
                   : ""
               }
             >
@@ -46,7 +48,7 @@ export default function Navbar() {
               to={"about"}
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#0146B1]" 
+                  ? "text-[#0146B1] flex items-center h-[4.375rem] border-b-2 border-[#0146B1]" 
                   : ""
               }
             >
