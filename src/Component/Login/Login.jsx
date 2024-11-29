@@ -37,7 +37,7 @@ export default function SignUpApplicant() {
           <div className="mt-9 ms-5">
             <div className="pass flex justify-between mb-3">
             <h2 className="font-semi_bold">Password</h2>
-            <Link><a className="mr-4 text-[#0146B1] font-sf_pro_text text-base">forgot ?</a></Link>
+            <Link to={"/ForgotPassword"}><a className="mr-4 text-[#0146B1] font-sf_pro_text text-base">forgot ?</a></Link>
             </div>
             <div className="relative rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[517px]">
               <input type="password" className=" w-full focus:outline-none ms-2 " />
