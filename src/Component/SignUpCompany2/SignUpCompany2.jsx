@@ -62,7 +62,7 @@ export default function SignUpCompany2() {
           <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex   h-44 w-[517px]">
             <textarea
               type="password"
-              className="w-full resize-none  focus:outline-none ms-2  h-full w-[97%] p-2"
+              className="w-full resize-none  focus:outline-none ms-2  h-full p-2"
             />
           </div>
         </div>
@@ -74,7 +74,7 @@ export default function SignUpCompany2() {
           <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex   h-28 w-[517px]">
             <textarea
               type="password"
-              className=" w-full resize-none  focus:outline-none ms-2  h-full w-[97%] p-2"
+              className=" w-full resize-none  focus:outline-none ms-2  h-full  p-2"
             />
           </div>
         </div>
