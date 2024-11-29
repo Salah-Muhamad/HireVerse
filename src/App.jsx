@@ -11,6 +11,7 @@ import SignUpApplicant from './Component/SignUpApplicant/SignUpApplicant';
 import SignUpCompany1 from './Component/SignUpCompany1/SignUpCompany1';
 import SignUpCompany2 from './Component/SignUpCompany2/SignUpCompany2';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 
 function App() {
   const Routers = createBrowserRouter([
@@ -27,6 +28,7 @@ function App() {
         { path: 'SignUpApplicant', element: <SignUpApplicant /> },
         { path: 'SignUpCompany1', element: <SignUpCompany1 /> },
         { path: 'SignUpCompany2', element: <SignUpCompany2 /> },
+        { path: 'ForgotPassword', element: <ForgotPassword /> },
         { path: '*', element: <NotFound /> },
       ],
     },
