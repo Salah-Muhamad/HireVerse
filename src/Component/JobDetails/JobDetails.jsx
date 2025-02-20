@@ -86,7 +86,7 @@ export default function JobDetails() {
   }, []);
   return (
     <div>
-      <div className="container w-10/12 m-auto bg-[#F9F9F9] p-3 mt-10">
+      <div className="container w-10/12 m-auto bg-[#F9F9F9] p-3 mt-24">
         <img src={company} alt="" />
         <p className="text-[#616161] text-sm font-bai_jamjuree font-medium mt-7 mb-7">
           - job details
