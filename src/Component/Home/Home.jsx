@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import OrangePart from "../../assets/Images/Vector.svg";
 import Person from "../../assets/Images/person.svg";
 import Person2 from "../../assets/Images/person2.svg";
@@ -30,13 +30,28 @@ import Wordpress from "../../assets/Images/Wordpress.svg";
 import App from "../../App";
 import TopCompanies from "../TopCompanies/TopCompanies";
 import Jobs from "../Jobs/Jobs";
+import axios from "axios";
 
 export default function Home() {
+  const [jobs, setJobs] = useState([]);
+
+  async function getJobs() {
+    try {
+      let { data } = await axios.get(`http://157.175.163.205/api/jobs`);
+      console.log(data.data);
+      setJobs(data.data)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    getJobs();
+  }, []);
   return (
     <>
       {/* Section 1 */}
-      <div className="bg-secondary flex justify-center pt-4 m-auto relative gap-44 h-screen">
-        <div className=" pt-8">
+      <div className="bg-secondary flex justify-center pt-44 m-auto relative gap-44 h-[125vh]">
+        <div className=" pt-8 relative left-16">
           <div className="text-primary font-sf_pro_display font-bold text-5xl relative w-[620px]">
             <div className="leading-[62px] z-10 relative">
               The Smarter Way To Get Your Dream Job
@@ -376,127 +391,7 @@ export default function Home() {
       </div>
 
       <div className="grid grid-cols-3 ms-10">
-        <Jobs
-          salary={"2500k"}
-          date={"8 Dec, 2023"}
-          jobType={"Full time"}
-          icon={Wordpress}
-          jobTitle={"Digital Marketer"}
-          location={"London, United Kingdom"}
-          description={
-            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
-          }
-        />
-        <Jobs
-          salary={"2500k"}
-          date={"8 Dec, 2023"}
-          jobType={"Full time"}
-          icon={Wordpress}
-          jobTitle={"Digital Marketer"}
-          location={"London, United Kingdom"}
-          description={
-            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
-          }
-        />
-        <Jobs
-          salary={"2500k"}
-          date={"8 Dec, 2023"}
-          jobType={"Full time"}
-          icon={Wordpress}
-          jobTitle={"Digital Marketer"}
-          location={"London, United Kingdom"}
-          description={
-            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
-          }
-        />
-        <Jobs
-          salary={"2500k"}
-          date={"8 Dec, 2023"}
-          jobType={"Full time"}
-          icon={Wordpress}
-          jobTitle={"Digital Marketer"}
-          location={"London, United Kingdom"}
-          description={
-            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
-          }
-        />
-        <Jobs
-          salary={"2500k"}
-          date={"8 Dec, 2023"}
-          jobType={"Full time"}
-          icon={Wordpress}
-          jobTitle={"Digital Marketer"}
-          location={"London, United Kingdom"}
-          description={
-            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
-          }
-        />
-        <Jobs
-          salary={"2500k"}
-          date={"8 Dec, 2023"}
-          jobType={"Full time"}
-          icon={Wordpress}
-          jobTitle={"Digital Marketer"}
-          location={"London, United Kingdom"}
-          description={
-            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
-          }
-        />
-        <Jobs
-          salary={"2500k"}
-          date={"8 Dec, 2023"}
-          jobType={"Full time"}
-          icon={Wordpress}
-          jobTitle={"Digital Marketer"}
-          location={"London, United Kingdom"}
-          description={
-            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
-          }
-        />
-        <Jobs
-          salary={"2500k"}
-          date={"8 Dec, 2023"}
-          jobType={"Full time"}
-          icon={Wordpress}
-          jobTitle={"Digital Marketer"}
-          location={"London, United Kingdom"}
-          description={
-            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
-          }
-        />
-        <Jobs
-          salary={"2500k"}
-          date={"8 Dec, 2023"}
-          jobType={"Full time"}
-          icon={Wordpress}
-          jobTitle={"Digital Marketer"}
-          location={"London, United Kingdom"}
-          description={
-            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
-          }
-        />
-        <Jobs
-          salary={"2500k"}
-          date={"8 Dec, 2023"}
-          jobType={"Full time"}
-          icon={Wordpress}
-          jobTitle={"Digital Marketer"}
-          location={"London, United Kingdom"}
-          description={
-            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
-          }
-        />
-        <Jobs
-          salary={"2500k"}
-          date={"8 Dec, 2023"}
-          jobType={"Full time"}
-          icon={Wordpress}
-          jobTitle={"Digital Marketer"}
-          location={"London, United Kingdom"}
-          description={
-            "Join our team as an Email Marketing Specialist and lead our digital outreach efforts."
-          }
-        />
+        { jobs.map((job , index)=> <Jobs key={index} job={job} />) }
       </div>
       {/* End Of Section 6 */}
 
@@ -515,7 +410,9 @@ export default function Home() {
               that matches your skills and goals has never been easier. Start
               your journey today!
             </p>
-            <button className="mt-10 w-48 h-12 bg-white text-[#0B2B82] font-semibold text-xl rounded-lg">Get Started</button>
+            <button className="mt-10 w-48 h-12 bg-white text-[#0B2B82] font-semibold text-xl rounded-lg">
+              Get Started
+            </button>
           </div>
 
           {/* Image */}

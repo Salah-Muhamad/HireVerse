@@ -9,7 +9,7 @@
     content: '';
     position: absolute;
     width: 100%;
-    height: 25vh;
+    height: 40vh;
     background-image: url('src/assets/Images/aboutbackground.svg');
     opacity: 4%;
 }
