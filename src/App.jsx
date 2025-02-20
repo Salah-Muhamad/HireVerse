@@ -1,3 +1,8 @@
+
+import { useState } from 'react'
+import Home from './Component/Home/Home'
+import About from './Component/About/About'
+import JobDetails from './Component/JobDetails/JobDetails'
 import { useState } from 'react';
 import Home from './Component/Home/Home';
 import About from './Component/About/About';
@@ -12,6 +17,7 @@ import SignUpCompany1 from './Component/SignUpCompany1/SignUpCompany1';
 import SignUpCompany2 from './Component/SignUpCompany2/SignUpCompany2';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
+
 
 function App() {
   const Routers = createBrowserRouter([
@@ -35,8 +41,15 @@ function App() {
   ]);
 
   return (
+
+    <>
+      <JobDetails/>
+    </>
+  )
+
     <RouterProvider router={Routers} />
   );
+
 }
 
 export default App;
