@@ -1,7 +1,3 @@
-
-import { useState } from 'react'
-import Home from './Component/Home/Home'
-import About from './Component/About/About'
 import JobDetails from './Component/JobDetails/JobDetails'
 import { useState } from 'react';
 import Home from './Component/Home/Home';
@@ -29,6 +25,7 @@ function App() {
         { path: 'About', element: <About /> },
         { path: 'Companies', element: <Companies /> },
         { path: 'JobsPage', element: <JobsPage /> },
+        { path: 'JobDetails/:id', element: <JobDetails /> },
         { path: 'Login', element: <Login /> },
         { path: 'Register', element: <Register />},
         { path: 'SignUpApplicant', element: <SignUpApplicant /> },
@@ -43,12 +40,11 @@ function App() {
   return (
 
     <>
-      <JobDetails/>
+      <RouterProvider router={Routers} />
     </>
   )
 
-    <RouterProvider router={Routers} />
-  );
+  
 
 }
 

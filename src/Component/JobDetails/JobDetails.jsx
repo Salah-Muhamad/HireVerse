@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import company from "../../assets/Images/company.svg";
 import logo from "../../assets/Images/Microsoftlogo.svg";
 import location from "../../assets/Images/location.svg";
 import salary from "../../assets/Images/salary.svg";
 import line2 from "../../assets/Images/Line 27.svg";
 import RelatedJob from "../RelatedJob/RelatedJob";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function JobDetails() {
   var settings = {
@@ -67,7 +69,21 @@ export default function JobDetails() {
       apllicants: "+5000 apllicant",
     },
   ];
-
+  const [jobDetails, setJobDetails] = useState([]);
+  let { id } = useParams();
+  console.log(id);
+  async function getJobDetails(id) {
+    try {
+      let { data } = await axios.get(`http://157.175.163.205/api/jobs/${id}`);
+      console.log(data.data.attributes);
+      setJobDetails(data.data.attributes);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    getJobDetails(id);
+  }, []);
   return (
     <div>
       <div className="container w-10/12 m-auto bg-[#F9F9F9] p-3 mt-10">
@@ -80,11 +96,11 @@ export default function JobDetails() {
             <div className="flex justify-between">
               <div className="text flex ">
                 <div className="logo mt-2">
-                  <img src={logo} className="mr-3" />
+                  <img src={jobDetails.company_logo} className="mr-3" />
                 </div>
                 <div>
                   <p className="font-sf_pro_text font-semibold text-2xl">
-                    Full Stack Developer
+                    {jobDetails.title}
                   </p>
                   <p className="companyname font-bai_jamjuree text-xs font-normal text-[#0146B1]">
                     Microsoft
@@ -96,139 +112,38 @@ export default function JobDetails() {
               </button>
             </div>
             <img src={line2} className="mt-8" />
-            <div className="w-[840px]">
-              <h2 className="font-medium text-lg font-bai_jamjuree mb-2 mt-6">
-                Summary:
-              </h2>
-              <p className="font-normal text-sm font-bai_jamjuree text=[#474747]">
-                As a Full Stack Developer, you will be responsible for
-                designing, developing, and maintaining scalable software
-                solutions across both front-end and back-end components. Working
-                closely with a cross-functional team, you’ll play a key role in
-                delivering high-quality applications that meet the needs of both
-                the business and end users.
-              </p>
-            </div>
-            <h2 className="font-medium text-lg font-bai_jamjuree mb-2 mt-6">
-              Responsibilties:
-            </h2>
-            <div className="responsibilities ml-5">
-              <ul className="list-disc font-bai_jamjuree text-sm font-normal text-[#474747]">
-                <li className="ml-6 ">
-                  <p>
-                    Develop robust and scalable web applications using modern
-                    frameworks.
+            <div className=" flex flex-col gap-5">
+              <div className="w-[840px]">
+                <h2 className="font-medium text-lg font-bai_jamjuree mb-2 mt-6 ">
+                  Summary:
+                </h2>
+                <p className="font-normal text-sm font-bai_jamjuree text=[#474747] ml-5">
+                  {jobDetails.summary}
+                </p>
+              </div>
+              <div>
+                <h2 className="font-medium text-lg font-bai_jamjuree mb-2 mt-6">
+                  Responsibilties:
+                </h2>
+                <div className="responsibilities ml-5">
+                  <p className="pb-4">{jobDetails.responsibilities}</p>
+                </div>
+              </div>
+              <div>
+                <h2 className="font-medium text-lg font-bai_jamjuree mb-2 mt-6">
+                  Requirements :
+                </h2>
+                <div className="requirements ml-5">
+                  <p className="mt-1 mb-1 font-bai_jamjuree font-medium">
+                    {jobDetails.requirements}
                   </p>
-                </li>
-                <li className="ml-6 ">
-                  <p>
-                    Implement responsive and user-friendly interfaces for a
-                    seamless user experience.
-                  </p>
-                </li>
-                <li className="ml-6 ">
-                  <p>
-                    Ensure server and network performance, implementing caching
-                    and optimizing configurations as needed.
-                  </p>
-                </li>
-              </ul>
-              <p className="mt-1 mb-1 font-bai_jamjuree font-medium">
-                -Back-End Development:
-              </p>
-              <ul className="list-disc font-bai_jamjuree text-sm font-normal text-[#474747]">
-                <li className="ml-6 ">
-                  <p>
-                    Build and maintain RESTful APIs, ensuring secure and
-                    efficient data flow between the server and clients.
-                  </p>
-                </li>
-                <li className="ml-6 ">
-                  <p>
-                    Manage database systems, design schemas, and optimize
-                    queries for performance.
-                  </p>
-                </li>
-                <li className="ml-6 ">
-                  <p>
-                    Collaborate with UI/UX designers to bring visual designs to
-                    life.
-                  </p>
-                </li>
-              </ul>
-              <p className="mt-1 mb-1 font-bai_jamjuree font-medium">
-                -Collaboration & Project Management:
-              </p>
-              <ul className="list-disc font-bai_jamjuree text-sm font-normal text-[#474747]">
-                <li className="ml-6 ">
-                  <p>
-                    Work with cross-functional teams including designers,
-                    product managers, and QA to define requirements and deliver
-                    solutions.
-                  </p>
-                </li>
-                <li className="ml-6 ">
-                  <p>
-                    Manage database systems, design schemas, and optimize
-                    queries for performance.
-                  </p>
-                </li>
-              </ul>
-              <p className="mt-1 mb-1 font-bai_jamjuree font-medium">
-                -Quality Assurance:
-              </p>
-              <ul className="list-disc font-bai_jamjuree text-sm font-normal text-[#474747]">
-                <li className="ml-6 ">
-                  <p>Write clean, maintainable, and well-documented code..</p>
-                </li>
-                <li className="ml-6 ">
-                  <p>
-                    Conduct thorough testing, including unit, integration, and
-                    end-to-end tests, to ensure application stability..
-                  </p>
-                </li>
-                <li className="ml-6 ">
-                  <p>Debug and resolve issues in a timely manner.</p>
-                </li>
-              </ul>
-            </div>
-            <h2 className="font-medium text-lg font-bai_jamjuree mb-2 mt-6">
-              Requirements :
-            </h2>
-            <div className="requirements ml-5">
-              <p className="mt-1 mb-1 font-bai_jamjuree font-medium">
-                -Educational Background:
-              </p>
-              <ul className="list-disc font-bai_jamjuree text-sm font-normal text-[#474747]">
-                <li className="ml-6 ">
-                  <p>
-                    Bachelor’s degree in Computer Science, Software Engineering,
-                    or a related field (or equivalent experience).
-                  </p>
-                </li>
-              </ul>
-              <p className="mt-1 mb-1 font-bai_jamjuree font-medium">
-                -Technical Skills:
-              </p>
-              <ul className="list-disc font-bai_jamjuree text-sm font-normal text-[#474747]">
-                <li className="ml-6 ">
-                  <p>
-                    Proficiency in front-end languages (e.g., HTML, CSS,
-                    JavaScript) and frameworks like React or Angular.
-                  </p>
-                </li>
-                <li className="ml-6 ">
-                  <p>
-                    Strong experience with back-end languages (e.g., Node.js,
-                    Python, Ruby) and frameworks.
-                  </p>
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>
           </div>
           <aside className="col-span-3  border-l-[2px] p-5">
             <h3 className="time font-sf_pro_text font-bold text-lg mb-3">
-              Full-Time
+              {jobDetails.type}
             </h3>
             <div className="location flex mb-3 text-sm font-semibold text-[#474747]">
               <img src={location} className="mr-2" />
@@ -236,7 +151,7 @@ export default function JobDetails() {
             </div>
             <div className="salary flex mb-3 text-sm font-semibold text-[#474747]">
               <img src={salary} className="mr-2" />
-              <p>$80,000 - $100,000 annually</p>
+              <p>{jobDetails.salary} $</p>
             </div>
             <img src={line2} alt="" />
             <div className="downside mt-4">
@@ -253,7 +168,7 @@ export default function JobDetails() {
                   • Location
                 </h2>
                 <p className="font-bai_jamjuree text-sm text-[#474747] mt-2 ml-2">
-                  On-Site
+                  {jobDetails.workLocation}
                 </p>
               </div>
               <div className="mb-4">
@@ -295,7 +210,6 @@ export default function JobDetails() {
                   <div className="skill flex justify-center items-center bg-[#EFEFEF] rounded-xl	h-6  text-sm font-normal w-fit p-4">
                     Cloud Computing
                   </div>
-                  
                 </div>
               </div>
             </div>
