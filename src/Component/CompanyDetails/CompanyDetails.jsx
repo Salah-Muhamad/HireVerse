@@ -111,7 +111,7 @@ export default function CompanyDetails() {
             </div>
           </div>
         </div>
-        <div className="sec2 grid grid-cols-3 gap-4 px-32">
+        <div className="sec2 grid grid-cols-3 gap-4 px-32 w-[1410px]">
             <div className="con1 col-span-2">
                 <div className="mb-4">
                     <div className="label font-sf_pro_text font-bold mb-3">
@@ -164,10 +164,10 @@ export default function CompanyDetails() {
                     </div>
                 </div>
             </div>
-            <div className="con2">
+            <div className="con2 w-[495px]">
                 <div className="con2header flex justify-between mb-6 ">
                 <p className="font-sf_pro_text font-bold">Jobs From <span>Microsoft</span></p>
-                <p><Link className="text-blue-500 underline"><p className="font-sf_pro_text">View all</p></Link></p>
+                <p><Link className="text-blue-700 underline"><p className="font-sf_pro_text">View all</p></Link></p>
                 </div>
                 {
                     jobs.map((ele)=><JobsFromCompany 
