@@ -1,8 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function TopCompanies({icon , companyName , position , locationIcon , location}) {
   return (
     <>
+        <Link to={"/CompanyDetails"}>
         <div className='w-[424px] h-[104px] border-2 border-[#E4E5E8] rounded-lg mb-8 flex items-center'>
             <div className='flex gap-4 font-bai_jamjuree'>
                 <div className='ms-4'>
@@ -22,6 +24,7 @@ export default function TopCompanies({icon , companyName , position , locationIc
                 </div>
             </div>
         </div>
+        </Link>
     </>
   )
 }
