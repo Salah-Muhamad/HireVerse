@@ -34,17 +34,29 @@ import axios from "axios";
 
 export default function Home() {
   const [jobs, setJobs] = useState([]);
+  const [companies, setCompanies] = useState([])
+  async function getCompanies() {
+    try{
+      let {data} = await axios.get(`http://157.175.163.205/api/companies`)
+      // console.log(data.data)
+      setCompanies(data.data)
+    }catch(err){
+      console.log(err)
+    }
+  }
+
 
   async function getJobs() {
     try {
       let { data } = await axios.get(`http://157.175.163.205/api/jobs`);
-      console.log(data.data);
+      // console.log(data.data);
       setJobs(data.data)
     } catch (err) {
       console.log(err);
     }
   }
   useEffect(() => {
+    getCompanies();
     getJobs();
   }, []);
   return (
@@ -306,69 +318,9 @@ export default function Home() {
       </div>
 
       <div className="ms-14  grid grid-cols-3">
-        <TopCompanies
-          icon={Microsoft}
-          companyName={"Microsoft"}
-          position={"Software Engineering"}
-          locationIcon={Location}
-          location={"USA, UK, India"}
-        />
-        <TopCompanies
-          icon={Google}
-          companyName={"Google"}
-          position={"Tech"}
-          locationIcon={Location}
-          location={"Canada, Germany"}
-        />
-        <TopCompanies
-          icon={Tesla}
-          companyName={"Tesla"}
-          position={"Electric Vehicles"}
-          locationIcon={Location}
-          location={"Singapore, UAE"}
-        />
-        <TopCompanies
-          icon={Amazon}
-          companyName={"Amazon"}
-          position={"Software Engineering"}
-          locationIcon={Location}
-          location={"Seattle, USAUSA, UK, India"}
-        />
-        <TopCompanies
-          icon={Tesla}
-          companyName={"Tesla"}
-          position={"Electric Vehicles"}
-          locationIcon={Location}
-          location={"Singapore, UAE"}
-        />
-        <TopCompanies
-          icon={Apple}
-          companyName={"Apple"}
-          position={"Design & Development"}
-          locationIcon={Location}
-          location={"Cupertino, USA"}
-        />
-        <TopCompanies
-          icon={Tesla}
-          companyName={"Tesla"}
-          position={"Electric Vehicles"}
-          locationIcon={Location}
-          location={"Singapore, UAE"}
-        />
-        <TopCompanies
-          icon={Microsoft}
-          companyName={"Microsoft"}
-          position={"Software Engineering"}
-          locationIcon={Location}
-          location={"USA, UK, India"}
-        />
-        <TopCompanies
-          icon={Google}
-          companyName={"Google"}
-          position={"Tech"}
-          locationIcon={Location}
-          location={"Canada, Germany"}
-        />
+        {
+          companies.map((company , index)=><TopCompanies key={index} company = {company} locationIcon={Location}/>)
+        }
       </div>
       {/* End of Section 5 */}
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Search from "../../assets/Images/Search3.svg";
 import Microsoft from "../../assets/Images/Microsoft.svg";
 import TopCompanies from "../TopCompanies/TopCompanies";
@@ -44,6 +44,20 @@ export default function Companies() {
     }
     return ["...", currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2, "..."];
   };
+
+  const [companies, setCompanies] = useState([])
+  async function getCompanies() {
+    try{
+      let {data} = await axios.get(`http://157.175.163.205/api/companies`)
+      // console.log(data.data)
+      setCompanies(data.data)
+    }catch(err){
+      console.log(err)
+    }
+  }
+  useEffect(()=>{
+    getCompanies()
+  })
   return (
     <>
       <div className="mt-44 ms-[91.5px] w-[791px] h-16 border-2 rounded-lg flex items center px-5 justify-between shadow-md">
