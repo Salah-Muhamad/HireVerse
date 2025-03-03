@@ -1,6 +1,7 @@
 import JobDetails from './Component/JobDetails/JobDetails'
 import { useState } from 'react';
 import Home from './Component/Home/Home';
+import CompanyDetails from './Component/CompanyDetails/CompanyDetails';
 import About from './Component/About/About';
 import Register from './Component/Register/Register';
 import Login from './Component/Login/Login';
@@ -15,6 +16,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 
 
+
 function App() {
   const Routers = createBrowserRouter([
     {
@@ -25,6 +27,7 @@ function App() {
         { path: 'About', element: <About /> },
         { path: 'Companies', element: <Companies /> },
         { path: 'JobsPage', element: <JobsPage /> },
+        { path: 'CompanyDetails/:id', element:<CompanyDetails/> },
         { path: 'JobDetails/:id', element: <JobDetails /> },
         { path: 'Login', element: <Login /> },
         { path: 'Register', element: <Register />},

@@ -3,7 +3,6 @@ import Line from "../../assets/Images/Line 2.svg";
 import LineH from "../../assets/Images/Line 4.svg";
 import Location2 from "../../assets/Images/Location2.svg";
 import ArrowUpRight from "../../assets/Images/arrow-up-right.svg";
-import JobDetails from "../JobDetails/JobDetails";
 import { Link } from "react-router-dom";
 export default function Jobs({ job }) {
   return (
