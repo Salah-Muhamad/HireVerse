@@ -14,8 +14,7 @@ import SignUpCompany1 from './Component/SignUpCompany1/SignUpCompany1';
 import SignUpCompany2 from './Component/SignUpCompany2/SignUpCompany2';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
-
-
+import VerifyEmail from './Component/VerifyEmail/VerifyEmail';
 
 function App() {
   const Routers = createBrowserRouter([
@@ -31,6 +30,7 @@ function App() {
         { path: 'JobDetails/:id', element: <JobDetails /> },
         { path: 'Login', element: <Login /> },
         { path: 'Register', element: <Register />},
+        { path: 'VerifyEmail', element: <VerifyEmail />},
         { path: 'SignUpApplicant', element: <SignUpApplicant /> },
         { path: 'SignUpCompany1', element: <SignUpCompany1 /> },
         { path: 'SignUpCompany2', element: <SignUpCompany2 /> },
