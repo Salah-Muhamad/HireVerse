@@ -7,7 +7,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import {Link} from 'react-router-dom';
 import React, { useState } from "react";
 
-export default function SignUpApplicant() {
+export default function Login() {
   return (
     <>
       <div className="h-[170vh] bg-[url('src/assets/Images/back.jpg')] bg-cover bg-center bg-fixed pt-10 font-sf_pro_text">

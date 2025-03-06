@@ -40,7 +40,7 @@ export default function Register() {
             <button
               onClick={() => handleButtonClick("applicant")}
               className={`w-[204px] h-[107px] rounded-lg border-2 flex flex-col justify-center gap-5 items-center
-              ${activeButton === "applicant" ? "bg-[#143567] text-white" : "bg-white text-[#636363] border-[#99B1B9]"}`}
+              ${activeButton === "applicant" ? "border-[#0a49c0] bg-[#e7eef9b6] " : "bg-white text-[#636363] border-[#99B1B9]"}`}
             >
               <h3 className="font-bold text-[18px]">Applicant</h3>
               <p className="text-sm font-normal">Browse jobs and apply</p>
@@ -49,7 +49,7 @@ export default function Register() {
             <button
               onClick={() => handleButtonClick("company")}
               className={`w-[204px] h-[107px] rounded-lg border-2 flex flex-col justify-center gap-5 items-center
-              ${activeButton === "company" ? "bg-[#143567] text-white" : "bg-white text-[#636363] border-[#99B1B9]"}`}
+              ${activeButton === "company" ? "border-[#0a49c0] bg-[#e7eef9b6] " : "bg-white text-[#636363] border-[#99B1B9]"}`}
             >
               <h3 className="font-bold text-[18px]">Company</h3>
               <p className="text-sm font-normal">Post jobs, find talent</p>

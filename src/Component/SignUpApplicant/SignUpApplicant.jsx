@@ -2,22 +2,71 @@ import MainLogo from "../../assets/Images/MainLogo.svg";
 import Password from "../../assets/Images/Password.svg";
 import Line from "../../assets/Images/Line 30.svg";
 import Google from "../../assets/Images/devicon_google.svg";
+import Star from "../../assets/Images/star.svg";
+import Strong from "../../assets/Images/Strong.svg";
+import Vpoor from "../../assets/Images/Vpoor.svg";
+import Poor from "../../assets/Images/Poor.svg";
+import Moderate from "../../assets/Images/Moderate.svg";
 import Github from "../../assets/Images/mdi_github.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import { PacmanLoader } from "react-spinners";
 export default function SignUpApplicant() {
-  function handleRigester(values){
-    console.log(values)
+  const [registerError, setRegisterError] = useState("");
+  const [loading, setLoading] = useState(false);
+  let navigate = useNavigate();
+  const checkStrength = (val) => {
+    if (val.length < 4) return Vpoor;
+    if (val.length < 7) return Poor;
+    if (val.length < 10) return Moderate;
+    if (/[A-Z]/.test(val) && /[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val)) {
+      return Strong;
+    }
+    return Moderate;
+  };
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+  async function register(values) {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "http://157.175.163.205/api/register",
+        values
+      );
+
+      console.log(response.data);
+      navigate("/VerifyEmail");
+    } catch (err) {
+      console.error("Error:", err);
+      setRegisterError(err.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   }
+  let validationSchema = Yup.object().shape({
+    first_name: Yup.string().required("First Name Is Required ."),
+    last_name: Yup.string().required("Last Name Is Required ."),
+    email: Yup.string()
+      .email("Email Is Invalid .")
+      .required("Email Is Required ."),
+    password: Yup.string().required("Password Is Required ."),
+  });
+
   let formik = useFormik({
     initialValues: {
       first_name: "",
       last_name: "",
       email: "",
       password: "",
-    }, onSubmit: handleRigester
+    },
+    validationSchema,
+    onSubmit: register,
   });
   return (
     <>
@@ -48,6 +97,12 @@ export default function SignUpApplicant() {
           </div>
 
           <form onSubmit={formik.handleSubmit}>
+            {registerError && (
+              <div className=" ms-2 text-red-600 flex gap-1">
+                <img src={Star} alt="" />
+                <div className="mt-3">{registerError}</div>
+              </div>
+            )}
             <div className="mt-9 flex justify-center gap-6">
               <div>
                 <h2 className="font-semi_bold">First name</h2>
@@ -61,6 +116,12 @@ export default function SignUpApplicant() {
                     onBlur={formik.handleBlur}
                   />
                 </div>
+                {formik.errors.first_name && formik.touched.first_name && (
+                  <div className=" ms-2 text-red-600 flex gap-1">
+                    <img src={Star} alt="" />
+                    <div className="mt-3">{formik.errors.first_name}</div>
+                  </div>
+                )}
               </div>
               <div>
                 <h2 className="font-semi_bold">Last name</h2>
@@ -74,6 +135,12 @@ export default function SignUpApplicant() {
                     className="   focus:outline-none ms-2 w-full"
                   />
                 </div>
+                {formik.errors.last_name && formik.touched.last_name && (
+                  <div className=" ms-2 text-red-600 flex gap-1">
+                    <img src={Star} alt="" />
+                    <div className="mt-3">{formik.errors.last_name}</div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -89,25 +156,61 @@ export default function SignUpApplicant() {
                   className="   focus:outline-none ms-2 w-full"
                 />
               </div>
+              {formik.errors.email && formik.touched.email && (
+                <div className=" ms-2 text-red-600 flex gap-1">
+                  <img src={Star} alt="" />
+                  <div className="mt-3">{formik.errors.email}</div>
+                </div>
+              )}
             </div>
             <div className="mt-9 ms-5">
               <h2 className="font-semi_bold">Password</h2>
               <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center justify-between  h-14 w-[517px]">
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   value={formik.values.password}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   className="   focus:outline-none ms-2 w-full"
                 />
-                <img src={Password} alt="" className="pe-4" />
+                <img
+                  src={Password}
+                  alt=""
+                  className="pe-4"
+                  onClick={togglePasswordVisibility}
+                />
               </div>
+              {formik.errors.password && formik.touched.password && (
+                <div className=" ms-2 text-red-600 flex gap-1">
+                  <img src={Star} alt="" />
+                  <div className="mt-3">{formik.errors.password}</div>
+                </div>
+              )}
+              {formik.values.password && (
+                <img
+                  src={checkStrength(formik.values.password)}
+                  alt="Password Strength"
+                  className="mt-4"
+                />
+              )}
             </div>
             <div className="text-center">
-              <button type="submit" className="w-[517px] h-11 bg-[#143567] text-white text-base font-semibold rounded-lg mt-10 ms-4">
-                Create Account
-              </button>
+              {!loading ? (
+                <button
+                  type="submit"
+                  className="w-[517px] h-11 bg-[#143567] text-white text-base font-semibold rounded-lg mt-10 ms-4"
+                >
+                  Create Account
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="w-[517px] h-11 bg-[#143567] text-white text-base font-semibold rounded-lg mt-10 ms-4 flex justify-center items-center"
+                >
+                  <PacmanLoader color="#ffff" size={15}/>{" "}
+                </button>
+              )}
               <p className="mt-5 font-normal text-sm">
                 Already have an account?
                 <span className="text-[#0146B1] underline">
