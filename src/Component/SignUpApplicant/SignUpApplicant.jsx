@@ -5,8 +5,20 @@ import Google from "../../assets/Images/devicon_google.svg";
 import Github from "../../assets/Images/mdi_github.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-
+import { useFormik } from "formik";
+import * as Yup from "yup";
 export default function SignUpApplicant() {
+  function handleRigester(values){
+    console.log(values)
+  }
+  let formik = useFormik({
+    initialValues: {
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: "",
+    }, onSubmit: handleRigester
+  });
   return (
     <>
       <div className="h-[170vh] bg-[url('src/assets/Images/back.jpg')] bg-cover bg-center bg-fixed pt-10 font-sf_pro_text">
@@ -28,56 +40,82 @@ export default function SignUpApplicant() {
         </div>
 
         <div className="w-[616px]  bg-[#F1F1F1F2] m-auto mt-6 rounded-2xl p-8">
-
           <div className="ms-4">
-          <h2 className="font-medium text-2xl">Create your account</h2>
-          <p className="text-[#979797] font-normal text-base mt-4">
-            start exploring job opportunities
-          </p>
-          </div>
-
-          <div className="mt-9 flex justify-center gap-6">
-            <div>
-              <h2 className="font-semi_bold">First name</h2>
-              <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[247px]">
-                <input type="text" className="   focus:outline-none ms-2 w-full" />
-              </div>
-            </div>
-            <div>
-              <h2 className="font-semi_bold">Last name</h2>
-              <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[247px]">
-                <input type="text" className="   focus:outline-none ms-2 w-full" />
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-9 ms-5">
-            <h2 className="font-semi_bold">Email</h2>
-            <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[517px]">
-              <input type="text" className="   focus:outline-none ms-2 w-full" />
-            </div>
-          </div>
-          <div className="mt-9 ms-5">
-            <h2 className="font-semi_bold">Password</h2>
-            <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center justify-between  h-14 w-[517px]">
-              <input type="password" className="   focus:outline-none ms-2 w-full" />
-              <img src={Password} alt="" className="pe-4" />
-            </div>
-          </div>
-          <div className="text-center">
-            <button
-              className="w-[517px] h-11 bg-[#143567] text-white text-base font-semibold rounded-lg mt-10 ms-4"
-            >
-              Create Account
-            </button>
-            <p className="mt-5 font-normal text-sm">
-              Already have an account?
-              <span className="text-[#0146B1] underline">
-                <NavLink to={"/login"}> Log In</NavLink>
-              </span>
+            <h2 className="font-medium text-2xl">Create your account</h2>
+            <p className="text-[#979797] font-normal text-base mt-4">
+              start exploring job opportunities
             </p>
           </div>
 
+          <form onSubmit={formik.handleSubmit}>
+            <div className="mt-9 flex justify-center gap-6">
+              <div>
+                <h2 className="font-semi_bold">First name</h2>
+                <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[247px]">
+                  <input
+                    type="text"
+                    className="focus:outline-none ms-2 w-full"
+                    name="first_name"
+                    value={formik.values.first_name}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                </div>
+              </div>
+              <div>
+                <h2 className="font-semi_bold">Last name</h2>
+                <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[247px]">
+                  <input
+                    type="text"
+                    name="last_name"
+                    value={formik.values.last_name}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className="   focus:outline-none ms-2 w-full"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-9 ms-5">
+              <h2 className="font-semi_bold">Email</h2>
+              <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[517px]">
+                <input
+                  type="text"
+                  name="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className="   focus:outline-none ms-2 w-full"
+                />
+              </div>
+            </div>
+            <div className="mt-9 ms-5">
+              <h2 className="font-semi_bold">Password</h2>
+              <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center justify-between  h-14 w-[517px]">
+                <input
+                  type="password"
+                  name="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className="   focus:outline-none ms-2 w-full"
+                />
+                <img src={Password} alt="" className="pe-4" />
+              </div>
+            </div>
+            <div className="text-center">
+              <button type="submit" className="w-[517px] h-11 bg-[#143567] text-white text-base font-semibold rounded-lg mt-10 ms-4">
+                Create Account
+              </button>
+              <p className="mt-5 font-normal text-sm">
+                Already have an account?
+                <span className="text-[#0146B1] underline">
+                  <NavLink to={"/login"}> Log In</NavLink>
+                </span>
+              </p>
+            </div>
+          </form>
 
           <div className="mt-9 flex items-center justify-start gap-3 ms-7">
             <img src={Line} alt="" />
@@ -86,12 +124,16 @@ export default function SignUpApplicant() {
           </div>
 
           <div className="my-5 w-[517px] h-14 border-2 rounded-2xl border-[#99B1B9] ms-7 flex items-center justify-center gap-7">
-                <img src={Google} alt="" />
-                <div className="text-[#656565] font-medium text-base">Sign up with Google</div>
+            <img src={Google} alt="" />
+            <div className="text-[#656565] font-medium text-base">
+              Sign up with Google
+            </div>
           </div>
           <div className="my-5 w-[517px] h-14 border-2 rounded-2xl border-[#99B1B9] ms-7 flex items-center justify-center gap-7">
-                <img src={Github} alt="" />
-                <div className="text-[#656565] font-medium text-base">Sign up with Github</div>
+            <img src={Github} alt="" />
+            <div className="text-[#656565] font-medium text-base">
+              Sign up with Github
+            </div>
           </div>
         </div>
       </div>
