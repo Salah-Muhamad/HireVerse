@@ -49,7 +49,7 @@ export default function CompanyDetails() {
   async function getCompanyDetails(id) {
     try {
       let { data } = await axios.get(
-        `http://157.175.163.205/api/companies/${id}`
+        `https://hireverse.ddns.net/api/companies/${id}`
       );
       // console.log(data.data)
       setCompanyDetails(data.data.attributes);

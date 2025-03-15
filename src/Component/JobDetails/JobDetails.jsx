@@ -74,7 +74,7 @@ export default function JobDetails() {
   console.log(id);
   async function getJobDetails(id) {
     try {
-      let { data } = await axios.get(`http://157.175.163.205/api/jobs/${id}`);
+      let { data } = await axios.get(`https://hireverse.ddns.net/api/jobs/${id}`);
       console.log(data.data.attributes);
       setJobDetails(data.data.attributes);
     } catch (err) {
@@ -96,7 +96,7 @@ export default function JobDetails() {
             <div className="flex justify-between">
               <div className="text flex ">
                 <div className="logo mt-2">
-                  <img src={jobDetails.company_logo} className="mr-3" />
+                  <img src={jobDetails.companyLogo} className="mr-3" />
                 </div>
                 <div>
                   <p className="font-sf_pro_text font-semibold text-2xl">

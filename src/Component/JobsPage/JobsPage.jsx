@@ -1,28 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import jobs from "../../assets/Images/jobs.svg";
 import search from "../../assets/Images/searchicon.svg";
 import dashline from "../../assets/Images/Vector 11.svg";
 import Job from "../Job/Job";
 import logo from "../../assets/Images/Microsoftlogo.svg";
-
+import Jobs from "../Jobs/Jobs";
+import axios from "axios";
 export default function JobsPage() {
-  // // Initialize state for dropdowns with all set to false (closed)
-  // const [dropdownStates, setDropdownStates] = useState({
-  //   location: false,
-  //   jobType: false,
-  //   priceRange: false,
-  //   experienceLevel: false,
-  //   workinghours: false
-  // });
-
-  // // Toggle function to open or close a specific dropdown
-  // const toggleDropdown = (dropdownName) => {
-  //   setDropdownStates((prev) => ({
-  //     ...prev,
-  //     [dropdownName]: !prev[dropdownName]
-  //   }));
-  // };
-
+  const [jobs, setJobs] = useState([]);
+  async function getJobs() {
+    try {
+      let { data } = await axios.get(`https://hireverse.ddns.net/api/jobs`);
+      console.log(data.data);
+      setJobs(data.data)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    getJobs();
+  }, []);
   const [dropdownStates, setDropdownStates] = useState({
     location: false,
     jobType: false,
@@ -405,7 +402,7 @@ export default function JobsPage() {
             </button>
           </div>
           {/*Jobs */}
-          <Job
+          {/* <Job
             logo={logo}
             jobtitle={"Full-Stack Developer"}
             company={"Microsoft"}
@@ -469,20 +466,24 @@ export default function JobsPage() {
               "•you will be responsible for designing, developing, and maintaining scalable software ,Working closely with a cross-functional team, you’ll play a key role in delivering high-quality"
             }
             posted={"Posted 3 Days ago"}
-          />
-          <Job
-            logo={logo}
-            jobtitle={"Full-Stack Developer"}
-            company={"Microsoft"}
-            location={"NewYork"}
-            site={"On-Site"}
-            time={"Full-Time"}
-            salary={"•$80.000 - $100.000 annually"}
-            desc={
-              "•you will be responsible for designing, developing, and maintaining scalable software ,Working closely with a cross-functional team, you’ll play a key role in delivering high-quality"
-            }
-            posted={"Posted 3 Days ago"}
-          />
+            <Job
+              logo={logo}
+              jobtitle={"Full-Stack Developer"}
+              company={"Microsoft"}
+              location={"NewYork"}
+              site={"On-Site"}
+              time={"Full-Time"}
+              salary={"•$80.000 - $100.000 annually"}
+              desc={
+                "•you will be responsible for designing, developing, and maintaining scalable software ,Working closely with a cross-functional team, you’ll play a key role in delivering high-quality"
+              }
+              posted={"Posted 3 Days ago"}
+            /> 
+          />*/
+          }
+          { 
+          jobs.map((job , index)=> <Job key={index} job={job} />)
+           }
         </div>
       </div>
     </>

@@ -36,7 +36,7 @@ export default function SignUpApplicant() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://157.175.163.205/api/register",
+        "https://hireverse.ddns.net/api/register",
         values
       );
 
