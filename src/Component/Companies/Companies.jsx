@@ -10,7 +10,7 @@ export default function Companies() {
   const [companies, setCompanies] = useState([]);
   async function getCompanies() {
     try {
-      let { data } = await axios.get(`http://157.175.163.205/api/companies`);
+      let { data } = await axios.get(`https://hireverse.ddns.net/api/companies`);
       console.log(data.data);
       setCompanies(data.data);
     } catch (err) {

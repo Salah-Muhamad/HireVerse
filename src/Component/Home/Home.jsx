@@ -37,8 +37,8 @@ export default function Home() {
   const [companies, setCompanies] = useState([])
   async function getCompanies() {
     try{
-      let {data} = await axios.get(`http://157.175.163.205/api/companies`)
-      // console.log(data.data)
+      let {data} = await axios.get(`https://hireverse.ddns.net/api/companies`)
+      console.log(data.data)
       setCompanies(data.data)
     }catch(err){
       console.log(err)
@@ -48,8 +48,8 @@ export default function Home() {
 
   async function getJobs() {
     try {
-      let { data } = await axios.get(`http://157.175.163.205/api/jobs`);
-      // console.log(data.data);
+      let { data } = await axios.get(`https://hireverse.ddns.net/api/jobs`);
+      console.log(data.data);
       setJobs(data.data)
     } catch (err) {
       console.log(err);
@@ -319,7 +319,7 @@ export default function Home() {
 
       <div className="ms-14  grid grid-cols-3">
         {
-          companies.map((company , index)=><TopCompanies key={index} company = {company} locationIcon={Location}/>)
+          companies.slice(0,9).map((company , index)=><TopCompanies key={index} company = {company} locationIcon={Location}/>)
         }
       </div>
       {/* End of Section 5 */}
@@ -343,7 +343,7 @@ export default function Home() {
       </div>
 
       <div className="grid grid-cols-3 ms-10">
-        { jobs.map((job , index)=> <Jobs key={index} job={job} />) }
+        { jobs.slice(0,9).map((job , index)=> <Jobs key={index} job={job} />) }
       </div>
       {/* End Of Section 6 */}
 

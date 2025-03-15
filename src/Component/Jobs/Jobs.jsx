@@ -15,7 +15,7 @@ export default function Jobs({ job }) {
                 APPLY BEFORE
               </p>
               <p className="text-[#0C2E82] font-medium">
-                {job.attributes.available_to}
+                {job.attributes.availableTo}
               </p>
             </div>
             <img src={Line} alt="" />
@@ -40,7 +40,7 @@ export default function Jobs({ job }) {
 
           <div className="flex gap-6 items-center mt-4 ms-4">
             <div>
-              <img src={job.attributes.company_logo} alt="" />
+              <img src={job.attributes.companyLogo} alt="" />
             </div>
             <div className="text-[#0B2B82] text-xl font-semibold">
               {job.attributes.title}
