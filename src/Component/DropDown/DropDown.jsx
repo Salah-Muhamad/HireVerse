@@ -1,7 +1,10 @@
 import React from "react";
+import { useJobsProvider } from "../../Context/JobsContext";
 
-export default function DropDown({ title, options , onSelect }) {
+export default function DropDown({ title, options , onOptionSelect , property }) {
+  const {filter} = useJobsProvider()
   return (
+    
     <>
       <details className="group [&_summary::-webkit-details-marker]:hidden">
         <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
@@ -24,11 +27,11 @@ export default function DropDown({ title, options , onSelect }) {
         </summary>
 
         <ul className="mt-2 space-y-1 px-4">
-          {options.map((option) => {
+          {options.map((option , index) => {
             return (
-              <li className="flex gap-3">
-                <input type="checkbox" id={option} />
-                <label htmlFor={option}>{option}</label>
+              <li className="flex gap-3" key={index}>
+                <input type="checkbox" id={option.value} checked = {filter[property].includes(option.value)} onClick={()=>onOptionSelect(property , option.value)}/>
+                <label htmlFor={option.value}>{option.name}</label>
               </li>
             );
           })}
