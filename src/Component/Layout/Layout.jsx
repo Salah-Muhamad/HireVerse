@@ -4,7 +4,7 @@ import Navbar from '../Navbar/Navbar';
 
 export default function Layout() {
   const location = useLocation();
-  const hideNavbarRoutes = ['/Register' , "/ForgotPassword" , '/VerifyEmail','/login' , '/Login' , '/SignUpCompany1' , '/SignUpCompany2' , '/SignUpApplicant'];
+  const hideNavbarRoutes = ['/Register' , "/ForgotPassword" , '/VerifyEmail','/login' , '/Login' , '/SignUpCompany1' , '/SignUpCompany2' , '/SignUpApplicant','/ProfileSettings'];
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   return (

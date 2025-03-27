@@ -15,6 +15,7 @@ import SignUpCompany2 from './Component/SignUpCompany2/SignUpCompany2';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 import VerifyEmail from './Component/VerifyEmail/VerifyEmail';
+import ProfileSettings from './Component/ProfileSettings/ProfileSettings';
 
 function App() {
   const Routers = createBrowserRouter([
@@ -36,6 +37,7 @@ function App() {
         { path: 'SignUpCompany2', element: <SignUpCompany2 /> },
         { path: 'ForgotPassword', element: <ForgotPassword /> },
         { path: '*', element: <NotFound /> },
+        {path:'ProfileSettings',element:<ProfileSettings/>}
       ],
     },
   ]);

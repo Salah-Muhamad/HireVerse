@@ -31,7 +31,7 @@ import App from "../../App";
 import TopCompanies from "../TopCompanies/TopCompanies";
 import Jobs from "../Jobs/Jobs";
 import axios from "axios";
-
+import { Link } from 'react-router-dom'
 export default function Home() {
   const [jobs, setJobs] = useState([]);
   const [companies, setCompanies] = useState([])
@@ -362,9 +362,7 @@ export default function Home() {
               that matches your skills and goals has never been easier. Start
               your journey today!
             </p>
-            <button className="mt-10 w-48 h-12 bg-white text-[#0B2B82] font-semibold text-xl rounded-lg">
-              Get Started
-            </button>
+            <Link to={"/ProfileSettings"}> <button className="mt-10 w-48 h-12 bg-white text-[#0B2B82] font-semibold text-xl rounded-lg">Get Started</button></Link>
           </div>
 
           {/* Image */}
