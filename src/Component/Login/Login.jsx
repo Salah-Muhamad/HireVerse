@@ -6,30 +6,34 @@ import eye from "../../assets/Images/eye.svg";
 import Star from "../../assets/Images/star.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { PacmanLoader } from "react-spinners";
+import { UserContext } from "../../Context/UserContext";
 export default function Login() {
   const [loginError, setLoginError] = useState("");
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-
+  let {setUserData} = useContext(UserContext)
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
   async function login(values) {
     setLoading(true);
     try {
-      const response = await axios.post(
+      const {data} = await axios.post(
         "https://hireverse.ddns.net/api/login",
         values
       );
-
-      console.log(response.data);
+      localStorage.setItem("userToken" , data.data.token)
+      // console.log(data)
+      // console.log(data.data);
+      console.log(data.data.token)
       navigate("/");
+      setUserData(data.data.token)
     } catch (err) {
       console.error("Error:", err);
       setLoginError(err.response?.data?.message || "Something went wrong");

@@ -1,84 +1,160 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
 import MainLogo from "../../assets/Images/MainLogo.svg";
+import Avatar from "../../assets/Images/Avatar.svg";
+import Settings from "../../assets/Images/Settings.svg";
+import MyJobs from "../../assets/Images/MyJobs.svg";
+import LogOut from "../../assets/Images/LogOut.svg";
+import Notification from "../../assets/Images/Notification.svg";
+import ArrowDown from "../../assets/Images/ArrowDown.svg";
 import Search from "../../assets/Images/Search2.svg";
 import { NavLink } from "react-router-dom";
 import Register from "../Register/Register";
+import { UserContext } from "../../Context/UserContext";
 export default function Navbar() {
+  let { userData } = useContext(UserContext);
+  const [isOpen, setIsOpen] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("")
+  useEffect(() => {
+    const firstName = localStorage.getItem("first_name");
+    const lastName = localStorage.getItem("last_name");
+    const email = localStorage.getItem("email")
+    if (firstName && lastName) {
+      setUserName(`${firstName} ${lastName}`);
+    }
+    if (email) {
+      setEmail(email)
+    }
+  }, []);
   return (
     <>
-      <div className="flex w-full justify-start">
-        <nav
-          className="w-[83.063rem] h-[4.375rem] bg-white rounded-lg border-[0.5px] 
+      {
+        <div className="flex w-full justify-start">
+          <nav
+            className="w-[83.063rem] h-[4.375rem] bg-white rounded-lg border-[0.5px] 
         absolute z-10 top-6 left-[91.5px] px-8 flex items-center justify-around"
-        >
-          <NavLink to={"/"}>
-            <div className="flex items-center gap-2">
-              <img src={MainLogo} alt="" />
-              <p className="text-primary font-sf_pro_text font-bold text-[18px] mt-2">
-                HIRE VERSE
-              </p>
+          >
+            <NavLink to={"/"}>
+              <div className="flex items-center gap-2">
+                <img src={MainLogo} alt="" />
+                <p className="text-primary font-sf_pro_text font-bold text-[18px] mt-2">
+                  HIRE VERSE
+                </p>
+              </div>
+            </NavLink>
+
+            <div className="flex gap-8 font-bai_jamjuree text-base font-semibold items-center mt-1 h-[4.375rem]">
+              <NavLink
+                to={"JobsPage"}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-[#0146B1] flex items-center h-[4.375rem] border-b-2 border-[#0146B1]"
+                    : ""
+                }
+              >
+                Jobs
+              </NavLink>
+
+              <NavLink
+                to={"Companies"}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-[#0146B1] flex items-center h-[4.375rem] border-b-2 border-[#0146B1]"
+                    : ""
+                }
+              >
+                Companies
+              </NavLink>
+              <NavLink
+                to={"about"}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-[#0146B1] flex items-center h-[4.375rem] border-b-2 border-[#0146B1]"
+                    : ""
+                }
+              >
+                About
+              </NavLink>
             </div>
-          </NavLink>
 
-          <div className="flex gap-8 font-bai_jamjuree text-base font-semibold items-center mt-1 h-[4.375rem]">
-          
-            <NavLink
-              to={"JobsPage"}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#0146B1] flex items-center h-[4.375rem] border-b-2 border-[#0146B1]" 
-                  : ""
-              }
-            >
-              Jobs
-            </NavLink>
+            <div className="w-80 h-12 border-2 rounded-lg flex items-center ps-4 font-bai_jamjuree font-medium">
+              <img src={Search} alt="" />
+              <input
+                type="text"
+                className="p-2 rounded-md focus:outline-none "
+                placeholder="Search"
+              />
+            </div>
 
-            <NavLink
-              to={"Companies"}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#0146B1] flex items-center h-[4.375rem] border-b-2 border-[#0146B1]" 
-                  : ""
-              }
-            >
-              Companies
-            </NavLink>
-            <NavLink
-              to={"about"}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#0146B1] flex items-center h-[4.375rem] border-b-2 border-[#0146B1]" 
-                  : ""
-              }
-            >
-              About
-            </NavLink>
-          </div>
-
-          <div className="w-80 h-12 border-2 rounded-lg flex items-center ps-4 font-bai_jamjuree font-medium">
-            <img src={Search} alt="" />
-            <input
-              type="text"
-              className="p-2 rounded-md focus:outline-none "
-              placeholder="Search"
-            />
-          </div>
-
-          <div className="font-bai_jamjuree font-semibold flex gap-5">
-            <NavLink to={"Login"}>
-              <button className="text-primary w-28 h-11 text-center rounded-lg">
-                Log In
-              </button>
-            </NavLink>
-            <NavLink to={"Register"}>
-              <button className="bg-primary text-white w-28 h-11 text-center rounded-md">
-                Get Started
-              </button>
-            </NavLink>
-          </div>
-        </nav>
-      </div>
+            {!userData && (
+              <div className="font-bai_jamjuree font-semibold flex gap-5">
+                <NavLink to={"Login"}>
+                  <button className="text-primary w-28 h-11 text-center rounded-lg">
+                    Log In
+                  </button>
+                </NavLink>
+                <NavLink to={"Register"}>
+                  <button className="bg-primary text-white w-28 h-11 text-center rounded-md">
+                    Get Started
+                  </button>
+                </NavLink>
+              </div>
+            )}
+            {userData && (
+              <div className="flex gap-8">
+                <img src={Notification} alt="Notification" />
+                <div className="relative inline-block text-left">
+                  <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="bg-transparent px-4 py-2 rounded-md"
+                  >
+                    <div className="flex justify-center items-center gap-2">
+                      <img src={Avatar} alt="Avatar" />
+                      <span className="font-semibold">{userName}</span>
+                      <img
+                        src={ArrowDown}
+                        alt="Arrow"
+                        className={`transition-transform duration-300 ${
+                          isOpen ? "rotate-180" : "rotate-0"
+                        }`}
+                      />
+                    </div>
+                  </button>
+                  {isOpen && (
+                    <div className="absolute mt-2  bg-white border px-1 rounded-lg shadow-xl">
+                      <ul className="py-2">
+                        <li className="px-4 py-2  cursor-pointer border-b-2">
+                          <div className="flex gap-2">
+                            <img src={Avatar} alt="" />
+                            <div>
+                              <p className="font-semibold text-sm">
+                              {userName}
+                              </p>
+                              <p className="text-gray-400 text-[11px]">
+                                {email}
+                              </p>
+                            </div>
+                          </div>
+                        </li>
+                        <li className="px-4 py-4 hover:text-gray-400 cursor-pointer">
+                          <img src={MyJobs} alt="" />
+                        </li>
+                        <li className="px-4 py-2 hover:text-gray-400 cursor-pointer  border-b-2">
+                          <img src={Settings} alt="" />
+                        </li>
+                        <li className="px-4 py-2 hover:text-gray-400 cursor-pointer">
+                          <img src={LogOut} alt="" />
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </nav>
+        </div>
+      }
     </>
   );
 }
