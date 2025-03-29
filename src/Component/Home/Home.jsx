@@ -81,7 +81,7 @@ export default function Home() {
       {/* Home Page after Login */}
       {userData && (
         <>
-          <div className="bg-secondary py-44 m-auto ">
+          <div className="bg-secondary pt-44 pb-20 m-auto ">
             <div className="flex justify-between px-24 items-center">
               <h2 className="font-semibold font-sf_pro_text text-2xl">
                 Welcome back, <span className="text-[#0146B1]">{userName}</span>
@@ -187,11 +187,20 @@ export default function Home() {
             </div>
 
             {/* Top Companies  */}
+            <h2 className="font-semibold font-sf_pro_text text-2xl px-16 my-10">
+              Top Companies <span className="text-[#0146B1]">You</span> Might{" "}
+              <span className="text-[#0146B1]">Like</span>
+            </h2>
+            <div className="ms-14  grid grid-cols-3 ">
+              {companies.slice(0, 9).map((company, index) => (
+                <TopCompanies
+                  key={index}
+                  company={company}
+                  locationIcon={Location}
+                />
+              ))}
+            </div>
           </div>
-          <h2 className="font-semibold font-sf_pro_text text-2xl px-16 my-10">
-            Top Companies <span className="text-[#0146B1]">You</span> Might{" "}
-            <span className="text-[#0146B1]">Like</span>
-          </h2>
         </>
       )}
 
@@ -458,29 +467,35 @@ export default function Home() {
 
       {/* Start Of Section 5*/}
       {!userData && (
-        <div className="flex justify-around items-center mb-8">
-          <p className="font-sf_pro_display text-5xl font-normal">
-            Top <span className="text-[#0146B1]">Companies</span>
-          </p>
-          <div className="flex items-center gap-3">
-            <div>
-              <img src={CenterFrame} alt="" />
-            </div>
-            <p className="font-bai_jamjuree text-[#0B2B82] underline  underline-offset-1">
-              Browse All
+        <>
+          <div className="flex justify-around items-center mb-8">
+            <p className="font-sf_pro_display text-5xl font-normal">
+              Top <span className="text-[#0146B1]">Companies</span>
             </p>
-            <div>
-              <img src={ArrowUpRight} alt="" />
+            <div className="flex items-center gap-3">
+              <div>
+                <img src={CenterFrame} alt="" />
+              </div>
+              <p className="font-bai_jamjuree text-[#0B2B82] underline  underline-offset-1">
+                Browse All
+              </p>
+              <div>
+                <img src={ArrowUpRight} alt="" />
+              </div>
             </div>
           </div>
-        </div>
+          <div className="ms-14  grid grid-cols-3 ">
+            {companies.slice(0, 9).map((company, index) => (
+              <TopCompanies
+                key={index}
+                company={company}
+                locationIcon={Location}
+              />
+            ))}
+          </div>
+        </>
       )}
 
-      <div className="ms-14  grid grid-cols-3 ">
-        {companies.slice(0, 9).map((company, index) => (
-          <TopCompanies key={index} company={company} locationIcon={Location} />
-        ))}
-      </div>
       {/* End of Section 5 */}
 
       {/* Start Of Section 6 */}
