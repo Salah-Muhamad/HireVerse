@@ -8,11 +8,11 @@ import LogOut from "../../assets/Images/LogOut.svg";
 import Notification from "../../assets/Images/Notification.svg";
 import ArrowDown from "../../assets/Images/ArrowDown.svg";
 import Search from "../../assets/Images/Search2.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Register from "../Register/Register";
 import { UserContext } from "../../Context/UserContext";
 export default function Navbar() {
-  let { userData } = useContext(UserContext);
+  let { userData , setUserData } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("")
@@ -27,6 +27,12 @@ export default function Navbar() {
       setEmail(email)
     }
   }, []);
+  let navigate = useNavigate()
+  function logOut(){
+    localStorage.removeItem('userToken')
+    setUserData(null)
+    navigate('/')
+  }
   return (
     <>
       {
@@ -143,7 +149,7 @@ export default function Navbar() {
                         <li className="px-4 py-2 hover:text-gray-400 cursor-pointer  border-b-2">
                           <img src={Settings} alt="" />
                         </li>
-                        <li className="px-4 py-2 hover:text-gray-400 cursor-pointer">
+                        <li className="px-4 py-2 hover:text-gray-400 cursor-pointer" onClick={()=>logOut()}>
                           <img src={LogOut} alt="" />
                         </li>
                       </ul>

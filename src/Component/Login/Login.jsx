@@ -36,7 +36,7 @@ export default function Login() {
       setUserData(data.data.token)
     } catch (err) {
       console.error("Error:", err);
-      setLoginError(err.response?.data?.message || "Something went wrong");
+      setLoginError(err.response?.data?.message || "Email Or Password is wrong");
     } finally {
       setLoading(false);
     }
