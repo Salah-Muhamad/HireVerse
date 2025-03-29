@@ -1,6 +1,7 @@
 import JobDetails from './Component/JobDetails/JobDetails'
 import { useState } from 'react';
 import Home from './Component/Home/Home';
+import UserContextProvider from './Context/UserContext.jsx';
 import CompanyDetails from './Component/CompanyDetails/CompanyDetails';
 import About from './Component/About/About';
 import Register from './Component/Register/Register';
@@ -43,7 +44,9 @@ function App() {
   return (
 
     <>
+      <UserContextProvider>
       <RouterProvider router={Routers} />
+      </UserContextProvider>
     </>
   )
 
