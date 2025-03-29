@@ -41,9 +41,9 @@ export default function SignUpApplicant() {
       );
 
       console.log(response.data);
-      localStorage.setItem("first_name", response.data.data.applicant.attributes.firstName);
-      localStorage.setItem("last_name", response.data.data.applicant.attributes.lastName);
-      localStorage.setItem("email", response.data.data.applicant.attributes.email);
+      // localStorage.setItem("first_name", response.data.data.applicant.attributes.firstName);
+      // localStorage.setItem("last_name", response.data.data.applicant.attributes.lastName);
+      // localStorage.setItem("email", response.data.data.applicant.attributes.email);
   
 
       navigate("/VerifyEmail");

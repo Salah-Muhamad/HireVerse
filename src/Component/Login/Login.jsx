@@ -29,8 +29,12 @@ export default function Login() {
         values
       );
       localStorage.setItem("userToken" , data.data.token)
+      localStorage.setItem("first_name", data.data.applicant.first_name);
+      localStorage.setItem("last_name", data.data.applicant.last_name);
+      localStorage.setItem("email", data.data.applicant.email);
       // console.log(data)
-      // console.log(data.data);
+      console.log(data.data.applicant.first_name)
+      console.log(data.data);
       console.log(data.data.token)
       navigate("/");
       setUserData(data.data.token)

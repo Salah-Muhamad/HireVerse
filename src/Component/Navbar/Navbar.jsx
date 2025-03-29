@@ -30,6 +30,9 @@ export default function Navbar() {
   let navigate = useNavigate()
   function logOut(){
     localStorage.removeItem('userToken')
+    // localStorage.removeItem('first_name')
+    // localStorage.removeItem('last_name')
+    // localStorage.removeItem('email')
     setUserData(null)
     navigate('/')
   }
