@@ -8,35 +8,33 @@ import CompanyName from "../../assets/Images/CompanyName.svg";
 import { data, NavLink } from "react-router-dom";
 import axios from "axios";
 export default function ApplicantJobs() {
-    const [applicantJobDetails, setApplicantJobDetails] = useState([]);
+  const [applicantJobDetails, setApplicantJobDetails] = useState([]);
 
-    const userToken = localStorage.getItem("userToken");
-    
-    async function getApplicantJobDetails() {
-        try {
-            let { data } = await axios.get(
-                "https://hireverse.ddns.net/api/applicant/jobs",
-                {
-                    headers: {
-                        Authorization: `Bearer ${userToken}`, // إرسال التوكن مع الطلب
-                    },
-                }
-            );
-            
-            // استخراج جميع الـ attributes من كل عنصر في المصفوفة
-            const jobDetails = data.data.map(item => item.attributes);
-            
-            setApplicantJobDetails(jobDetails); // تخزين البيانات في الحالة
-            console.log(jobDetails); // التأكد من صحة البيانات
-    
-        } catch (err) {
-            console.log(err);
+  const userToken = localStorage.getItem("userToken");
+
+  async function getApplicantJobDetails() {
+    try {
+      let { data } = await axios.get(
+        "https://hireverse.ddns.net/api/applicant/jobs",
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
         }
+      );
+
+      const jobDetails = data.data.map((item) => item.attributes);
+
+      setApplicantJobDetails(jobDetails);
+      // console.log(jobDetails);
+    } catch (err) {
+      console.log(err);
     }
-    
-    useEffect(() => {
-        getApplicantJobDetails();
-    }, []);
+  }
+
+  useEffect(() => {
+    getApplicantJobDetails();
+  }, []);
 
   return (
     <div className="py-32  ps-24 bg-[#EFF2F7]">
@@ -73,19 +71,46 @@ export default function ApplicantJobs() {
             </tr>
           </thead>
           <tbody className="divide-y bg-white divide-gray-300">
-    {applicantJobDetails.map((job, idx) => (
-      <tr key={idx} className="*:text-gray-900">
-        <td className="text-center font-bold">{idx + 1}</td>
-        <td className="px-4 py-3 border border-gray-300">{job.jobTitle}</td>
-        <td className="px-4 py-3 border border-gray-300">{job.companyName}</td>
-        <td className="px-4 py-3 border border-gray-300">{job.status}</td>
-        <td className="px-4 py-3 border border-gray-300">{job.applied}</td>
-        <td className="w-10 text-center">
-          <img className="ms-3" src={Next2} alt="Next" />
-        </td>
-      </tr>
-    ))}
-  </tbody>
+            {applicantJobDetails.map((job, idx) => (
+              <tr key={idx} className="*:text-gray-900">
+                <td className="text-center font-bold">{idx + 1}</td>
+                <td className="px-4 py-3 border border-gray-300">
+                  {job.jobTitle}
+                </td>
+                <td className="px-4 py-3 border border-gray-300">
+                  {job.companyName}
+                </td>
+                <td className="px-4 py-3 border border-gray-300">
+                  <span
+                    className={`inline-flex items-center px-3 py-1 rounded-full w-[131px] text-lg font-medium gap-1
+      ${
+        job.status === "accepted"
+          ? "bg-green-100 text-green-800"
+          : job.status === "rejected"
+          ? "bg-red-100 text-red-800"
+          : job.status === "Pending"
+          ? "bg-yellow-100 text-yellow-800"
+          : job.status === "interviewed"
+          ? "bg-purple-100 text-purple-800"
+          : job.status === "cv_eligible"
+          ? "bg-blue-100 text-blue-800"
+          : "bg-gray-100 text-gray-800"
+      }
+    `}
+                  >
+                    <span className="h-2 w-2 rounded-full bg-current"></span>
+                    {job.status}
+                  </span>
+                </td>
+                <td className="px-4 py-3 border border-gray-300">
+                  {job.applied}
+                </td>
+                <td className="w-10 text-center">
+                  <img className="ms-3" src={Next2} alt="Next" />
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </div>
