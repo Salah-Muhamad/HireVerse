@@ -12,29 +12,29 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Register from "../Register/Register";
 import { UserContext } from "../../Context/UserContext";
 export default function Navbar() {
-  let { userData , setUserData } = useContext(UserContext);
+  let { userData, setUserData } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
   useEffect(() => {
     const firstName = localStorage.getItem("first_name");
     const lastName = localStorage.getItem("last_name");
-    const email = localStorage.getItem("email")
+    const email = localStorage.getItem("email");
     if (firstName && lastName) {
       setUserName(`${firstName} ${lastName}`);
     }
     if (email) {
-      setEmail(email)
+      setEmail(email);
     }
   }, []);
-  let navigate = useNavigate()
-  function logOut(){
-    localStorage.removeItem('userToken')
+  let navigate = useNavigate();
+  function logOut() {
+    localStorage.removeItem("userToken");
     // localStorage.removeItem('first_name')
     // localStorage.removeItem('last_name')
     // localStorage.removeItem('email')
-    setUserData(null)
-    navigate('/')
+    setUserData(null);
+    navigate("/");
   }
   return (
     <>
@@ -138,7 +138,7 @@ export default function Navbar() {
                             <img src={Avatar} alt="" />
                             <div>
                               <p className="font-semibold text-sm">
-                              {userName}
+                                {userName}
                               </p>
                               <p className="text-gray-400 text-[11px]">
                                 {email}
@@ -146,13 +146,18 @@ export default function Navbar() {
                             </div>
                           </div>
                         </li>
-                        <li className="px-4 py-4 hover:text-gray-400 cursor-pointer">
-                          <img src={MyJobs} alt="" />
-                        </li>
+                        <NavLink to={"/ApplicantJobs"}>
+                          <li className="px-4 py-4 hover:text-gray-400 cursor-pointer">
+                            <img src={MyJobs} alt="" />
+                          </li>
+                        </NavLink>
                         <li className="px-4 py-2 hover:text-gray-400 cursor-pointer  border-b-2">
                           <img src={Settings} alt="" />
                         </li>
-                        <li className="px-4 py-2 hover:text-gray-400 cursor-pointer" onClick={()=>logOut()}>
+                        <li
+                          className="px-4 py-2 hover:text-gray-400 cursor-pointer"
+                          onClick={() => logOut()}
+                        >
                           <img src={LogOut} alt="" />
                         </li>
                       </ul>
