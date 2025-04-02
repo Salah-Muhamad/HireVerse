@@ -17,6 +17,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 import VerifyEmail from './Component/VerifyEmail/VerifyEmail';
 import ApplicantJobs from './Component/ApplicantJobs/ApplicantJobs';
+import ApplyJob from './Component/ApplyJob/ApplyJob';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         { index: true, element: <Home /> },
         { path: 'About', element: <About /> },
         { path: 'Companies', element: <Companies /> },
+        { path: 'ApplyJob', element: <ApplyJob /> },
         { path: 'JobsPage', element: <JobsPage /> },
         { path: 'ApplicantJobs', element: <ApplicantJobs /> },
         { path: 'CompanyDetails/:id', element:<CompanyDetails/> },
