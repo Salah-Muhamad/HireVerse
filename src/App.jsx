@@ -18,6 +18,7 @@ import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 import VerifyEmail from './Component/VerifyEmail/VerifyEmail';
 import ApplicantJobs from './Component/ApplicantJobs/ApplicantJobs';
 
+
 function App() {
   const Routers = createBrowserRouter([
     {

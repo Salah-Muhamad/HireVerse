@@ -15,6 +15,8 @@ import { UserContext } from "../../Context/UserContext";
 export default function Login() {
   const [loginError, setLoginError] = useState("");
   const [loading, setLoading] = useState(false);
+  const skills = localStorage.getItem("skills")
+  const jobTitle = localStorage.getItem("jobTitle")
   let navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   let {setUserData} = useContext(UserContext)
@@ -33,10 +35,12 @@ export default function Login() {
       localStorage.setItem("last_name", data.data.applicant.last_name);
       localStorage.setItem("email", data.data.applicant.email);
       // console.log(data)
-      console.log(data.data.applicant.first_name)
-      console.log(data.data);
-      console.log(data.data.token)
-      navigate("/");
+      // console.log(data.data.applicant.first_name)
+      // console.log(data.data);
+      // console.log(data.data.token)
+      console.log(skills)
+      console.log(jobTitle)
+      navigate('/')
       setUserData(data.data.token)
     } catch (err) {
       console.error("Error:", err);
