@@ -40,12 +40,7 @@ export default function Login() {
       // console.log(data.data.token)
       console.log(skills)
       console.log(jobTitle)
-      if(skills != null || jobTitle != null){
-        navigate('/')
-      }
-      else{
-        navigate('/CompleteRegistration')
-      }
+      navigate('/')
       setUserData(data.data.token)
     } catch (err) {
       console.error("Error:", err);
