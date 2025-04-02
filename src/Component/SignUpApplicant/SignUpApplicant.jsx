@@ -35,16 +35,16 @@ export default function SignUpApplicant() {
   async function register(values) {
     setLoading(true);
     try {
-      const response = await axios.post(
+      const {data} = await axios.post(
         "https://hireverse.ddns.net/api/register",
         values
       );
 
-      console.log(response.data);
+      console.log(data.data);
+      localStorage.setItem("userToken" , data.data.token)
       // localStorage.setItem("first_name", response.data.data.applicant.attributes.firstName);
       // localStorage.setItem("last_name", response.data.data.applicant.attributes.lastName);
       // localStorage.setItem("email", response.data.data.applicant.attributes.email);
-  
 
       navigate("/VerifyEmail");
     } catch (err) {
@@ -202,18 +202,18 @@ export default function SignUpApplicant() {
             </div>
             <div className="text-center">
               {!loading ? (
-                <button
-                  type="submit"
-                  className="w-[517px] h-11 bg-[#143567] text-white text-base font-semibold rounded-lg mt-10 ms-4"
-                >
-                  Create Account
-                </button>
+                  <button
+                    type="submit"
+                    className="w-[517px] h-11 bg-[#143567] text-white text-base font-semibold rounded-lg mt-10 ms-4"
+                  >
+                    Create Account
+                  </button>
               ) : (
                 <button
                   type="button"
                   className="w-[517px] h-11 bg-[#143567] text-white text-base font-semibold rounded-lg mt-10 ms-4 flex justify-center items-center"
                 >
-                  <PacmanLoader color="#ffff" size={15}/>{" "}
+                  <PacmanLoader color="#ffff" size={15} />{" "}
                 </button>
               )}
               <p className="mt-5 font-normal text-sm">

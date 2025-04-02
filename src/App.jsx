@@ -17,6 +17,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 import VerifyEmail from './Component/VerifyEmail/VerifyEmail';
 import ApplicantJobs from './Component/ApplicantJobs/ApplicantJobs';
+import CompleteRegistration from './Component/CompleteRegistration/CompleteRegistration';
 
 function App() {
   const Routers = createBrowserRouter([
@@ -29,6 +30,7 @@ function App() {
         { path: 'Companies', element: <Companies /> },
         { path: 'JobsPage', element: <JobsPage /> },
         { path: 'ApplicantJobs', element: <ApplicantJobs /> },
+        { path: 'CompleteRegistration', element: <CompleteRegistration /> },
         { path: 'CompanyDetails/:id', element:<CompanyDetails/> },
         { path: 'JobDetails/:id', element: <JobDetails /> },
         { path: 'Login', element: <Login /> },

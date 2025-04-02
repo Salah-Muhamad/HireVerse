@@ -35,7 +35,7 @@ export default function VerifyEmail() {
             <p className="mb-4">
               {" "}
               Just click on the link in that email to complete your signup and
-              click <NavLink to={"/login"} className={"text-[#0146B1] underline ml-2"}>Here</NavLink> to login.
+              click <NavLink to={"/Login"} className={"text-[#0146B1] underline ml-2"}>Here</NavLink> to login.
             </p>{" "}
             <p>
               If you don't see it, you may need to{" "}
