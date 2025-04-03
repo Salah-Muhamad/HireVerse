@@ -37,8 +37,12 @@ import RecommendedJobs from "../RecommendedJobs/RecommendedJobs";
 import ApplicantDetails from "../ApplicantDetails/ApplicantDetails";
 import Jobs from "../Jobs/Jobs";
 import axios from "axios";
+
+import { Link } from 'react-router-dom'
+
 import { UserContext } from "../../Context/UserContext";
 import { NavLink } from "react-router-dom";
+
 export default function Home() {
   let { userData } = useContext(UserContext);
   const [userName, setUserName] = useState("");
@@ -506,6 +510,14 @@ export default function Home() {
             <p className="font-sf_pro_display text-5xl font-normal">
               Latest <span className="text-[#0146B1]">Jobs </span>Post
             </p>
+            <p className="font-bai_jamjuree text-xl font-normal leading-6">
+              Browse the latest job openings across various sectors with
+              personalized recommendations and advanced filters. Finding a job
+              that matches your skills and goals has never been easier. Start
+              your journey today!
+            </p>
+            <Link to={"/ProfileSettings"}> <button className="mt-10 w-48 h-12 bg-white text-[#0B2B82] font-semibold text-xl rounded-lg">Get Started</button></Link>
+
             <div className="flex items-center gap-3">
               <div>
                 <img src={CenterFrame} alt="" />
@@ -522,6 +534,7 @@ export default function Home() {
             {jobs.slice(0, 9).map((job, index) => (
               <Jobs key={index} job={job} />
             ))}
+
           </div>
 
           <div className="bg-[#F1F2F4] h-[587px] mt-16 flex items-center justify-center ">
