@@ -46,7 +46,7 @@ import { NavLink } from "react-router-dom";
 export default function Home() {
   let { userData } = useContext(UserContext);
   const [userName, setUserName] = useState("");
-
+  
   const [jobs, setJobs] = useState([]);
   const [companies, setCompanies] = useState([]);
   async function getCompanies() {

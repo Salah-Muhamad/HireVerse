@@ -151,9 +151,11 @@ export default function Navbar() {
                             <img src={MyJobs} alt="" />
                           </li>
                         </NavLink>
-                        <li className="px-4 py-2 hover:text-gray-400 cursor-pointer  border-b-2">
-                          <img src={Settings} alt="" />
-                        </li>
+                        <NavLink to={"/ProfileSettings"}>
+                          <li className="px-4 py-2 hover:text-gray-400 cursor-pointer  border-b-2">
+                            <img src={Settings} alt="" />
+                          </li>
+                        </NavLink>
                         <li
                           className="px-4 py-2 hover:text-gray-400 cursor-pointer"
                           onClick={() => logOut()}
