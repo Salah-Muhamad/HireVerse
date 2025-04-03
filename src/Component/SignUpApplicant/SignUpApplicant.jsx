@@ -35,12 +35,17 @@ export default function SignUpApplicant() {
   async function register(values) {
     setLoading(true);
     try {
-      const response = await axios.post(
+      const { data } = await axios.post(
         "https://hireverse.ddns.net/api/register",
         values
       );
 
-      console.log(response.data);
+      console.log(data.data);
+      localStorage.setItem("userToken", data.data.token);
+      // localStorage.setItem("first_name", response.data.data.applicant.attributes.firstName);
+      // localStorage.setItem("last_name", response.data.data.applicant.attributes.lastName);
+      // localStorage.setItem("email", response.data.data.applicant.attributes.email);
+
       navigate("/VerifyEmail");
     } catch (err) {
       console.error("Error:", err);
@@ -56,6 +61,10 @@ export default function SignUpApplicant() {
       .email("Email Is Invalid .")
       .required("Email Is Required ."),
     password: Yup.string().required("Password Is Required ."),
+    job_title: Yup.string().required("Job Title Is Required."),
+    skills: Yup.array()
+      .min(1, "You Must Enter At Least One Skill") // التحقق من أن المصفوفة ليست فارغة
+      .required("You Must Enter Skills"),
   });
 
   let formik = useFormik({
@@ -64,13 +73,15 @@ export default function SignUpApplicant() {
       last_name: "",
       email: "",
       password: "",
+      job_title: "",
+      skills: [],
     },
     validationSchema,
     onSubmit: register,
   });
   return (
     <>
-      <div className="h-[170vh] bg-[url('src/assets/Images/back.jpg')] bg-cover bg-center bg-fixed pt-10 font-sf_pro_text">
+      <div className=" bg-[url('src/assets/Images/back.jpg')] bg-cover bg-center bg-fixed pt-10 font-sf_pro_text">
         <div className="flex justify-between mx-14">
           <NavLink to={"/"}>
             <div className="flex items-center gap-2 ms-10">
@@ -195,6 +206,52 @@ export default function SignUpApplicant() {
                 />
               )}
             </div>
+            <div className="mt-9 flex justify-center gap-6">
+              <div>
+                <h2 className="font-semi_bold">Job Title</h2>
+                <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[247px]">
+                  <input
+                    type="text"
+                    name="job_title"
+                    value={formik.values.job_title}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className="   focus:outline-none ms-2 w-full"
+                  />
+                </div>
+                {formik.errors.job_title && formik.touched.job_title && (
+                  <div className=" ms-2 text-red-600 flex gap-1">
+                    <img src={Star} alt="" />
+                    <div className="mt-3">{formik.errors.job_title}</div>
+                  </div>
+                )}
+              </div>
+              <div>
+                <h2 className="font-semi_bold">Skills</h2>
+                <div className="rounded-xl border-2 bg-white mt-1 border-[#99B1B9] flex items-center  h-14 w-[247px]">
+                  <input
+                    type="text"
+                    name="skills"
+                    value={formik.values.skills.join(", ")} // تحويل المصفوفة إلى نص مفصول بفواصل
+                    onChange={(e) =>
+                      formik.setFieldValue(
+                        "skills",
+                        e.target.value.split(",").map((skill) => skill.trim()) // تقسيم النص إلى مصفوفة
+                      )
+                    }
+                    onBlur={formik.handleBlur}
+                    className="   focus:outline-none ms-2 w-full"
+                  />
+                </div>
+                {formik.errors.skills && formik.touched.skills && (
+                  <div className=" ms-2 text-red-600 flex gap-1">
+                    <img src={Star} alt="" />
+                    <div className="mt-3">{formik.errors.skills}</div>
+                  </div>
+                )}
+              </div>
+            </div>
+
             <div className="text-center">
               {!loading ? (
                 <button
@@ -208,7 +265,7 @@ export default function SignUpApplicant() {
                   type="button"
                   className="w-[517px] h-11 bg-[#143567] text-white text-base font-semibold rounded-lg mt-10 ms-4 flex justify-center items-center"
                 >
-                  <PacmanLoader color="#ffff" size={15}/>{" "}
+                  <PacmanLoader color="#ffff" size={15} />{" "}
                 </button>
               )}
               <p className="mt-5 font-normal text-sm">

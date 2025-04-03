@@ -6,33 +6,45 @@ import eye from "../../assets/Images/eye.svg";
 import Star from "../../assets/Images/star.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { PacmanLoader } from "react-spinners";
+import { UserContext } from "../../Context/UserContext";
 export default function Login() {
   const [loginError, setLoginError] = useState("");
   const [loading, setLoading] = useState(false);
+  const skills = localStorage.getItem("skills")
+  const jobTitle = localStorage.getItem("jobTitle")
   let navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-
+  let {setUserData} = useContext(UserContext)
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
   async function login(values) {
     setLoading(true);
     try {
-      const response = await axios.post(
+      const {data} = await axios.post(
         "https://hireverse.ddns.net/api/login",
         values
       );
-
-      console.log(response.data);
-      navigate("/");
+      localStorage.setItem("userToken" , data.data.token)
+      localStorage.setItem("first_name", data.data.applicant.first_name);
+      localStorage.setItem("last_name", data.data.applicant.last_name);
+      localStorage.setItem("email", data.data.applicant.email);
+      // console.log(data)
+      // console.log(data.data.applicant.first_name)
+      // console.log(data.data);
+      // console.log(data.data.token)
+      console.log(skills)
+      console.log(jobTitle)
+      navigate('/')
+      setUserData(data.data.token)
     } catch (err) {
       console.error("Error:", err);
-      setLoginError(err.response?.data?.message || "Something went wrong");
+      setLoginError(err.response?.data?.message || "Email Or Password is wrong");
     } finally {
       setLoading(false);
     }

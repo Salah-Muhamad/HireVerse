@@ -1,6 +1,7 @@
 import JobDetails from './Component/JobDetails/JobDetails'
 import { useState } from 'react';
 import Home from './Component/Home/Home';
+import UserContextProvider from './Context/UserContext.jsx';
 import CompanyDetails from './Component/CompanyDetails/CompanyDetails';
 import About from './Component/About/About';
 import Register from './Component/Register/Register';
@@ -17,6 +18,10 @@ import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 import VerifyEmail from './Component/VerifyEmail/VerifyEmail';
 import ProfileSettings from './Component/ProfileSettings/ProfileSettings';
 
+import ApplicantJobs from './Component/ApplicantJobs/ApplicantJobs';
+import ApplyJob from './Component/ApplyJob/ApplyJob';
+
+
 function App() {
   const Routers = createBrowserRouter([
     {
@@ -26,7 +31,9 @@ function App() {
         { index: true, element: <Home /> },
         { path: 'About', element: <About /> },
         { path: 'Companies', element: <Companies /> },
+        { path: 'ApplyJob', element: <ApplyJob /> },
         { path: 'JobsPage', element: <JobsPage /> },
+        { path: 'ApplicantJobs', element: <ApplicantJobs /> },
         { path: 'CompanyDetails/:id', element:<CompanyDetails/> },
         { path: 'JobDetails/:id', element: <JobDetails /> },
         { path: 'Login', element: <Login /> },
@@ -45,7 +52,9 @@ function App() {
   return (
 
     <>
+      <UserContextProvider>
       <RouterProvider router={Routers} />
+      </UserContextProvider>
     </>
   )
 
