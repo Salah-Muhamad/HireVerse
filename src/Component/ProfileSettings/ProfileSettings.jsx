@@ -21,13 +21,13 @@ export default function ProfileSettings() {
           <div class="border-b-2 border-[#E8E8E8] mt-3 mb-4"></div>
           <div className="flex gap-4 mb-6 bg-[#E1E1E1] rounded-md w-11/12 h-11 p-2">
             <img src={user} alt="" />
-            <Link to={"/profile"}>
+            <Link to={"/ProfileSettings"}>
               <p className="mt-1">Profile</p>
             </Link>
           </div>
           <div className="flex gap-4 mb-8 ml-2">
             <img src={lock} alt="" />
-            <Link to={"/profile"}>
+            <Link to={"/UpdatePassword"}>
               <p>Password</p>
             </Link>
           </div>
