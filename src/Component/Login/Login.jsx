@@ -34,6 +34,9 @@ export default function Login() {
       localStorage.setItem("first_name", data.data.applicant.first_name);
       localStorage.setItem("last_name", data.data.applicant.last_name);
       localStorage.setItem("email", data.data.applicant.email);
+      localStorage.setItem("job_title", data.data.applicant.job_title);
+      localStorage.setItem("github_url", data.data.applicant.github_url);
+      
       
       // console.log(data)
       // console.log(data.data.applicant.first_name)

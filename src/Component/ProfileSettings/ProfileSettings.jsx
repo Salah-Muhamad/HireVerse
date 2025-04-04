@@ -8,9 +8,22 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 export default function ProfileSettings() {
   const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEamil] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [github_url, setgithub_url] = useState("");
   useEffect(() => {
     const firstName = localStorage.getItem("first_name");
+    const lastName = localStorage.getItem("last_name");
+    const email = localStorage.getItem("email");
+    const jobTitle=localStorage.getItem("job_title");
+    const github_url=localStorage.getItem("github_url");
+    
     setFirstName(firstName);
+    setLastName(lastName);
+    setEamil(email);
+    setJobTitle(jobTitle);
+    setgithub_url(github_url);
   }, []);
 
   return (
@@ -101,9 +114,14 @@ export default function ProfileSettings() {
                         Last Name
                       </label>
                       <input
+                        value={lastName}
                         type="text"
                         id="text"
-                        class="mt-2  bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-xl focus:ring-[#0C2E82] focus:border-[#0C2E82] block h-[35px] w-[205px] p-2 dark:bg-gray-700 dark:border-gray-600  dark:text-white dark:focus:ring-[#0C2E82] dark:focus:border-[#0C2E82]"
+                        className="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-xl 
+               focus:ring-[#0C2E82] focus:border-[#0C2E82] block h-[35px] w-[205px] p-2 
+               dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-[#0C2E82] 
+               dark:focus:border-[#0C2E82]"
+                        onChange={(e) => setFirstName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -112,9 +130,11 @@ export default function ProfileSettings() {
                       Job Title
                     </label>
                     <input
+                      value={jobTitle}
                       type="text"
                       id="text"
                       class="mt-2  bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-xl focus:ring-[#0C2E82] focus:border-[#0C2E82] block h-[35px] w-full p-2 dark:bg-gray-700 dark:border-gray-600  dark:text-white dark:focus:ring-[#0C2E82] dark:focus:border-[#0C2E82]"
+                      onChange={(e) => setJobTitle(e.target.value)}
                     />
                   </div>
                   <div className="mb-5">
@@ -122,8 +142,10 @@ export default function ProfileSettings() {
                       Emai Address
                     </label>
                     <input
+                      value={email}
                       type="email"
                       id="text"
+                      
                       class="mt-2  bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-xl focus:ring-[#0C2E82] focus:border-[#0C2E82] block h-[35px] w-full p-2 dark:bg-gray-700 dark:border-gray-600  dark:text-white dark:focus:ring-[#0C2E82] dark:focus:border-[#0C2E82]"
                     />
                   </div>
@@ -163,6 +185,7 @@ export default function ProfileSettings() {
                       Github Profile
                     </label>
                     <input
+                    value={github_url}
                       type="text"
                       id="text"
                       class="mt-2  bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-xl focus:ring-[#0C2E82] focus:border-[#0C2E82] block h-[35px] w-full p-2 dark:bg-gray-700 dark:border-gray-600  dark:text-white dark:focus:ring-[#0C2E82] dark:focus:border-[#0C2E82]"
