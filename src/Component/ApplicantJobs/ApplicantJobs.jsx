@@ -26,7 +26,7 @@ export default function ApplicantJobs() {
       const jobDetails = data.data.map((item) => item.attributes);
 
       setApplicantJobDetails(jobDetails);
-      // console.log(jobDetails);
+      console.log(jobDetails);
     } catch (err) {
       console.log(err);
     }

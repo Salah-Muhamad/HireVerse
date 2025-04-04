@@ -5,7 +5,7 @@ import { UserContext } from '../../Context/UserContext';
 
 export default function Layout() {
   const location = useLocation();
-  const hideNavbarRoutes = ['/Register'  , "/CompleteRegistration" , "/ApplyJob" , "/ForgotPassword" , '/VerifyEmail','/login' , '/Login' , '/SignUpCompany1' , '/SignUpCompany2' , '/SignUpApplicant'];
+  const hideNavbarRoutes = ['/Register' , "/ForgotPassword" , '/VerifyEmail','/login' , '/Login' , '/SignUpCompany1' , '/SignUpCompany2' , '/SignUpApplicant','/ProfileSettings'];
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
  let {setUserData}  = useContext(UserContext)
  let navigate = useNavigate()
