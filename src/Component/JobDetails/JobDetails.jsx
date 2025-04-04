@@ -5,7 +5,7 @@ import location from "../../assets/Images/location.svg";
 import salary from "../../assets/Images/salary.svg";
 import line2 from "../../assets/Images/Line 27.svg";
 import RelatedJob from "../RelatedJob/RelatedJob";
-import { useParams } from "react-router-dom";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default function JobDetails() {
@@ -74,7 +74,9 @@ export default function JobDetails() {
   console.log(id);
   async function getJobDetails(id) {
     try {
-      let { data } = await axios.get(`https://hireverse.ddns.net/api/jobs/${id}`);
+      let { data } = await axios.get(
+        `https://hireverse.ddns.net/api/jobs/${id}`
+      );
       console.log(data.data.attributes);
       setJobDetails(data.data.attributes);
     } catch (err) {
@@ -84,6 +86,8 @@ export default function JobDetails() {
   useEffect(() => {
     getJobDetails(id);
   }, []);
+  const location = useLocation();
+  const isApply = location.pathname.includes("ApplyJob"); 
   return (
     <div>
       <div className="container w-10/12 m-auto bg-[#F9F9F9] p-3 mt-24">
@@ -107,9 +111,9 @@ export default function JobDetails() {
                   </p>
                 </div>
               </div>
-              <button className="bg-[#143567] w-28 h-11 rounded-lg text-[#FFFFFF] mr-16">
+              <Link to={"ApplyJob"} className="bg-[#143567] w-28 h-11 rounded-lg flex items-center justify-center text-[#FFFFFF] mr-16">
                 Apply Now
-              </button>
+              </Link>
             </div>
             <img src={line2} className="mt-8" />
             <div className=" flex flex-col gap-5">
@@ -234,6 +238,8 @@ export default function JobDetails() {
           ))}
         </div>
       </div>
+      
+        <Outlet />  
     </div>
   );
 }
