@@ -1,19 +1,21 @@
 import React, { useEffect } from "react";
 import user from "../../assets/Images/user.svg";
 import lock from "../../assets/Images/lock.svg";
-import noti from "../../assets/Images/notification.svg";
 import del from "../../assets/Images/delete.svg";
 import photo from "../../assets/Images/Ellipse 128.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Formik, useFormik } from "formik";
+import axios from "axios";
 export default function ProfileSettings() {
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEamil] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [github_url, setgithub_url] = useState("");
   useEffect(() => {
-    const firstName = localStorage.getItem("first_name");
+    const firstName = localStorage.getItem("firstName");
     const lastName = localStorage.getItem("last_name");
     const email = localStorage.getItem("email");
     const jobTitle=localStorage.getItem("job_title");
@@ -25,6 +27,28 @@ export default function ProfileSettings() {
     setJobTitle(jobTitle);
     setgithub_url(github_url);
   }, []);
+
+let formik=useFormik(
+  {
+    initialValues:{
+      firstName:localStorage.getItem("firstName"),
+      lastName:localStorage.getItem("lasttName"),
+      email:'',
+    },
+    onSubmit:handleSubmit,
+  }
+)
+async function handleSubmit(values)
+{
+  try{
+    const response=await axios.post(`https://hireverse.ddns.net/api/applicant/profile`,values);
+    console.log("الرد من السيرفر:", response.data); 
+  }
+    catch(err){
+      // console.log(err.response.data.message)
+      console.error("Error:", err.response?.data || err.message);
+    }
+}
 
   return (
     <div className="container bg-[#F9FAFB]">
@@ -60,7 +84,7 @@ export default function ProfileSettings() {
               <button className="bg-[#E4E4E4] w-20 h-9 rounded-xl text-sm font-sf_pro_text font-medium mr-4">
                 Discard
               </button>
-              <button className="bg-[#0146B1] w-20 h-9 rounded-xl text-white text-sm font-sf_pro_text font-medium">
+              <button onClick={formik.handleSubmit}  type="submit" className="bg-[#0146B1] w-20 h-9 rounded-xl text-white text-sm font-sf_pro_text font-medium">
                 Save
               </button>
             </div>
@@ -76,19 +100,21 @@ export default function ProfileSettings() {
                 <div className="image flex items-center">
                   <div className="ml-6">
                     <p className="font-sf_pro_text text-base font-medium">
-                      Salah Muhamed
+                      {firstName}
                     </p>
                     <p className="text-[#7D7D7D] font-normal text-sm">
-                      salah56@gmail.com
+                      {email}
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="ml-6 border-2 border-[E8E8E8] p-4 rounded-xl mt-8 grid grid-cols-12 gap-20 bg-[#F9FAFB]">
+
+            <div   className="ml-6 border-2 border-[E8E8E8] p-4 rounded-xl mt-8 grid grid-cols-12 gap-20 bg-[#F9FAFB]">
               <div className="col-span-7 p-3  bg-[#F9FAFB] ">
-                <div className="personalinfo bg-[#FFFFFF] border-2 rounded-lg p-5">
+                <form onSubmit={formik.handleSubmit}>
+                  <div className="personalinfo bg-[#FFFFFF] border-2 rounded-lg p-5">
                   <p className="font-sf_pro_text text-lg font-semibold mb-2">
                     Personl Information
                   </p>
@@ -99,14 +125,16 @@ export default function ProfileSettings() {
                         First Name
                       </label>
                       <input
-                        value={firstName}
+                        value={formik.values.firstName}
                         type="text"
-                        id="text"
+                        id="firstName"
+                        name="firstName"
                         className="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-xl 
-               focus:ring-[#0C2E82] focus:border-[#0C2E82] block h-[35px] w-[205px] p-2 
-               dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-[#0C2E82] 
-               dark:focus:border-[#0C2E82]"
-                        onChange={(e) => setFirstName(e.target.value)}
+                      focus:ring-[#0C2E82] focus:border-[#0C2E82] block h-[35px] w-[205px] p-2 
+                      dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-[#0C2E82] 
+                      dark:focus:border-[#0C2E82]"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                       />
                     </div>
                     <div>
@@ -118,9 +146,9 @@ export default function ProfileSettings() {
                         type="text"
                         id="text"
                         className="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-xl 
-               focus:ring-[#0C2E82] focus:border-[#0C2E82] block h-[35px] w-[205px] p-2 
-               dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-[#0C2E82] 
-               dark:focus:border-[#0C2E82]"
+                        focus:ring-[#0C2E82] focus:border-[#0C2E82] block h-[35px] w-[205px] p-2 
+                        dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-[#0C2E82] 
+                        dark:focus:border-[#0C2E82]"
                         onChange={(e) => setFirstName(e.target.value)}
                       />
                     </div>
@@ -163,6 +191,8 @@ export default function ProfileSettings() {
                     </p>
                   </div>
                 </div>
+                </form>
+                
 
                 <div className="links bg-[#FFFFFF] border-2 rounded-lg p-5 mt-14">
                   <p className="font-sf_pro_text text-lg font-semibold mb-2">

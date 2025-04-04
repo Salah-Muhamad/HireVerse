@@ -31,10 +31,10 @@ export default function Login() {
         values
       );
       localStorage.setItem("userToken" , data.data.token)
-      localStorage.setItem("first_name", data.data.applicant.first_name);
-      localStorage.setItem("last_name", data.data.applicant.last_name);
-      localStorage.setItem("email", data.data.applicant.email);
-      localStorage.setItem("job_title", data.data.applicant.job_title);
+      localStorage.setItem("firstName", data.data.applicant.attributes.firstName);
+      localStorage.setItem("last_name", data.data.applicant.attributes.lastName);
+      localStorage.setItem("email", data.data.applicant.attributes.email);
+      localStorage.setItem("job_title", data.data.applicant.attributes.jobTitle);
       localStorage.setItem("github_url", data.data.applicant.github_url);
       
       
