@@ -31,9 +31,9 @@ export default function Login() {
         values
       );
       localStorage.setItem("userToken" , data.data.token)
-      localStorage.setItem("first_name", data.data.applicant.first_name);
-      localStorage.setItem("last_name", data.data.applicant.last_name);
-      localStorage.setItem("cv", data.data.applicant.cv);
+      localStorage.setItem("first_name", data.data.applicant.attributes.firstName);
+      localStorage.setItem("last_name", data.data.applicant.attributes.lastName);
+      localStorage.setItem("cv", data.data.applicant.attributes.cvUrl);
       // console.log(data)
       // console.log(data.data.applicant.first_name)
       // console.log(data.data);
