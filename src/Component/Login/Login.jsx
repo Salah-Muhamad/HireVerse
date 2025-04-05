@@ -32,10 +32,10 @@ export default function Login() {
       );
       localStorage.setItem("userToken" , data.data.token)
       localStorage.setItem("firstName", data.data.applicant.attributes.firstName);
-      localStorage.setItem("last_name", data.data.applicant.attributes.lastName);
+      localStorage.setItem("lastName", data.data.applicant.attributes.lastName);
       localStorage.setItem("email", data.data.applicant.attributes.email);
-      localStorage.setItem("job_title", data.data.applicant.attributes.jobTitle);
-      localStorage.setItem("github_url", data.data.applicant.github_url);
+      localStorage.setItem("jobTitle", data.data.applicant.attributes.jobTitle);
+      
       
       
       // console.log(data)
