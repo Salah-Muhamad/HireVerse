@@ -35,7 +35,7 @@ export default function ProfileSettings() {
           <div class="border-b-2 border-[#E8E8E8] mt-3 mb-10"></div>
           <div className="flex gap-4 mb-6">
             <img src={del} alt="" />
-            <Link to={"/profile"}>
+            <Link to={"/DeleteAccount"}>
               <p className="text-[#F02E2E]">Delete account</p>
             </Link>
           </div>

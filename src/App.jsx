@@ -20,6 +20,7 @@ import ApplicantJobs from "./Component/ApplicantJobs/ApplicantJobs";
 import ApplyJob from "./Component/ApplyJob/ApplyJob";
 import ProfileSettings from "./Component/ProfileSettings/ProfileSettings";
 import UpdatePassword from "./Component/UpdatePassword/UpdatePassword";
+import DeleteAccount from "./Component/DeleteAccount/DeleteAccount";
 import { Toaster } from "react-hot-toast";
 
 
@@ -37,6 +38,7 @@ function App() {
         { path: "Companies", element: <Companies /> },
         { path: "JobsPage", element: <JobsPage /> },
         { path: "ApplicantJobs", element: <ApplicantJobs /> },
+        { path: "DeleteAccount", element: <DeleteAccount /> },
         { path: "UpdatePassword", element: <UpdatePassword /> },
         { path: "CompanyDetails/:id", element: <CompanyDetails /> },
         {
