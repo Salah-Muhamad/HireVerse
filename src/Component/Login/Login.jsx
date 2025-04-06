@@ -31,10 +31,16 @@ export default function Login() {
         values
       );
       localStorage.setItem("userToken" , data.data.token)
+      localStorage.setItem("email", data.data.applicant.attributes.email);
+      localStorage.setItem("jobTitle", data.data.applicant.attributes.jobTitle);
+      
+      
+
 
       localStorage.setItem("first_name", data.data.applicant.attributes.firstName);
       localStorage.setItem("last_name", data.data.applicant.attributes.lastName);
       localStorage.setItem("cv", data.data.applicant.attributes.cvUrl);
+
 
       
 
