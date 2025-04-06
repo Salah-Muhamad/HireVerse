@@ -63,8 +63,8 @@ export default function UpdatePassword() {
       navigate("/Login");
     } catch (err) {
       console.error("Error:", err);
-      setApiError(err.response?.data?.errors.old_password || "Something went wrong");
-      toast.error(err.response?.data?.errors.old_password || "Something went wrong", {
+      setApiError(err.response?.data?.message || "Something went wrong");
+      toast.error(err.response?.data?.message || "Something went wrong", {
         id: toastId,
       });
     } finally {
