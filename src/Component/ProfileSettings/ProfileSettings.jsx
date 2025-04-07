@@ -7,7 +7,10 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Formik, useFormik } from "formik";
 import axios from "axios";
+import { Formik, useFormik } from "formik";
+import axios from "axios";
 export default function ProfileSettings() {
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -170,8 +173,10 @@ export default function ProfileSettings() {
                   <div className="ml-6">
                     <p className="font-sf_pro_text text-base font-medium">
                       {firstName}
+                      {firstName}
                     </p>
                     <p className="text-[#7D7D7D] font-normal text-sm">
+                      {email}
                       {email}
                     </p>
                   </div>
@@ -179,7 +184,8 @@ export default function ProfileSettings() {
               </div>
             </div>
 
-            <div className="ml-6 border-2 border-[E8E8E8] p-4 rounded-xl mt-8 grid grid-cols-12 gap-20 bg-[#F9FAFB]">
+
+            <div   className="ml-6 border-2 border-[E8E8E8] p-4 rounded-xl mt-8 grid grid-cols-12 gap-20 bg-[#F9FAFB]">
               <div className="col-span-7 p-3  bg-[#F9FAFB] ">
                 <form onSubmit={formik.handleSubmit}>
                   <div className="personalinfo bg-[#FFFFFF] border-2 rounded-lg p-5">
