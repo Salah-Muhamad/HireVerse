@@ -18,7 +18,7 @@ export default function ProfileSettings() {
   const [githubUrl, setgithubUrl] = useState("");
   const [college, setcollege] = useState("");
   const [department, setdepartment] = useState("");
-  const [skills, setSkills] = useState([]);
+
 
   function handleDiscard() {
     const storedFirstName = localStorage.getItem("first_name") || "";
@@ -51,9 +51,7 @@ export default function ProfileSettings() {
     setdepartment(localStorage.getItem("department") || "");
     setcollege(localStorage.getItem("college") || "");
   
-    // هنا هنعمل parse لل skills علشان نرجعها ل array تاني
-    const storedSkills = JSON.parse(localStorage.getItem("skills")) || [];
-    setSkills(storedSkills);
+
   }, []);
   
 
@@ -67,7 +65,6 @@ export default function ProfileSettings() {
       linkedin_url: linkedinUrl,
       college: college,
       department: department,
-      skills: skills,
     },
     enableReinitialize: true,
     onSubmit: handleSubmit,
@@ -96,9 +93,6 @@ export default function ProfileSettings() {
       localStorage.setItem("department", values.department);
       localStorage.setItem("college", values.college);
   
-      // هنا بنستخدم stringify لتحويل array الـ skills إلى string
-      localStorage.setItem("skills", JSON.stringify(values.skills));
-  
       setFirstName(values.first_name);
       setLastName(values.last_name);
       setEmail(values.email);
@@ -107,7 +101,7 @@ export default function ProfileSettings() {
       setgithubUrl(values.github_url);
       setcollege(values.college);
       setdepartment(values.department);
-      setSkills(values.skills);
+
     } catch (err) {
       console.error("Error:", err.response?.data || err.message);
     }
@@ -409,7 +403,7 @@ export default function ProfileSettings() {
                   </div>
                 </div>
               </div>
-              <div className="Education bg-[#FFFFFF] border-2 rounded-lg p-5 mt-14 w-[490px]">
+              {/* <div className="Education bg-[#FFFFFF] border-2 rounded-lg p-5 mt-14 w-[490px]">
                 <p className="font-sf_pro_text text-lg font-semibold mb-2">
                   Skills
                 </p>
@@ -429,11 +423,8 @@ export default function ProfileSettings() {
                   {console.log(skills)}
                   
                 </div>
-              </div>
-              {/* <div>
-              <div>Skills</div>
-              <div className="w-[490px] h-[95px] border-2 rounded-lg"></div>
               </div> */}
+
             </div>
           </div>
         </div>
