@@ -5,10 +5,9 @@ import del from "../../assets/Images/delete.svg";
 import photo from "../../assets/Images/Ellipse 128.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Formik, useFormik } from "formik";
 import axios from "axios";
 import { Formik, useFormik } from "formik";
-import axios from "axios";
+
 export default function ProfileSettings() {
 
   const [firstName, setFirstName] = useState("");
