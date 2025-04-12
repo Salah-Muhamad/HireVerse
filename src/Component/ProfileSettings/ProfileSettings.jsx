@@ -21,40 +21,46 @@ export default function ProfileSettings() {
   const [skills, setSkills] = useState([]);
   const [showSkills, setShowSkills] = useState([]);
   const [newSkill, setNewSkill] = useState("");
-  const [photo, setPhoto] = useState(photo2);
+  const [photo, setPhoto] = useState(`https://hireverse.ddns.net/api/storage/${localStorage.getItem("avatarUrl")}`);
   const [method, setMethod] = useState();
   
-  function handleUploadOhoto(e){
-    const file = e.target.files[0];
+  const [selectedFile, setSelectedFile] = useState(null);
+
+function handleUploadPhoto(e) {
+  const file = e.target.files[0];
+  if (file) {
+    setSelectedFile(file); // 👈 خزنه عشان تبعته لما تحب
     const reader = new FileReader();
     reader.onloadend = () => {
-      setPhoto(reader.result);
+      setPhoto(reader.result); // للعرض فقط، مش للرفع
     };
-    if (file) {
-      reader.readAsDataURL(file);
-    }   
-
+    reader.readAsDataURL(file);
   }
-  console.log(photo)
-  function saveProfilePhoto(){
-    const photoFile = new File([photo], "profile_photo.jpg", {
-      type: "image/jpeg",
-      lastModified: Date.now(),
-    })
-    const formData = new FormData();
-    formData.append("avatar", photoFile);
-    axios.patch("https://hireverse.ddns.net/api/applicant/profile", formData, {
+}
+
+function saveProfilePhoto() {
+  if (!selectedFile) {
+    console.warn("No file selected.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("avatar", selectedFile); // 👈 الملف الأصلي مش Base64
+  axios
+    .patch("https://hireverse.ddns.net/api/applicant/profile", formData, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        "Content-Type": "multipart/form-data",
       },
     })
-    .then(response => {
+    .then((response) => {
       console.log("Profile photo uploaded successfully:", response.data);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("Error uploading profile photo:", error);
     });
-  }
+}
+
   const handleAddSkill = () => {
     const trimmedSkill = newSkill.trim();
     if (trimmedSkill && !showSkills.includes(trimmedSkill)) {
@@ -400,7 +406,7 @@ export default function ProfileSettings() {
                       <img
                         src={photo}
                         alt=""
-                        className="rounded-full w-[100px] h-[100px]"
+                        className="rounded-full w-[80px] h-[80px] mx-4"
                       />
                     </div>
                     <div className="mt-2">
@@ -420,7 +426,7 @@ export default function ProfileSettings() {
                   <div className="border-dotted border-2 mt-8 border-[#BAC5DC] rounded-lg p-3 text-center h-[160px] flex justify-center items-center">
                     <div>
                       <span>
-                        <input type="file" className="hidden" id="profilePhoto" onChange={handleUploadOhoto} accept="image/*"/>
+                        <input type="file" className="hidden" id="profilePhoto" onChange={handleUploadPhoto} accept="image/*"/>
                         <label htmlFor="profilePhoto" className="cursor-pointer">
                           <p className="text-[#0146B1] mb-3">Clik to Upload</p>
                         </label>

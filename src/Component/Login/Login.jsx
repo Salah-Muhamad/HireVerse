@@ -36,6 +36,7 @@ export default function Login() {
       localStorage.setItem("email", data.data.applicant.attributes.email);
       localStorage.setItem("jobTitle", data.data.applicant.attributes.jobTitle);
       localStorage.setItem("cv", data.data.applicant.attributes.cvUrl);
+      localStorage.setItem("avatarUrl", data.data.applicant.attributes.avatarUrl);
       localStorage.setItem("skills", JSON.stringify(data.data.applicant.attributes.skills));
 
       console.log(data.data.applicant.attributes.email);
