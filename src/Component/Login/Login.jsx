@@ -36,7 +36,7 @@ export default function Login() {
       localStorage.setItem("email", data.data.applicant.attributes.email);
       localStorage.setItem("jobTitle", data.data.applicant.attributes.jobTitle);
       localStorage.setItem("cv", data.data.applicant.attributes.cvUrl);
-      localStorage.setItem("skills",data.data.applicant.attributes.skills)
+      localStorage.setItem("skills", JSON.stringify(data.data.applicant.attributes.skills));
 
       console.log(data.data.applicant.attributes.email);
 
@@ -44,7 +44,7 @@ export default function Login() {
       // console.log(data.data.applicant.first_name)
       // console.log(data.data);
       // console.log(data.data.token)
-      console.log(skills)
+      console.log(skills + '44444444')
       console.log(jobTitle)
       navigate('/')
       setUserData(data.data.token)

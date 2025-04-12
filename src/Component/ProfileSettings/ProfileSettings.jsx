@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import user from "../../assets/Images/user.svg";
 import lock from "../../assets/Images/lock.svg";
 import del from "../../assets/Images/delete.svg";
-import photo from "../../assets/Images/Ellipse 128.png";
+import photo2 from "../../assets/Images/Ellipse 128.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { Formik, useFormik } from "formik";
+import { X } from "lucide-react";
 
 export default function ProfileSettings() {
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,27 +18,87 @@ export default function ProfileSettings() {
   const [githubUrl, setgithubUrl] = useState("");
   const [college, setcollege] = useState("");
   const [department, setdepartment] = useState("");
-
-
+  const [skills, setSkills] = useState([]);
+  const [showSkills, setShowSkills] = useState([]);
+  const [newSkill, setNewSkill] = useState("");
+  const [photo, setPhoto] = useState(photo2);
+  const [method, setMethod] = useState();
+  
+  function handleUploadOhoto(e){
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPhoto(reader.result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }   
+    const formData = new FormData();
+    formData.append("avatar", file);
+    axios.post("https://hireverse.ddns.net/api/applicant/profile", formData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+      },
+    })
+    .then(response => {
+      console.log("Profile photo uploaded successfully:", response.data);
+    })
+    .catch(error => {
+      console.error("Error uploading profile photo:", error);
+    });
+  }
+  console.log(photo)
+  function saveProfilePhoto(){
+    const photoFile = new File([photo], "profile_photo.jpg", {
+      type: "image/jpeg",
+      lastModified: Date.now(),
+    })
+    const formData = new FormData();
+    formData.append("avatar", photoFile);
+    axios.patch("https://hireverse.ddns.net/api/applicant/profile", formData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+      },
+    })
+    .then(response => {
+      console.log("Profile photo uploaded successfully:", response.data);
+    })
+    .catch(error => {
+      console.error("Error uploading profile photo:", error);
+    });
+  }
+  const handleAddSkill = () => {
+    const trimmedSkill = newSkill.trim();
+    if (trimmedSkill && !showSkills.includes(trimmedSkill)) {
+      const updatedSkills = [...showSkills, trimmedSkill];
+      setShowSkills(updatedSkills);
+      setSkills(updatedSkills);
+      formik.setFieldValue("skills", updatedSkills);
+      setNewSkill(""); // تفضيه الـ input
+    }
+  };
   function handleDiscard() {
     const storedFirstName = localStorage.getItem("first_name") || "";
     const storedLastName = localStorage.getItem("last_name") || "";
     const storedEmail = localStorage.getItem("email") || "";
     const storedJobTitle = localStorage.getItem("jobTitle") || "";
     const storedLinkedinUrl = localStorage.getItem("LinkedinUrl") || "";
+    const storedSkills = JSON.parse(localStorage.getItem("skills") || "[]");
 
     setFirstName(storedFirstName);
     setLastName(storedLastName);
     setEmail(storedEmail);
     setJobTitle(storedJobTitle);
     setLinkedinUrl(storedLinkedinUrl);
+    setSkills(storedSkills);
+    setShowSkills(storedSkills);
 
-    // هنا بنستخدم setFieldValue لتحديث القيم داخل Formik
     formik.setFieldValue("first_name", storedFirstName);
     formik.setFieldValue("last_name", storedLastName);
     formik.setFieldValue("email", storedEmail);
     formik.setFieldValue("job_title", storedJobTitle);
     formik.setFieldValue("linkedin_url", storedLinkedinUrl);
+    formik.setFieldValue("skills", storedSkills);
   }
 
   useEffect(() => {
@@ -50,10 +110,21 @@ export default function ProfileSettings() {
     setgithubUrl(localStorage.getItem("githubUrl") || "");
     setdepartment(localStorage.getItem("department") || "");
     setcollege(localStorage.getItem("college") || "");
-  
 
+    const storedSkills = localStorage.getItem("skills");
+    if (storedSkills) {
+      const parsedSkills = JSON.parse(storedSkills);
+      setSkills(parsedSkills);
+      setShowSkills(parsedSkills);
+    }
   }, []);
-  
+
+  const handleRemoveSkill = (skillToRemove) => {
+    const updatedSkills = showSkills.filter((s) => s !== skillToRemove);
+    setShowSkills(updatedSkills);
+    setSkills(updatedSkills);
+    formik.setFieldValue("skills", updatedSkills);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -65,6 +136,7 @@ export default function ProfileSettings() {
       linkedin_url: linkedinUrl,
       college: college,
       department: department,
+      skills: skills,
     },
     enableReinitialize: true,
     onSubmit: handleSubmit,
@@ -72,7 +144,7 @@ export default function ProfileSettings() {
 
   async function handleSubmit(values) {
     try {
-      const response = await axios.patch(
+      const response = await axios.post(
         "https://hireverse.ddns.net/api/applicant/profile",
         values,
         {
@@ -81,9 +153,9 @@ export default function ProfileSettings() {
           },
         }
       );
-  
+      console.log(values)
       console.log("الرد من السيرفر:", response.data);
-  
+
       localStorage.setItem("first_name", values.first_name);
       localStorage.setItem("last_name", values.last_name);
       localStorage.setItem("email", values.email);
@@ -92,7 +164,8 @@ export default function ProfileSettings() {
       localStorage.setItem("githubUrl", values.github_url);
       localStorage.setItem("department", values.department);
       localStorage.setItem("college", values.college);
-  
+      localStorage.setItem("skills", JSON.stringify(values.skills));
+
       setFirstName(values.first_name);
       setLastName(values.last_name);
       setEmail(values.email);
@@ -101,12 +174,12 @@ export default function ProfileSettings() {
       setgithubUrl(values.github_url);
       setcollege(values.college);
       setdepartment(values.department);
-
+      setSkills(values.skills);
+      setShowSkills(values.skills);
     } catch (err) {
       console.error("Error:", err.response?.data || err.message);
     }
   }
-  
 
   return (
     <div className="container bg-[#F9FAFB]">
@@ -130,7 +203,7 @@ export default function ProfileSettings() {
           <div className="border-b-2 border-[#E8E8E8] mt-3 mb-10"></div>
           <div className="flex gap-4 mb-6">
             <img src={del} alt="" />
-            <Link to={"/DeleteAccount"}>
+            <Link to={"/DeleteAccountb"}>
               <p className="text-[#F02E2E]">Delete account</p>
             </Link>
           </div>
@@ -165,11 +238,9 @@ export default function ProfileSettings() {
                 <div className="image flex items-center">
                   <div className="ml-6">
                     <p className="font-sf_pro_text text-base font-medium">
-                      {firstName}
-                      {firstName}
+                      {firstName + " " + lastName}
                     </p>
                     <p className="text-[#7D7D7D] font-normal text-sm">
-                      {email}
                       {email}
                     </p>
                   </div>
@@ -177,8 +248,7 @@ export default function ProfileSettings() {
               </div>
             </div>
 
-
-            <div   className="ml-6 border-2 border-[E8E8E8] p-4 rounded-xl mt-8 grid grid-cols-12 gap-20 bg-[#F9FAFB]">
+            <div className="ml-6 border-2 border-[E8E8E8] p-4 rounded-xl mt-8 grid grid-cols-12 gap-20 bg-[#F9FAFB]">
               <div className="col-span-7 p-3  bg-[#F9FAFB] ">
                 <form onSubmit={formik.handleSubmit}>
                   <div className="personalinfo bg-[#FFFFFF] border-2 rounded-lg p-5">
@@ -257,19 +327,6 @@ export default function ProfileSettings() {
                         onBlur={formik.handleBlur}
                       />
                     </div>
-                    {/* <div className="max-w-sm">
-                    <label htmlFor="" className="font-sf_pro_text text-sm">
-                      Bio
-                    </label>
-                    <textarea
-                      id="Bio"
-                      rows="4"
-                      className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    ></textarea>
-                    <p className="text-[#757575] font-normal text-xs mt-3 ">
-                      Brief Description about Yourself
-                    </p>
-                  </div> */}
                   </div>
                 </form>
 
@@ -351,7 +408,13 @@ export default function ProfileSettings() {
                   </p>
                   <div className="border-b-2 border-[#E8E8E8] mt-3 mb-4"></div>
                   <div className="image flex">
-                    <img src={photo} className="mr-8" />
+                    <div>
+                      <img
+                        src={photo}
+                        alt=""
+                        className="rounded-full w-[100px] h-[100px]"
+                      />
+                    </div>
                     <div className="mt-2">
                       <p className="font-sf_pro_text text-base font-medium mb-2">
                         Edit Your Profile
@@ -360,7 +423,7 @@ export default function ProfileSettings() {
                         <button>
                           <p className="text-[#888888]">Delete</p>
                         </button>
-                        <button>
+                        <button onClick={saveProfilePhoto}>
                           <p className="text-[#0146B1]">Update</p>
                         </button>
                       </div>
@@ -369,9 +432,10 @@ export default function ProfileSettings() {
                   <div className="border-dotted border-2 mt-8 border-[#BAC5DC] rounded-lg p-3 text-center h-[160px] flex justify-center items-center">
                     <div>
                       <span>
-                        <button>
+                        <input type="file" className="hidden" id="profilePhoto" onChange={handleUploadOhoto} accept="image/*"/>
+                        <label htmlFor="profilePhoto" className="cursor-pointer">
                           <p className="text-[#0146B1] mb-3">Clik to Upload</p>
-                        </button>
+                        </label>
                       </span>
                       <p className="text-[#6F6F6F] font-normal text-xs font-sf_pro_text">
                         PNG,SVG,JPG
@@ -403,32 +467,49 @@ export default function ProfileSettings() {
                   </div>
                 </div>
               </div>
-              {/* <div className="Education bg-[#FFFFFF] border-2 rounded-lg p-5 mt-14 w-[490px]">
+              <div className="Education bg-[#FFFFFF] border-2 rounded-lg p-5 mt-14 w-[490px]">
                 <p className="font-sf_pro_text text-lg font-semibold mb-2">
                   Skills
                 </p>
+                <div className="flex items-center gap-2 mb-3">
+                  <input
+                    type="text"
+                    placeholder="Add new skill..."
+                    value={newSkill}
+                    onChange={(e) => setNewSkill(e.target.value)}
+                    className="border px-3 py-1 rounded"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddSkill}
+                    className="bg-[#0146B1] text-white px-3 py-1 rounded"
+                  >
+                    Add
+                  </button>
+                </div>
                 <div className="mb-5 flex flex-wrap gap-4">
-                  {
-                  
-                  skills.map((skill, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="h-[30px] rounded-2xl border-2 text-center min-w-28 px-2"
-                      >
+                  {showSkills.map((skill, index) => (
+                    <div
+                      className="flex h-[35px] rounded-2xl border-2 text-center min-w-32 px-2 justify-around items-center
+                     "
+                    >
+                      <div className="" key={index}>
                         {skill}
                       </div>
-                    );
-                  })}
-                  {console.log(skills)}
-                  
+                      <X
+                        size={16}
+                        strokeWidth={1.75}
+                        onClick={() => handleRemoveSkill(skill)}
+                        className="cursor-pointer"
+                      />
+                    </div>
+                  ))}
                 </div>
-              </div> */}
-
+              </div>
             </div>
           </div>
         </div>
-        <div className=" bg-red-500">Skills</div>
+        
       </div>
     </div>
   );
