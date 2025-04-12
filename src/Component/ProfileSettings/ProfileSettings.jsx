@@ -33,19 +33,7 @@ export default function ProfileSettings() {
     if (file) {
       reader.readAsDataURL(file);
     }   
-    const formData = new FormData();
-    formData.append("avatar", file);
-    axios.post("https://hireverse.ddns.net/api/applicant/profile", formData, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-      },
-    })
-    .then(response => {
-      console.log("Profile photo uploaded successfully:", response.data);
-    })
-    .catch(error => {
-      console.error("Error uploading profile photo:", error);
-    });
+
   }
   console.log(photo)
   function saveProfilePhoto(){
@@ -144,7 +132,7 @@ export default function ProfileSettings() {
 
   async function handleSubmit(values) {
     try {
-      const response = await axios.post(
+      const response = await axios.patch(
         "https://hireverse.ddns.net/api/applicant/profile",
         values,
         {
