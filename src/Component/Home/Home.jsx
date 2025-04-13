@@ -231,9 +231,11 @@ export default function Home() {
                 <button className="bg-primary text-white w-40 h-14 rounded-lg border-0">
                   Get Started
                 </button>
+                <Link to={'/CompanyLogin'}>
                 <button className="text-primary w-40 h-14 rounded-lg border-2 border-primary">
                   Login
                 </button>
+                </Link>
               </div>
 
               <div className="mt-12">
