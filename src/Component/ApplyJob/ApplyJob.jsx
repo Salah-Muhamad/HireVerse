@@ -78,7 +78,7 @@ export default function ApplyJob() {
   return (
     <div className="fixed w-full h-full inset-0 bg-slate-400 bg-opacity-50 z-10 flex items-center justify-center">
       <div className="w-[650px] h-[500px] mx-auto flex flex-col justify-evenly bg-white p-6 rounded-lg shadow-lg mt-12 relative">
-          <X onClick={back} className="cursor-pointer absolute right-4 top-4" />
+        <X onClick={back} className="cursor-pointer absolute right-4 top-4" />
         <div className="flex justify-between">
           <h2 className="text-lg font-semibold">
             Upload your CV <span className="text-red-500">*</span>
@@ -125,7 +125,7 @@ export default function ApplyJob() {
             className="w-32 mt-4 bg-[#1F4171] text-white px-4 py-2 rounded-lg"
             onClick={handleSubmit}
           >
-           Submit
+            Submit
           </button>
         </div>
       </div>

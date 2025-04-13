@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
 import MainLogo from "../../assets/Images/MainLogo.svg";
-import Avatar from "../../assets/Images/Avatar.svg";
+import photo2 from "../../assets/Images/Prof.jpeg";
+
 import Settings from "../../assets/Images/Settings.svg";
 import MyJobs from "../../assets/Images/MyJobs.svg";
 import LogOut from "../../assets/Images/LogOut.svg";
@@ -16,6 +17,13 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
+
+  const avatarUrl = localStorage.getItem("avatarUrl");
+
+  const Avatar =
+    avatarUrl && avatarUrl !== "null"
+      ? `https://hireverse.ddns.net/api/storage/${avatarUrl}`
+      : photo2;
   useEffect(() => {
     const firstName = localStorage.getItem("first_name");
     const lastName = localStorage.getItem("last_name");
@@ -119,7 +127,7 @@ export default function Navbar() {
                     className="bg-transparent px-4 py-2 rounded-md"
                   >
                     <div className="flex justify-center items-center gap-2">
-                      <img src={Avatar} alt="Avatar" />
+                      <img src={Avatar} className="w-12 h-12 rounded-full" alt="Avatar" />
                       <span className="font-semibold">{userName}</span>
                       <img
                         src={ArrowDown}
@@ -135,7 +143,7 @@ export default function Navbar() {
                       <ul className="py-2">
                         <li className="px-4 py-2  cursor-pointer border-b-2">
                           <div className="flex gap-2">
-                            <img src={Avatar} alt="" />
+                            <img src={Avatar} className="w-12 h-12 rounded-full" alt="" />
                             <div>
                               <p className="font-semibold text-sm">
                                 {userName}

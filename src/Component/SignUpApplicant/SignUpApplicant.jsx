@@ -14,6 +14,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { PacmanLoader } from "react-spinners";
+import toast from "react-hot-toast";
 export default function SignUpApplicant() {
   const [registerError, setRegisterError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,6 +34,7 @@ export default function SignUpApplicant() {
     setShowPassword((prev) => !prev);
   };
   async function register(values) {
+    const toastId = toast.loading("Creating Account...");
     setLoading(true);
     try {
       const { data } = await axios.post(
@@ -46,10 +48,16 @@ export default function SignUpApplicant() {
       // localStorage.setItem("last_name", response.data.data.applicant.attributes.lastName);
       // localStorage.setItem("email", response.data.data.applicant.attributes.email);
 
+      toast.success("Account Created Successfully", {
+        id: toastId,
+      });
       navigate("/VerifyEmail");
     } catch (err) {
       console.error("Error:", err);
       setRegisterError(err.response?.data?.message || "Something went wrong");
+      toast.error("Something went wrong", {
+        id: toastId,
+      });
     } finally {
       setLoading(false);
     }

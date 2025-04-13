@@ -12,6 +12,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { PacmanLoader } from "react-spinners";
 import { UserContext } from "../../Context/UserContext";
+import toast from "react-hot-toast";
 export default function Login() {
   const [loginError, setLoginError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,6 +26,7 @@ export default function Login() {
   };
   async function login(values) {
     setLoading(true);
+    const toastId = toast.loading("Logging In...");
     try {
       const {data} = await axios.post(
         "https://hireverse.ddns.net/api/login",
@@ -36,7 +38,8 @@ export default function Login() {
       localStorage.setItem("email", data.data.applicant.attributes.email);
       localStorage.setItem("jobTitle", data.data.applicant.attributes.jobTitle);
       localStorage.setItem("cv", data.data.applicant.attributes.cvUrl);
-      localStorage.setItem("skills",data.data.applicant.attributes.skills)
+      localStorage.setItem("avatarUrl", data.data.applicant.attributes.avatarUrl);
+      localStorage.setItem("skills", JSON.stringify(data.data.applicant.attributes.skills));
 
       console.log(data.data.applicant.attributes.email);
 
@@ -44,13 +47,15 @@ export default function Login() {
       // console.log(data.data.applicant.first_name)
       // console.log(data.data);
       // console.log(data.data.token)
-      console.log(skills)
+      console.log(skills + '44444444')
       console.log(jobTitle)
+      toast.success("Logged In Successfully", { id: toastId });
       navigate('/')
       setUserData(data.data.token)
     } catch (err) {
       console.error("Error:", err);
       setLoginError(err.response?.data?.message || "Email Or Password is wrong");
+      toast.error("Email Or Password is wrong", { id: toastId });
     } finally {
       setLoading(false);
     }
