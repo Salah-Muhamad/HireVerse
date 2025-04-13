@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
 import MainLogo from "../../assets/Images/MainLogo.svg";
-// import Avatar from "../../assets/Images/Avatar.svg";
+import photo2 from "../../assets/Images/Prof.jpeg";
+
 import Settings from "../../assets/Images/Settings.svg";
 import MyJobs from "../../assets/Images/MyJobs.svg";
 import LogOut from "../../assets/Images/LogOut.svg";
@@ -16,9 +17,13 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
-  const Avatar =  `https://hireverse.ddns.net/api/storage/${localStorage.getItem(
-    "avatarUrl"
-  )}`
+
+  const avatarUrl = localStorage.getItem("avatarUrl");
+
+  const Avatar =
+    avatarUrl && avatarUrl !== "null"
+      ? `https://hireverse.ddns.net/api/storage/${avatarUrl}`
+      : photo2;
   useEffect(() => {
     const firstName = localStorage.getItem("first_name");
     const lastName = localStorage.getItem("last_name");

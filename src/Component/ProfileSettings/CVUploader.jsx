@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { CloudUpload } from "lucide-react";
+import toast from "react-hot-toast";
 
 function CVUploader() {
     // console.log(localStorage.getItem("cv").split("/").pop())
@@ -35,6 +36,7 @@ function CVUploader() {
   
 
   const handle_upload = async () => {
+    const toastId = toast.loading("Uploading CV...");
     if (!cv_file) {
       alert("Please select a CV file first!");
       return;
@@ -61,10 +63,12 @@ function CVUploader() {
         response.data.data.applicant.attributes.cvUrl
       ); // Update local storage with new avatar URL
       // alert("Uploaded successfully!");
+      toast.success("CV Uploaded Successfully", { id: toastId });
       console.log("Server response:", response.data);
     } catch (error) {
       console.error("Upload error:", error);
       // alert("Failed to upload!");
+      toast.error("Failed to upload", { id: toastId });
     }
   };
 

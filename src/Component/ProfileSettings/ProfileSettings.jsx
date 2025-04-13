@@ -2,13 +2,14 @@ import React, { useEffect } from "react";
 import user from "../../assets/Images/user.svg";
 import lock from "../../assets/Images/lock.svg";
 import del from "../../assets/Images/delete.svg";
-import photo2 from "../../assets/Images/Ellipse 128.png";
+import photo2 from "../../assets/Images/Prof.jpeg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { Formik, useFormik } from "formik";
 import { X } from "lucide-react";
 import CVUploader from "./CVUploader";
+import toast from "react-hot-toast";
 
 export default function ProfileSettings() {
   const [firstName, setFirstName] = useState("");
@@ -22,11 +23,13 @@ export default function ProfileSettings() {
   const [skills, setSkills] = useState([]);
   const [showSkills, setShowSkills] = useState([]);
   const [newSkill, setNewSkill] = useState("");
+  const avatarUrl = localStorage.getItem("avatarUrl");
   const [photo, setPhoto] = useState(
-    `https://hireverse.ddns.net/api/storage/${localStorage.getItem(
-      "avatarUrl"
-    )}`
+    avatarUrl && avatarUrl !== "null"
+      ? `https://hireverse.ddns.net/api/storage/${avatarUrl}`
+      : photo2
   );
+  console.log(photo)
   const [method, setMethod] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -39,6 +42,7 @@ export default function ProfileSettings() {
   };
 
   const saveProfilePhoto = async () => {
+    const toastId = toast.loading("Uploading photo...");
     if (!selectedFile) {
       console.log("Please select an image first!");
       return;
@@ -59,6 +63,7 @@ export default function ProfileSettings() {
           },
         }
       );
+      toast.success("Uploaded successfully!", { id: toastId });
       console.log(response);
       localStorage.setItem(
         "avatarUrl",
@@ -69,6 +74,7 @@ export default function ProfileSettings() {
     } catch (error) {
       console.error("Upload error:", error);
       // alert("Failed to upload!");
+      toast.error("Failed to upload!", { id: toastId });
     }
     console.log(selectedFile);
   };
@@ -152,6 +158,7 @@ export default function ProfileSettings() {
   });
 
   async function handleSubmit(values) {
+    const toastId = toast.loading("Saving changes...");
     try {
       const response = await axios.patch(
         "https://hireverse.ddns.net/api/applicant/profile",
@@ -162,6 +169,7 @@ export default function ProfileSettings() {
           },
         }
       );
+      toast.success("Changes saved successfully!", { id: toastId });
       console.log(values);
       console.log("الرد من السيرفر:", response.data);
 
@@ -187,6 +195,7 @@ export default function ProfileSettings() {
       setShowSkills(values.skills);
     } catch (err) {
       console.error("Error:", err.response?.data || err.message);
+      toast.error("Failed to save changes!", { id: toastId });
     }
   }
 
@@ -212,7 +221,7 @@ export default function ProfileSettings() {
           <div className="border-b-2 border-[#E8E8E8] mt-3 mb-10"></div>
           <div className="flex gap-4 mb-6">
             <img src={del} alt="" />
-            <Link to={"/DeleteAccountb"}>
+            <Link to={"/DeleteAccount"}>
               <p className="text-[#F02E2E]">Delete account</p>
             </Link>
           </div>
@@ -250,7 +259,7 @@ export default function ProfileSettings() {
                       <img
                         src={photo}
                         alt=""
-                        className="rounded-full w-[50px] h-[50px] mx-4"
+                        className="rounded-full w-[70px] h-[70px] mx-4"
                       />
                       <div>
                         <p className="font-sf_pro_text text-base font-medium">
