@@ -8,6 +8,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Formik, useFormik } from "formik";
 import { X } from "lucide-react";
+import CVUploader from "./CVUploader";
 
 export default function ProfileSettings() {
   const [firstName, setFirstName] = useState("");
@@ -21,45 +22,59 @@ export default function ProfileSettings() {
   const [skills, setSkills] = useState([]);
   const [showSkills, setShowSkills] = useState([]);
   const [newSkill, setNewSkill] = useState("");
-  const [photo, setPhoto] = useState(`https://hireverse.ddns.net/api/storage/${localStorage.getItem("avatarUrl")}`);
+  const [photo, setPhoto] = useState(
+    `https://hireverse.ddns.net/api/storage/${localStorage.getItem(
+      "avatarUrl"
+    )}`
+  );
   const [method, setMethod] = useState();
-  
   const [selectedFile, setSelectedFile] = useState(null);
 
-function handleUploadPhoto(e) {
-  const file = e.target.files[0];
-  if (file) {
-    setSelectedFile(file); // 👈 خزنه عشان تبعته لما تحب
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPhoto(reader.result); // للعرض فقط، مش للرفع
-    };
-    reader.readAsDataURL(file);
-  }
-}
+  const handleUploadPhoto = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setPhoto(URL.createObjectURL(file));
+    }
+  };
 
-function saveProfilePhoto() {
-  if (!selectedFile) {
-    console.warn("No file selected.");
-    return;
-  }
+  const saveProfilePhoto = async () => {
+    if (!selectedFile) {
+      console.log("Please select an image first!");
+      return;
+    }
 
-  const formData = new FormData();
-  formData.append("avatar", selectedFile); // 👈 الملف الأصلي مش Base64
-  axios
-    .patch("https://hireverse.ddns.net/api/applicant/profile", formData, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((response) => {
-      console.log("Profile photo uploaded successfully:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error uploading profile photo:", error);
-    });
-}
+    const form_data = new FormData();
+    form_data.append("avatar", selectedFile);
+    form_data.append("_method", "PATCH");
+
+    try {
+      const response = await axios.post(
+        "https://hireverse.ddns.net/api/applicant/profile", // replace with your actual endpoint
+        form_data,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response);
+      localStorage.setItem(
+        "avatarUrl",
+        response.data.data.applicant.attributes.avatarUrl
+      ); // Update local storage with new avatar URL
+      // alert("Uploaded successfully!");
+      console.log("Server response:", response.data);
+    } catch (error) {
+      console.error("Upload error:", error);
+      // alert("Failed to upload!");
+    }
+    console.log(selectedFile);
+  };
+
+
+  
 
   const handleAddSkill = () => {
     const trimmedSkill = newSkill.trim();
@@ -147,7 +162,7 @@ function saveProfilePhoto() {
           },
         }
       );
-      console.log(values)
+      console.log(values);
       console.log("الرد من السيرفر:", response.data);
 
       localStorage.setItem("first_name", values.first_name);
@@ -231,12 +246,21 @@ function saveProfilePhoto() {
               <div className="flex justify-between w-4/5">
                 <div className="image flex items-center">
                   <div className="ml-6">
-                    <p className="font-sf_pro_text text-base font-medium">
-                      {firstName + " " + lastName}
-                    </p>
-                    <p className="text-[#7D7D7D] font-normal text-sm">
-                      {email}
-                    </p>
+                    <div className="flex  items-center">
+                      <img
+                        src={photo}
+                        alt=""
+                        className="rounded-full w-[50px] h-[50px] mx-4"
+                      />
+                      <div>
+                        <p className="font-sf_pro_text text-base font-medium">
+                          {firstName + " " + lastName}
+                        </p>
+                        <p className="text-[#7D7D7D] font-normal text-sm">
+                          {email}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -426,8 +450,17 @@ function saveProfilePhoto() {
                   <div className="border-dotted border-2 mt-8 border-[#BAC5DC] rounded-lg p-3 text-center h-[160px] flex justify-center items-center">
                     <div>
                       <span>
-                        <input type="file" className="hidden" id="profilePhoto" onChange={handleUploadPhoto} accept="image/*"/>
-                        <label htmlFor="profilePhoto" className="cursor-pointer">
+                        <input
+                          type="file"
+                          className="hidden"
+                          id="profilePhoto"
+                          onChange={handleUploadPhoto}
+                          accept="image/*"
+                        />
+                        <label
+                          htmlFor="profilePhoto"
+                          className="cursor-pointer"
+                        >
                           <p className="text-[#0146B1] mb-3">Clik to Upload</p>
                         </label>
                       </span>
@@ -438,28 +471,8 @@ function saveProfilePhoto() {
                   </div>
                 </div>
 
-                <div className=" p-5 border-2 rounded-xl mt-10 bg-[#FFFFFF]">
-                  <p className="font-sf_pro_text text-lg font-semibold mb-2">
-                    Upload Your CV
-                  </p>
-                  <div className="border-b-2 border-[#E8E8E8] mt-3 mb-4"></div>
-                  <p className="text-[#6F6F6F] font-normal text-xs font-sf_pro_text">
-                    Make sure to include an updated version of your CV.
-                  </p>
 
-                  <div className="border-dotted border-2 mt-8 border-[#BAC5DC] rounded-lg p-3 text-center h-[160px] flex justify-center items-center">
-                    <div>
-                      <span>
-                        <button>
-                          <p className="text-[#0146B1] mb-3">Clik to Upload</p>
-                        </button>
-                      </span>
-                      <p className="text-[#6F6F6F] font-normal text-xs font-sf_pro_text">
-                        Pdf
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <CVUploader />
               </div>
               <div className="Education bg-[#FFFFFF] border-2 rounded-lg p-5 mt-14 w-[490px]">
                 <p className="font-sf_pro_text text-lg font-semibold mb-2">
@@ -503,7 +516,6 @@ function saveProfilePhoto() {
             </div>
           </div>
         </div>
-        
       </div>
     </div>
   );
