@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import { PacmanLoader } from "react-spinners";
 import { UserContext } from "../../Context/UserContext";
 import toast from "react-hot-toast";
+import { CompanyContext } from "../../Context/CompanyContext";
 export default function CompanyLogin() {
   const [loginError, setLoginError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,7 +21,7 @@ export default function CompanyLogin() {
   const jobTitle = localStorage.getItem("jobTitle");
   let navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  let { setUserData } = useContext(UserContext);
+  let { setCompanyData } = useContext(CompanyContext);
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
@@ -55,7 +56,7 @@ export default function CompanyLogin() {
 
       toast.success("Logged In Successfully", { id: toastId });
       navigate("/");
-    //   setUserData(data.data.token);
+      setCompanyData(data.data.token);
     } catch (err) {
       console.error("Error:", err);
       setLoginError(
