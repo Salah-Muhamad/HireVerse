@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ApplicantDetails({title , icon , number , comp}) {
+export default function ApplicantDetails({title , icon , number , comp }) {
   return (
       <div className=' h-[137px] rounded-xl bg-white mt-4 w-1/4 px-4 pt-4 flex flex-col justify-between'>
         <div className='flex justify-between'>

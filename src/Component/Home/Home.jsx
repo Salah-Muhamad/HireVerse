@@ -9,6 +9,8 @@ import Building from "../../assets/Images/building.svg";
 import MiniGroup from "../../assets/Images/MiniGroup.svg";
 import Apply from "../../assets/Images/Apply.svg";
 import Search from "../../assets/Images/Search.svg";
+import Search2 from "../../assets/Images/Search2.svg";
+
 import UpArrow from "../../assets/Images/UpArrow.svg";
 import DownArrow from "../../assets/Images/DownArrow.svg";
 import UploadCv from "../../assets/Images/UploadCv.svg";
@@ -51,20 +53,26 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import { NavLink } from "react-router-dom";
 import { CompanyContext } from "../../Context/CompanyContext";
+import CompanyJobs from "../CompanyJobs/CompanyJobs";
 
 export default function Home() {
   const [userName, setUserName] = useState("");
   let { companyData } = useContext(CompanyContext);
   let { userData } = useContext(UserContext);
   const [companyName, setCompanyName] = useState("");
-  const [jobs, setJobs] = useState([]);
   const [companies, setCompanies] = useState([]);
+  const [jobs, setJobs] = useState([]);
+  const [companyJobs, setCompanyJobs] = useState([]);
+  const [stats1, setStats1] = useState("");
+  const [stats2, setStats2] = useState("");
+  const [stats3, setStats3] = useState("");
+
   async function getCompanies() {
     try {
       let { data } = await axios.get(
         `https://hireverse.ddns.net/api/companies`
       );
-      console.log(data.data);
+      // console.log(data.data);
       setCompanies(data.data);
     } catch (err) {
       console.log(err);
@@ -74,8 +82,29 @@ export default function Home() {
   async function getJobs() {
     try {
       let { data } = await axios.get(`https://hireverse.ddns.net/api/jobs`);
-      console.log(data.data);
+      // console.log(data.data);
       setJobs(data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  async function getCompanyJobs() {
+
+    try { 
+      
+      let { data } = await axios.get(
+        `https://hireverse.ddns.net/api/company/jobs` ,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("companyToken")}`,
+          },
+        }
+      );
+      console.log(data.jobs);
+      setCompanyJobs(data.jobs);
+      setStats1(data.stats.publishedJobs);
+      setStats2(data.stats.acceptedCandidates);
+      setStats3(data.stats.totalApplications);
     } catch (err) {
       console.log(err);
     }
@@ -83,6 +112,7 @@ export default function Home() {
   useEffect(() => {
     getCompanies();
     getJobs();
+    getCompanyJobs();
     const firstName = localStorage.getItem("first_name");
     const lastName = localStorage.getItem("last_name");
     const companyName = localStorage.getItem("company_name");
@@ -596,7 +626,7 @@ export default function Home() {
       )}
 
       {companyData && (
-        <div className="bg-[#EFF2F7] h-screen pt-40  font-sf_pro_text">
+        <div className="bg-[#EFF2F7] pb-20 pt-40  font-sf_pro_text">
           <div className="flex items-center gap-4 ps-24">
             <img src={photo2} alt="" className="w-20" />
             <div className="text-2xl font-semibold flex gap-2">
@@ -607,32 +637,60 @@ export default function Home() {
           <div className="flex gap-32 mt-6 ps-24">
             <CompanySta
               title={"Published Jobs"}
-              number={100}
-              comp={"+20"}
+              number={stats1.total}
+              comp={stats1.change}
               icon={PublishedJobs}
+              
             />
             <CompanySta
               title={"Accepted Candidates"}
-              number={100}
-              comp={"-2"}
+              number={stats2.total}
+              comp={stats2.change}
               icon={AcceptedCandidates}
             />
             <CompanySta
               title={"Applicants"}
-              number={100}
-              comp={"+22"}
+              number={stats3.total}
+              comp={stats3.change}
               icon={Applicants}
             />
           </div>
 
           <div className="bg-[#E2E9F8] w-[90%] m-auto h-[70px] mt-10 rounded-md flex justify-center items-center gap-6">
-            <div className="text-[18px] font-semibold">Get Access to Exclusive Tools</div>
+            <div className="text-[18px] font-semibold">
+              Get Access to Exclusive Tools
+            </div>
             <Link>
               <button className="bg-[#F4A120] w-[104px] h-[40px] text-white rounded-[5px]">
                 Go Pro
               </button>
             </Link>
           </div>
+          <div className="flex gap-8 mt-10 justify-between items-center mx-20">
+            <p className="font-semibold text-lg">Jobs</p>
+            <Link to={"/"}>
+              <div className="w-[171px] h-[47px] bg-primary text-white rounded-[5px] flex justify-center items-center gap-6">
+                <p>+</p>
+                <p>Create Job</p>
+              </div>
+            </Link>
+          </div>
+          <div className="w-80 ms-20 bg-white h-12 border-2 rounded-lg flex items-center ps-4 font-bai_jamjuree font-medium">
+            <img src={Search2} alt="" />
+            <input
+              type="text"
+              className="p-2 rounded-md focus:outline-none "
+              placeholder="Search"
+            />
+          </div>
+          <div className="grid grid-cols-3 gap-8 me-32 ">
+          {
+            companyJobs.map((companyJob, index) => (
+              <CompanyJobs key={index} companyJob={companyJob} />
+            ))
+          }
+          </div>
+          {/* <CompanyJobs /> */}
         </div>
       )}
     </>
