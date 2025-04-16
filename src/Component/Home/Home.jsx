@@ -277,10 +277,12 @@ export default function Home() {
                     our advanced AI-powered platform.
                   </p>
                   <div className="mt-10 flex gap-7 font-bai_jamjuree font-semibold">
+                    <Link to={"/Register"}>
                     <button className="bg-primary text-white w-40 h-14 rounded-lg border-0">
                       Get Started
                     </button>
-                    <Link to={"/CompanyLogin"}>
+                    </Link>
+                    <Link to={"/PreLogin"}>
                       <button className="text-primary w-40 h-14 rounded-lg border-2 border-primary">
                         Login
                       </button>

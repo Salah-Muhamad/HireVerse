@@ -23,6 +23,7 @@ import ProfileSettings from "./Component/ProfileSettings/ProfileSettings";
 import UpdatePassword from "./Component/UpdatePassword/UpdatePassword";
 import DeleteAccount from "./Component/DeleteAccount/DeleteAccount";
 import CompanyLogin from "./Component/CompanyLogin/CompanyLogin";
+import PreLogin from "./Component/PreLogin/PreLogin";
 import { Toaster } from "react-hot-toast";
 
 
@@ -51,6 +52,7 @@ function App() {
         { path: "Login", element: <Login /> },
         { path: "CompanyLogin", element: <CompanyLogin /> },
         { path: "Register", element: <Register /> },
+        { path: "PreLogin", element: <PreLogin /> },
         { path: "VerifyEmail", element: <VerifyEmail /> },
         { path: "SignUpApplicant", element: <SignUpApplicant /> },
         { path: "SignUpCompany1", element: <SignUpCompany1 /> },
