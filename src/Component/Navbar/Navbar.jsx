@@ -126,7 +126,7 @@ export default function Navbar() {
 
             {!userData && !companyData && (
               <div className="font-bai_jamjuree font-semibold flex gap-5">
-                <NavLink to={"Login"}>
+                <NavLink to={"PreLogin"}>
                   <button className="text-primary w-28 h-11 text-center rounded-lg">
                     Log In
                   </button>

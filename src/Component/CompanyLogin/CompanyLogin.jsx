@@ -99,7 +99,7 @@ export default function CompanyLogin() {
 
         <div className="w-[616px]  bg-[#F1F1F1F2] m-auto mt-6 rounded-2xl p-8">
           <h2 className="text-center font-bai_jamjuree font-bold text-2xl mt-8">
-            Login
+            Company Login
           </h2>
 
           <form onSubmit={formik.handleSubmit}>
