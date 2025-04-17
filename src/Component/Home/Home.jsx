@@ -670,7 +670,7 @@ export default function Home() {
           </div>
           <div className="flex gap-8 mt-10 justify-between items-center mx-20">
             <p className="font-semibold text-lg">Jobs</p>
-            <Link to={"/"}>
+            <Link to={"CreateJob1"}>
               <div className="w-[171px] h-[47px] bg-primary text-white rounded-[5px] flex justify-center items-center gap-6">
                 <p>+</p>
                 <p>Create Job</p>
