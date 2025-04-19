@@ -1,26 +1,51 @@
-import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import React, { useState } from "react";
+import { ErrorMessage, useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import frame from "../../assets/Images/Frame.svg";
 import job1 from "../../assets/Images/job1.svg";
 import job from "../../assets/Images/job free.svg";
 import line from "../../assets/Images/Line 69.svg";
-import { usePostJob } from "../../Context/PostJobContext"; 
-
-const validationSchema = Yup.object({
-  jobTitle: Yup.string().required("Required"),
-  jobType: Yup.string().required("Required"),
-  experienceLevel: Yup.string().required("Required"),
-  location: Yup.string().required("Required"),
-  workingHours: Yup.string().required("Required"),
-  education: Yup.string().required("Required"),
-  skills: Yup.string().required("Required"),
-});
+import { usePostJob } from "../../Context/PostJobContext";
 
 export default function CreateJob1() {
+  const [formData, setFormData] = useState({}); // تعريف setFormData
+
+  const validationSchema = Yup.object({
+    title: Yup.string().required("Required"),
+    type: Yup.string().required("Required"),
+    experience_level: Yup.string().required("Required"),
+    work_location: Yup.string().required("Required"),
+    work_hours: Yup.string().required("Required"),
+    requirements: Yup.string().required("Required").min(10, "Minimum 10 characters"),
+    skills: Yup.array()
+      .of(Yup.string().required("Required"))
+      .min(1, "At least one skill is required").max(20, "Maximum 20 skills allowed"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      type: "",
+      experience_level: "",
+      work_location: "",
+      work_hours: "",
+      requirements: "",
+      skills: [],
+    },
+    validationSchema, // إضافة التحقق من الصحة
+    onSubmit: (values) => {
+      // حفظ البيانات في localStorage
+      localStorage.setItem("formData", JSON.stringify(values));
+  
+      // تحديث حالة formData المحلية (إذا كنت تستخدم حالة في الـ component)
+      setFormData({ ...formData, ...values });
+      console.log(formData)
+      // الانتقال إلى الصفحة التالية
+      navigate("/CreateJob2");
+    },
+  });
   const navigate = useNavigate();
-  const { updateFormData } = usePostJob(); // تأكد من استخدام useJob بدلًا من usePostJob
 
   // لا حاجة لتعريف handleNext هنا، استخدم onSubmit في Formik مباشرة
   return (
@@ -48,179 +73,290 @@ export default function CreateJob1() {
 
         {/* Formik Form */}
         <div className="col-span-9">
-          <Formik
-            initialValues={{
-              jobTitle: "",
-              jobType: "",
-              experienceLevel: "",
-              location: "",
-              workingHours: "",
-              education: "",
-              skills: "",
-            }}
-            validationSchema={validationSchema}
-            onSubmit={(values) => {
-              updateFormData(values);  // حفظ البيانات في الكونتكست
-              navigate("/CreateJob2");  // الانتقال للصفحة التالية
-            }}
-          >
-            {({ errors, touched }) => (
-              <Form>
-                {/* Job Title */}
-                <div className="mb-5 flex w-[60%]">
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-4 mr-72">
-                    Job Title <span className="text-[#F11F1B]">*</span>
-                  </label>
-                  <div className="w-[50%]">
-                    <Field
-                      name="jobTitle"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    />
-                    <ErrorMessage
-                      name="jobTitle"
-                      component="div"
-                      className="text-red-600 text-xs mt-1"
-                    />
-                  </div>
-                </div>
-
-                <img src={line} alt="" />
-
-                {/* Job Type */}
-                <RadioGroup
-                  label="Job Type"
-                  name="jobType"
-                  options={["Internship", "Full-time", "Part-time"]}
-                  touched={touched}
-                  errors={errors}
-                  margin="mr-72"
+          <form onSubmit={formik.handleSubmit}>
+            {/* Job Title */}
+            <div className="mb-5 flex w-[60%]">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-4 mr-72">
+                Job Title <span className="text-[#F11F1B]">*</span>
+              </label>
+              <div className="w-[40%]">
+                <input
+                  name="title"
+                  value={formik.values.title}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
-                <img src={line} alt="" />
-
-                {/* Experience Level */}
-                <RadioGroup
-                  label="Experience Level"
-                  name="experienceLevel"
-                  options={["Junior", "Mid-Level", "Senior"]}
-                  touched={touched}
-                  errors={errors}
-                  margin="mr-60"
-                />
-                <img src={line} alt="" />
-
-                {/* Location */}
-                <RadioGroup
-                  label="Location"
-                  name="location"
-                  options={["Remote", "On-site", "Hybrid"]}
-                  touched={touched}
-                  errors={errors}
-                  margin="mr-72"
-                />
-                <img src={line} alt="" />
-
-                {/* Working Hours */}
-                <RadioGroup
-                  label="Working Hours"
-                  name="workingHours"
-                  options={["Flexible Schedule", "Fixed Schedule"]}
-                  touched={touched}
-                  errors={errors}
-                  margin="mr-60"
-                />
-                <img src={line} alt="" />
-
-                {/* Education */}
-                <div className="mb-5 flex w-[65%] mt-8">
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-4 mr-44">
-                    Education Requirements <span className="text-[#F11F1B]">*</span>
-                  </label>
-                  <div className="w-[50%]">
-                    <Field
-                      name="education"
-                      placeholder="ex: Bachelor’s Degree in Computer Science"
-                      className="bg-gray-50 border h-14 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-                    />
-                    <ErrorMessage
-                      name="education"
-                      component="div"
-                      className="text-red-600 text-xs mt-1"
-                    />
-                  </div>
+              </div>
+              {formik.errors.title && formik.touched.title && (
+                <div className="text-red-500 text-sm mt-2 ms-2">
+                  {formik.errors.title}
                 </div>
-                <img src={line} alt="" />
+              )}
+            </div>
 
-                {/* Skills */}
-                <div className="mb-20 flex w-[65%] mt-8">
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-4 mr-60">
-                    Required Skills <span className="text-[#F11F1B]">*</span>
-                  </label>
-                  <div className="w-[50%]">
-                    <Field
-                      name="skills"
-                      className="bg-gray-50 border h-14 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-                    />
-                    <ErrorMessage
-                      name="skills"
-                      component="div"
-                      className="text-red-600 text-xs mt-1"
-                    />
-                  </div>
-                </div>
+            <img src={line} alt="" />
 
-                {/* Buttons */}
-                <div className="w-full h-[2px] bg-slate-200 mb-7"></div>
-                <div className="h-20 w-full relative bottom-0 right-0 left-0 flex justify-between">
-                  <Link to="/">
-                    <button
-                      type="button"
-                      className="w-24 h-12 text-[#0C2E82] border-2 rounded-xl border-[#0C2E82]"
-                    >
-                      Back
-                    </button>
-                  </Link>
-                  <button
-                    type="submit"
-                    className="w-24 h-12 bg-[#0C2E82] text-white rounded-xl"
-                  >
-                    Continue
-                  </button>
+            {/* Job Type */}
+            <div>
+              <label className="block font-medium text-gray-700">
+                Job Type *
+              </label>
+              <div className="flex space-x-6">
+                <label>
+                  <input
+                    type="radio"
+                    name="type"
+                    value="freelance"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    checked={formik.values.type === "freelance"}
+                    className="mr-2"
+                  />
+                  Freelance
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="type"
+                    value="full_time"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    checked={formik.values.type === "full_time"}
+                    className="mr-2"
+                  />
+                  Full-time
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="type"
+                    value="part_time"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    checked={formik.values.type === "part_time"}
+                    className="mr-2"
+                  />
+                  Part-time
+                </label>
+              {formik.errors.type && formik.touched.type && (
+                <div className="text-red-500 text-sm mt-2 ms-2">
+                  {formik.errors.type}
                 </div>
-              </Form>
-            )}
-          </Formik>
+              )}
+              </div>
+
+            </div>
+
+            <div>
+              <label className="block font-medium text-gray-700">
+                Experience Level *
+              </label>
+              <div className="flex space-x-6">
+                <label>
+                  <input
+                    type="radio"
+                    name="experience_level"
+                    value="junior"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    checked={formik.values.experience_level === "junior"}
+                    className="mr-2"
+                  />
+                  Junior
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="experience_level"
+                    value="mid-level"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    checked={formik.values.experience_level === "mid-level"}
+                    className="mr-2"
+                  />
+                  Mid-Level
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="experience_level"
+                    value="senior"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    checked={formik.values.experience_level === "senior"}
+                    className="mr-2"
+                  />
+                  Senior
+                </label>
+                {formik.errors.experience_level && formik.touched.experience_level && (
+                <div className="text-red-500 text-sm mt-2 ms-2">
+                  {formik.errors.experience_level}
+                </div>
+              )}
+              </div>
+
+            </div>
+
+            <div>
+              <label className="block font-medium text-gray-700">
+                Location *
+              </label>
+              <div className="flex space-x-6">
+                <label>
+                  <input
+                    type="radio"
+                    name="work_location"
+                    value="remote"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    checked={formik.values.work_location === "remote"}
+                    className="mr-2"
+                  />
+                  Remote
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="work_location"
+                    value="onsite"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    checked={formik.values.work_location === "onsite"}
+                    className="mr-2"
+                  />
+                  On-site
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="work_location"
+                    value="hybrid"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    checked={formik.values.work_location === "hybrid"}
+                    className="mr-2"
+                  />
+                  Hybrid
+                </label>
+                {formik.errors.work_location && formik.touched.work_location && (
+                <div className="text-red-500 text-sm mt-2 ms-2">
+                  {formik.errors.work_location}
+                </div>
+              )}
+              </div>
+
+            </div>
+
+            <div>
+              <label className="block font-medium text-gray-700">
+                Working Hours *
+              </label>
+              <div className="flex space-x-6">
+                <label>
+                  <input
+                    type="radio"
+                    name="work_hours"
+                    value="flexible_schedule"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    checked={formik.values.work_hours === "flexible_schedule"}
+                    className="mr-2"
+                  />
+                  Flexible Schedule
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="work_hours"
+                    value="fixed_schedule"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    checked={formik.values.work_hours === "fixed_schedule"}
+                    className="mr-2"
+                  />
+                  Fixed Schedule
+                </label>
+                {formik.errors.work_hours && formik.touched.work_hours && (
+                <div className="text-red-500 text-sm mt-2 ms-2">
+                  {formik.errors.work_hours}
+                </div>
+              )}
+              </div>
+              
+            </div>
+            <img src={line} alt="" />
+
+            {/* Education */}
+            <div className="mb-5 flex w-[65%] mt-8">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-4 mr-44">
+                Education Requirements <span className="text-[#F11F1B]">*</span>
+              </label>
+              <div className="w-[40%]">
+                <input
+                  name="requirements"
+                  value={formik.values.requirements}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  type="text"
+                  placeholder="ex: Bachelor’s Degree in Computer Science"
+                  className="bg-gray-50 border h-14 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                />
+              </div>
+              {formik.errors.requirements && formik.touched.requirements && (
+                <div className="text-red-500 text-sm mt-2 ms-2">
+                  {formik.errors.requirements}
+                </div>
+              )}
+            </div>
+            <img src={line} alt="" />
+
+            {/* Skills */}
+            <div className="mb-20 flex w-[65%] mt-8">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-4 mr-60">
+                Required Skills <span className="text-[#F11F1B]">*</span>
+              </label>
+              <div className="w-[40%]">
+                <input
+                  name="skills"
+                  value={formik.values.skills}
+                  onChange={(e) => {
+                    const values = e.target.value.split(",").map((skill) => skill.trim());
+                    formik.setFieldValue("skills", values);
+                  }}
+                  onBlur={formik.handleBlur}
+                  type="text"
+                  className="bg-gray-50 border h-14 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                />
+              </div>
+              {formik.errors.skills && formik.touched.skills && (
+                <div className="text-red-500 text-sm mt-2 ms-2">
+                  {formik.errors.skills}
+                </div>
+              )}
+            </div>
+
+            {/* Buttons */}
+            <div className="w-full h-[2px] bg-slate-200 mb-7"></div>
+            <div className="h-20 w-full relative bottom-0 right-0 left-0 flex justify-between">
+              <Link to="/">
+                <button
+                  type="button"
+                  className="w-24 h-12 text-[#0C2E82] border-2 rounded-xl border-[#0C2E82]"
+                >
+                  Back
+                </button>
+              </Link>
+              <button
+                type="submit"
+                className="w-24 h-12 bg-[#0C2E82] text-white rounded-xl"
+              >
+                Continue
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   );
 }
-
-// Reusable RadioGroup component
-const RadioGroup = ({ label, name, options, touched, errors, margin }) => (
-  <div className={`mb-5 flex w-[70%] mt-8`}>
-    <p className={`${margin} text-sm font-medium`}>
-      {label} <span className="text-[#F11F1B]">*</span>
-    </p>
-    <div className="flex items-center mb-4">
-      {options.map((option, index) => (
-        <div className="radio mr-12" key={index}>
-          <label className="flex items-center">
-            <Field
-              type="radio"
-              name={name}
-              value={option}
-              className="w-4 h-4 text-blue-600 border-gray-300"
-            />
-            <span className="ms-2 text-sm font-medium text-gray-900">
-              {option}
-            </span>
-          </label>
-        </div>
-      ))}
-    </div>
-    {touched[name] && errors[name] && (
-      <div className="text-red-600 text-xs mt-1 absolute right-10">{errors[name]}</div>
-    )}
-  </div>
-);
-

@@ -10,13 +10,13 @@ export const usePostJob = () => {
 
 export const PostJobProvider = ({ children }) => {
   const [formData, setFormData] = useState({
-    jobTitle: "",
-    jobType: "",
-    experienceLevel: "",
-    location: "",
-    workingHours: "",
-    education: "",
-    skills: "",
+    title: "",
+    type: "",
+    experience_level: "",
+    work_location: "",
+    work_hours: "",
+    requirements: "",
+    skills: [],
   });
 
   const updateFormData = (data) => {

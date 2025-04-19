@@ -1,5 +1,5 @@
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import React, { useEffect, useState } from 'react';
+import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
 import * as Yup from 'yup';
 import frame from "../../assets/Images/Frame.svg";
 import job3 from "../../assets/Images/job3.svg";
@@ -8,45 +8,66 @@ import Done from "../../assets/Images/Done.svg";
 import line from "../../assets/Images/Line 69.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { usePostJob } from "../../Context/PostJobContext"; 
-
-const validationSchema = Yup.object({
-  openDate: Yup.date().required('Open date is required'),
-  closeDate: Yup.date()
-    .required('Close date is required')
-    .min(Yup.ref('openDate'), 'Close date cannot be before open date'),
-  maxApplications: Yup.number()
-    .required('Maximum applications is required')
-    .positive('Must be a positive number')
-    .integer('Must be an integer'),
-  requiredApplicants: Yup.number()
-    .required('Required applicants is required')
-    .positive('Must be a positive number')
-    .integer('Must be an integer'),
-});
-
-
-const handleSubmit = async () => {
-    try {
-      const res = await fetch('https://hireverse.ddns.net/api/jobs', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-  
-      if (!res.ok) throw new Error('Failed to submit');
-  
-      const result = await res.json();
-      console.log('Job submitted:', result);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+import axios from 'axios';
 
 export default function CreateJob3() {
+    const [formData, setFormData] = useState({});
+  
+    useEffect(() => {
+      // افترضنا أنك خزنت البيانات من الصفحة الأولى في localStorage
+      const savedData = JSON.parse(localStorage.getItem('formData'));
+      if (savedData) {
+        setFormData(savedData); // قم بتحديث الحالة بالبيانات المخزنة
+      }
+    }, []);
+  const validationSchema = Yup.object({
+
+    available_to: Yup.date()
+      .required('Close date is required'),
+      max_applicants: Yup.number()
+      .required('Maximum applications is required')
+      .positive('Must be a positive number')
+      .integer('Must be an integer'),
+      required_no_of_hires: Yup.number()
+      .required('Required applicants is required')
+      .positive('Must be a positive number')
+      .integer('Must be an integer'),
+      salary: Yup.number().min(1, 'Salary must be a positive number').required('Salary is required'),
+      currency: Yup.string().required('Currency is required'),
+      job_location: Yup.string().required('Job location is required'),
+  });
+  
+  
+  const formik = useFormik({
+    initialValues: {
+      available_to: '',
+      max_applicants: '',
+      required_no_of_hires: '',
+      salary: '',
+      currency: '',
+      job_location:''
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      const combinedData = { ...formData, ...values }; 
+      try {
+        await axios.post('https://hireverse.ddns.net/api/jobs', combinedData , 
+
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("companyToken")}`,
+            },
+          }
+        ); // إرسال البيانات
+        navigate('/'); // الانتقال للصفحة التالية
+      } catch (error) {
+        console.error('Error submitting the form', error);
+      }
+    }
+  });
+  
   const navigate = useNavigate();
-  const { formData } = usePostJob();
+  // const { formData } = usePostJob();
   return (
     <div className="">
       <p className="font-sf_pro_text font-semibold text-base mb-3 ml-8 mt-6">
@@ -68,66 +89,104 @@ export default function CreateJob3() {
             <p className="font-sf_pro_text font-medium ">Final Settings</p>
           </div>
         </div>
-
+  
         <div className="col-span-9">
-          <Formik
-            initialValues={{
-              openDate: '',
-              closeDate: '',
-              maxApplications: '',
-              requiredApplicants: '',
-            }}
-            validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log(values);
-              // Here you would usually send the data to your backend or move to a confirmation page
-              navigate("/CreateJob3"); // you can change the path if needed
-            }}
-          >
-            {() => (
-              <Form>
-                {/* Open Date */}
-                <div className="flex">
-                  <label className="mr-72 text-base mt-6 font-semibold">
-                    Open Date<span className="text-[#F11F1B]">*</span>
-                  </label>
-                  <div className="relative max-w-sm w-[480px]">
-                    <Field
-                      type="date"
-                      name="openDate"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-3 p-2.5"
-                    />
-                    <ErrorMessage
-                      name="openDate"
-                      component="div"
-                      className="text-red-600 text-xs mt-1"
-                    />
-                  </div>
-                </div>
 
-                <img src={line} className="mt-10 mb-10" alt="" />
-
+   
+              <form onSubmit={formik.handleSubmit}>
+            
+  
                 {/* Close Date */}
                 <div className="flex">
                   <label className="mr-72 text-base mt-6 font-semibold">
                     Close Date<span className="text-[#F11F1B]">*</span>
                   </label>
                   <div className="relative max-w-sm w-[480px]">
-                    <Field
+                    <input
                       type="date"
-                      name="closeDate"
+                      name="available_to"
+                      value={formik.values.available_to}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-3 p-2.5"
                     />
-                    <ErrorMessage
-                      name="closeDate"
-                      component="div"
-                      className="text-red-600 text-xs mt-1"
-                    />
+                    
                   </div>
+                  {formik.errors.available_to && formik.touched.available_to && (
+                <div className="text-red-500 text-sm mt-2 ms-2">
+                  {formik.errors.available_to}
+                </div>)}
                 </div>
 
+                    <img src={line} className="mt-10 mb-10" alt="" />
+                <div className="flex">
+                  <label className="mr-72 text-base mt-6 font-semibold">
+                    Job Location <span className="text-[#F11F1B]">*</span>
+                  </label>
+                  <div className="relative max-w-sm w-[480px]">
+                    <input
+                      type="text"
+                      name="job_location"
+                      placeholder='Enter the job_location...'
+                      value={formik.values.job_location}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-3 p-2.5"
+                    />
+                    
+                  </div>
+                  {formik.errors.job_location && formik.touched.job_location && (
+                <div className="text-red-500 text-sm mt-2 ms-2">
+                  {formik.errors.job_location}
+                </div>)}
+                </div>
+                    <img src={line} className="mt-10 mb-10" alt="" />
+                <div className="flex">
+                  <label className="mr-72 text-base mt-6 font-semibold">
+                    Salary <span className="text-[#F11F1B]">*</span>
+                  </label>
+                  <div className="relative max-w-sm w-[480px]">
+                    <input
+                      type="number"
+                      name="salary"
+                      placeholder='Enter the salary...'
+                      value={formik.values.salary}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-3 p-2.5"
+                    />
+                    
+                  </div>
+                  {formik.errors.salary && formik.touched.salary && (
+                <div className="text-red-500 text-sm mt-2 ms-2">
+                  {formik.errors.salary}
+                </div>)}
+                </div>
+                    <img src={line} className="mt-10 mb-10" alt="" />
+                <div className="flex">
+                  <label className="mr-72 text-base mt-6 font-semibold">
+                  Currency <span className="text-[#F11F1B]">*</span>
+                  </label>
+                  <div className="relative max-w-sm w-[480px]">
+                    <input
+                      type="text"
+                      name="currency"
+                      placeholder='Enter the currency...'
+                      value={formik.values.currency}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-3 p-2.5"
+                    />
+                    
+                  </div>
+                  {formik.errors.currency && formik.touched.currency && (
+                <div className="text-red-500 text-sm mt-2 ms-2">
+                  {formik.errors.currency}
+                </div>)}
+                </div>
+  
                 <img src={line} className="mt-10 mb-10" alt="" />
-
+  
                 {/* Maximum Applications */}
                 <div className="mb-5 flex w-[70%]">
                   <label
@@ -137,22 +196,27 @@ export default function CreateJob3() {
                     Maximum Applications <span className="text-[#F11F1B]">*</span>
                   </label>
                   <div className="w-[70%]">
-                    <Field
+                    <input
                       type="number"
-                      name="maxApplications"
+                      name="max_applicants"
+                      value={formik.values.max_applicants}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+
                       placeholder="Set a limit for applications..."
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     />
-                    <ErrorMessage
-                      name="maxApplications"
-                      component="div"
-                      className="text-red-600 text-xs mt-1"
-                    />
+                   
                   </div>
+                  {formik.errors.max_applicants && formik.touched.max_applicants && (
+                <div className="text-red-500 text-sm mt-2 ms-2">
+                  {formik.errors.max_applicants}
+                </div>)}
+                  
                 </div>
-
                 <img src={line} className="mt-10 mb-10" alt="" />
-
+  
+  
                 {/* Required Applicants */}
                 <div className="mb-5 flex w-[70%]">
                   <label
@@ -162,22 +226,26 @@ export default function CreateJob3() {
                     Required No. Applicants <span className="text-[#F11F1B]">*</span>
                   </label>
                   <div className="w-[70%]">
-                    <Field
+                    <input
                       type="number"
-                      name="requiredApplicants"
+                      name="required_no_of_hires"
+                      value={formik.values.required_no_of_hires}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+
                       placeholder="Enter the number of applicants..."
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     />
-                    <ErrorMessage
-                      name="requiredApplicants"
-                      component="div"
-                      className="text-red-600 text-xs mt-1"
-                    />
+                   
                   </div>
+                  {formik.errors.required_no_of_hires && formik.touched.required_no_of_hires && (
+                <div className="text-red-500 text-sm mt-2 ms-2">
+                  {formik.errors.required_no_of_hires}
+                </div>)}
                 </div>
-
+  
                 <div className="w-full h-[2px] bg-slate-200 mb-12 mt-14"></div>
-
+  
                 {/* Buttons */}
                 <div className="h-20 w-full flex justify-between">
                   <Link to="/CreateJob2">
@@ -189,18 +257,18 @@ export default function CreateJob3() {
                     </button>
                   </Link>
                   <button
-                  
                     type="submit"
                     className="w-24 h-12 border-2 rounded-xl border-solid bg-[#0C2E82] text-[#FFFFFF]"
                   >
                     Finish
                   </button>
                 </div>
-              </Form>
-            )}
-          </Formik>
+              </form>
+
         </div>
       </div>
     </div>
   );
+  
+
 }

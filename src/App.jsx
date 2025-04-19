@@ -89,13 +89,11 @@ function App() {
 
   return (
     <>
-    <PostJobProvider>
     <CompanyContextProvider>
       <UserContextProvider>
         <RouterProvider router={Routers} />
       </UserContextProvider>
       </CompanyContextProvider>
-    </PostJobProvider>
       <Toaster position="top-center"/>
     </>
   );
