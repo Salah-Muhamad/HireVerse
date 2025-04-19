@@ -6,7 +6,7 @@ import { CompanyContext } from '../../Context/CompanyContext';
 
 export default function Layout() {
   const location = useLocation();
-  const hideNavbarRoutes = ['/Register' , "/DeleteAccount" ,"/PreLogin",'/CompanyLogin' ,"/ForgotPassword" , '/UpdatePassword' ,  '/VerifyEmail','/login' , '/Login' , '/SignUpCompany1' , '/SignUpCompany2' , '/SignUpApplicant','/ProfileSettings'];
+  const hideNavbarRoutes = ['/CreateJob2','/CreateJob3','/CreateJob1','/Register' , "/DeleteAccount" ,"/PreLogin",'/CompanyLogin' ,"/ForgotPassword" , '/UpdatePassword' ,  '/VerifyEmail','/login' , '/Login' , '/SignUpCompany1' , '/SignUpCompany2' , '/SignUpApplicant','/ProfileSettings'];
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
  let {setUserData}  = useContext(UserContext)
  let {setCompanyData}  = useContext(CompanyContext)

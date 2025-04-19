@@ -25,6 +25,10 @@ import DeleteAccount from "./Component/DeleteAccount/DeleteAccount";
 import CompanyLogin from "./Component/CompanyLogin/CompanyLogin";
 import PreLogin from "./Component/PreLogin/PreLogin";
 import { Toaster } from "react-hot-toast";
+import CreateJob1 from "./Component/CreteJob1/CreateJob1.jsx";
+import CreateJob2 from "./Component/CreateJob2/CreateJob2.jsx";
+import CreteJob3 from "./Component/CreateJob3/CreteJob3.jsx";
+import { PostJobProvider } from "./Context/PostJobContext";  // تأكد من الباث والاسم الصحيح
 
 
 
@@ -74,14 +78,18 @@ function App() {
         { path: 'SignUpCompany2', element: <SignUpCompany2 /> },
         { path: 'ForgotPassword', element: <ForgotPassword /> },
         { path: '*', element: <NotFound /> },
-        {path:'ProfileSettings',element:<ProfileSettings/>}
+        {path:'ProfileSettings',element:<ProfileSettings/>},
+        {path:'CreateJob1',element:<CreateJob1/>},
+        {path:'CreateJob2',element:<CreateJob2/>},
+        {path:'CreateJob3',element:<CreteJob3/>},
+
       ],
     },
   ]);
 
   return (
     <>
-      <CompanyContextProvider>
+    <CompanyContextProvider>
       <UserContextProvider>
         <RouterProvider router={Routers} />
       </UserContextProvider>
