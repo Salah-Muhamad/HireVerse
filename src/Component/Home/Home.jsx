@@ -89,11 +89,9 @@ export default function Home() {
     }
   }
   async function getCompanyJobs() {
-
-    try { 
-      
+    try {
       let { data } = await axios.get(
-        `https://hireverse.ddns.net/api/company/jobs` ,
+        `https://hireverse.ddns.net/api/company/jobs`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("companyToken")}`,
@@ -278,9 +276,9 @@ export default function Home() {
                   </p>
                   <div className="mt-10 flex gap-7 font-bai_jamjuree font-semibold">
                     <Link to={"/Register"}>
-                    <button className="bg-primary text-white w-40 h-14 rounded-lg border-0">
-                      Get Started
-                    </button>
+                      <button className="bg-primary text-white w-40 h-14 rounded-lg border-0">
+                        Get Started
+                      </button>
                     </Link>
                     <Link to={"/PreLogin"}>
                       <button className="text-primary w-40 h-14 rounded-lg border-2 border-primary">
@@ -642,7 +640,6 @@ export default function Home() {
               number={stats1.total}
               comp={stats1.change}
               icon={PublishedJobs}
-              
             />
             <CompanySta
               title={"Accepted Candidates"}
@@ -685,12 +682,18 @@ export default function Home() {
               placeholder="Search"
             />
           </div>
-          <div className="grid grid-cols-3 gap-8 me-32 ">
-          {
-            companyJobs.map((companyJob, index) => (
-              <CompanyJobs key={index} companyJob={companyJob} />
-            ))
-          }
+          <div className="grid grid-cols-3 gap-8 me-32">
+            {companyJobs.map((companyJob, index) => (
+              <CompanyJobs
+                key={companyJob.jobId} // يفضل استخدام ID حقيقي مش index
+                companyJob={companyJob}
+                onDelete={(id) => {
+                  setCompanyJobs((prevJobs) =>
+                    prevJobs.filter((job) => job.jobId !== id)
+                  );
+                }}
+              />
+            ))}
           </div>
           {/* <CompanyJobs /> */}
         </div>
