@@ -17,10 +17,13 @@ export default function CreateJob1() {
     experience_level: Yup.string().required("Required"),
     work_location: Yup.string().required("Required"),
     work_hours: Yup.string().required("Required"),
-    requirements: Yup.string().required("Required").min(10, "Minimum 10 characters"),
+    requirements: Yup.string()
+      .required("Required")
+      .min(10, "Minimum 10 characters"),
     skills: Yup.array()
       .of(Yup.string().required("Required"))
-      .min(1, "At least one skill is required").max(20, "Maximum 20 skills allowed"),
+      .min(1, "At least one skill is required")
+      .max(20, "Maximum 20 skills allowed"),
   });
 
   const formik = useFormik({
@@ -37,10 +40,10 @@ export default function CreateJob1() {
     onSubmit: (values) => {
       // حفظ البيانات في localStorage
       localStorage.setItem("formData", JSON.stringify(values));
-  
+
       // تحديث حالة formData المحلية (إذا كنت تستخدم حالة في الـ component)
       setFormData({ ...formData, ...values });
-      console.log(formData)
+      console.log(formData);
       // الانتقال إلى الصفحة التالية
       navigate("/CreateJob2");
     },
@@ -99,10 +102,10 @@ export default function CreateJob1() {
 
             {/* Job Type */}
             <div>
-              <label className="block font-medium text-gray-700">
-                Job Type *
+              <div className="flex space-x-6 mt-4 mb-4 ">
+              <label className="block font-bold text-gray-700">
+                Job Type <span className="text-[#F11F1B]">*</span>
               </label>
-              <div className="flex space-x-6">
                 <label>
                   <input
                     type="radio"
@@ -139,20 +142,19 @@ export default function CreateJob1() {
                   />
                   Part-time
                 </label>
-              {formik.errors.type && formik.touched.type && (
-                <div className="text-red-500 text-sm mt-2 ms-2">
-                  {formik.errors.type}
-                </div>
-              )}
+                {formik.errors.type && formik.touched.type && (
+                  <div className="text-red-500 text-sm mt-2 ms-2">
+                    {formik.errors.type}
+                  </div>
+                )}
               </div>
-
             </div>
 
             <div>
-              <label className="block font-medium text-gray-700">
-                Experience Level *
+              <div className="flex space-x-6 mt-4 mb-4">
+              <label className="block font-bold text-gray-700">
+                Experience Level <span className="text-[#F11F1B]">*</span>
               </label>
-              <div className="flex space-x-6">
                 <label>
                   <input
                     type="radio"
@@ -189,20 +191,20 @@ export default function CreateJob1() {
                   />
                   Senior
                 </label>
-                {formik.errors.experience_level && formik.touched.experience_level && (
-                <div className="text-red-500 text-sm mt-2 ms-2">
-                  {formik.errors.experience_level}
-                </div>
-              )}
+                {formik.errors.experience_level &&
+                  formik.touched.experience_level && (
+                    <div className="text-red-500 text-sm mt-2 ms-2">
+                      {formik.errors.experience_level}
+                    </div>
+                  )}
               </div>
-
             </div>
 
             <div>
-              <label className="block font-medium text-gray-700">
-                Location *
+              <div className="flex space-x-6 mt-4 mb-4 ">
+              <label className="block font-bold text-gray-700">
+                Location <span className="text-[#F11F1B]">*</span>
               </label>
-              <div className="flex space-x-6">
                 <label>
                   <input
                     type="radio"
@@ -239,20 +241,20 @@ export default function CreateJob1() {
                   />
                   Hybrid
                 </label>
-                {formik.errors.work_location && formik.touched.work_location && (
-                <div className="text-red-500 text-sm mt-2 ms-2">
-                  {formik.errors.work_location}
-                </div>
-              )}
+                {formik.errors.work_location &&
+                  formik.touched.work_location && (
+                    <div className="text-red-500 text-sm mt-2 ms-2">
+                      {formik.errors.work_location}
+                    </div>
+                  )}
               </div>
-
             </div>
 
             <div>
-              <label className="block font-medium text-gray-700">
-                Working Hours *
+              <div className="flex space-x-6 mt-4 mb-4">
+              <label className="block  text-gray-700 font-bold">
+                Working Hours <span className="text-[#F11F1B]">*</span>
               </label>
-              <div className="flex space-x-6">
                 <label>
                   <input
                     type="radio"
@@ -278,19 +280,18 @@ export default function CreateJob1() {
                   Fixed Schedule
                 </label>
                 {formik.errors.work_hours && formik.touched.work_hours && (
-                <div className="text-red-500 text-sm mt-2 ms-2">
-                  {formik.errors.work_hours}
-                </div>
-              )}
+                  <div className="text-red-500 text-sm mt-2 ms-2">
+                    {formik.errors.work_hours}
+                  </div>
+                )}
               </div>
-              
             </div>
             <img src={line} alt="" />
 
-            {/* Education */}
-            <div className="mb-5 flex w-[65%] mt-8">
+            
+            <div className="mb-5 flex  mt-8">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-4 mr-44">
-                Education Requirements <span className="text-[#F11F1B]">*</span>
+                 Requirements <span className="text-[#F11F1B]">*</span>
               </label>
               <div className="w-[40%]">
                 <input
@@ -321,7 +322,9 @@ export default function CreateJob1() {
                   name="skills"
                   value={formik.values.skills}
                   onChange={(e) => {
-                    const values = e.target.value.split(",").map((skill) => skill.trim());
+                    const values = e.target.value
+                      .split(",")
+                      .map((skill) => skill.trim());
                     formik.setFieldValue("skills", values);
                   }}
                   onBlur={formik.handleBlur}
