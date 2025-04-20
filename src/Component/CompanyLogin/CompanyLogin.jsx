@@ -51,6 +51,8 @@ export default function CompanyLogin() {
       );
       localStorage.setItem("company_insights", data.data.company.insights);
       localStorage.setItem("company_ceo", data.data.company.ceo);
+      localStorage.setItem("company_industry", data.data.company.industry);
+      localStorage.setItem("company_logo", data.data.company.logo);
 
       console.log(data);
 
