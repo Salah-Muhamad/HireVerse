@@ -29,6 +29,7 @@ import CreateJob1 from "./Component/CreteJob1/CreateJob1.jsx";
 import CreateJob2 from "./Component/CreateJob2/CreateJob2.jsx";
 import CreteJob3 from "./Component/CreateJob3/CreteJob3.jsx";
 import { PostJobProvider } from "./Context/PostJobContext";  // تأكد من الباث والاسم الصحيح
+import ProJsx from "./Component/Pro/Pro.jsx";
 
 
 
@@ -82,6 +83,7 @@ function App() {
         {path:'CreateJob1',element:<CreateJob1/>},
         {path:'CreateJob2',element:<CreateJob2/>},
         {path:'CreateJob3',element:<CreteJob3/>},
+        {path:'pro',element:<ProJsx/>}
 
       ],
     },
