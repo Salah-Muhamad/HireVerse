@@ -21,13 +21,7 @@ export default function CompanyProfile() {
   const [description, setDescription] = useState("");
   const [insights, setInsights] = useState("");
 
-  const avatarUrl = localStorage.getItem("company_logo");
-  const [photo, setPhoto] = useState(
-    avatarUrl && avatarUrl !== "null"
-      ? `https://hireverse.ddns.net/api/storage/${avatarUrl}`
-      : photo2
-  );
-  console.log(photo);
+  const [photo, setPhoto] = useState();
   const [method, setMethod] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -35,7 +29,7 @@ export default function CompanyProfile() {
     const file = e.target.files[0];
     if (file) {
       setSelectedFile(file);
-      setPhoto(URL.createObjectURL(file));
+      setPhoto(URL.createObjectURL(file)); // عرض مؤقت للصورة
     }
   };
 
@@ -47,13 +41,12 @@ export default function CompanyProfile() {
     }
 
     const form_data = new FormData();
-    form_data.append("avatar", selectedFile);
+    form_data.append("logo", selectedFile);
     form_data.append("_method", "PATCH");
 
     try {
       const response = await axios.post(
-        "https://hireverse.ddns.net/api/companies", 
-
+        "https://hireverse.ddns.net/api/companies",
         form_data,
         {
           headers: {
@@ -62,26 +55,29 @@ export default function CompanyProfile() {
           },
         }
       );
+
       toast.success("Uploaded successfully!", { id: toastId });
-      console.log(response);
-      localStorage.setItem(
-        "company_logo",
-        response.data.data.attributes.logoUrl
-      ); // Update local storage with new avatar URL
-      // alert("Uploaded successfully!");
-      console.log("Server response:", response.data);
+
+      const newAvatarUrl = response.data.data.attributes.logoUrl;
+
+      // تحديث localStorage بالمفتاح الصحيح
+      localStorage.setItem("company_logo", newAvatarUrl);
+
+      // تحديث الصورة مباشرة
+      setPhoto(`https://hireverse.ddns.net/api/storage/${newAvatarUrl}`);
+
+      console.log("Server response:", newAvatarUrl);
     } catch (error) {
       console.error("Upload error:", error);
-      // alert("Failed to upload!");
       toast.error("Failed to upload!", { id: toastId });
     }
+
     console.log(selectedFile);
   };
 
-
   function handleDiscard() {
     const storedCompanyName = localStorage.getItem("company_name") || "";
-    const storedEmail = localStorage.getItem("company_email") || "";
+    // const storedEmail = localStorage.getItem("company_email") || "";
     const storedCeo = localStorage.getItem("company_ceo") || "";
     const storedIndustry = localStorage.getItem("company_industry") || "";
     const storedLocation = localStorage.getItem("company_location") || "";
@@ -91,7 +87,7 @@ export default function CompanyProfile() {
     const storedInsights = localStorage.getItem("company_insights") || "";
 
     setCompanyName(storedCompanyName);
-    setEmail(storedEmail);
+    // setEmail(storedEmail);
     setCeo(storedCeo);
     setIndustry(storedIndustry);
     setLocation(storedLocation);
@@ -101,7 +97,7 @@ export default function CompanyProfile() {
     setInsights(storedInsights);
 
     formik.setFieldValue("company_name", storedCompanyName);
-    formik.setFieldValue("company_email", storedEmail);
+    // formik.setFieldValue("company_email", storedEmail);
     formik.setFieldValue("company_ceo", storedCeo);
     formik.setFieldValue("company_industry", storedIndustry);
     formik.setFieldValue("company_location", storedLocation);
@@ -113,7 +109,7 @@ export default function CompanyProfile() {
 
   useEffect(() => {
     setCompanyName(localStorage.getItem("company_name") || "");
-    setEmail(localStorage.getItem("company_email") || "");
+    // setEmail(localStorage.getItem("company_email") || "");
     setCeo(localStorage.getItem("company_ceo") || "");
     setIndustry(localStorage.getItem("company_industry") || "");
     setLocation(localStorage.getItem("company_location") || "");
@@ -121,19 +117,31 @@ export default function CompanyProfile() {
     setWebSiteUrl(localStorage.getItem("company_website_url") || "");
     setDescription(localStorage.getItem("company_description") || "");
     setInsights(localStorage.getItem("company_insights") || "");
-  }, []);
 
-  const handleRemoveSkill = (skillToRemove) => {
-    const updatedSkills = showSkills.filter((s) => s !== skillToRemove);
-    setShowSkills(updatedSkills);
-    setSkills(updatedSkills);
-    formik.setFieldValue("skills", updatedSkills);
-  };
+    const email = localStorage.getItem("company_email") || "";
+    if (email) {
+      setEmail(email);
+
+      const avatarUrl = localStorage.getItem("company_logo");
+      if (avatarUrl && avatarUrl !== "null") {
+        setPhoto(`https://hireverse.ddns.net/api/storage/${avatarUrl}`);
+      } else {
+        setPhoto(photo2); // photo2 لازم تكون معرفة فوق
+      }
+    }
+
+    // const avatarUrl = localStorage.getItem("company_logo");
+    // if (avatarUrl && avatarUrl !== "null") {
+    //   setPhoto(`https://hireverse.ddns.net/api/storage/${avatarUrl}`);
+    // } else {
+    //   setPhoto(photo2);
+    // }
+  }, []);
 
   const formik = useFormik({
     initialValues: {
       name: companyName,
-      email: email,
+      // email: email,
       ceo: ceo,
       industry: industry,
       location: location,
@@ -162,8 +170,8 @@ export default function CompanyProfile() {
       console.log(values);
       console.log("الرد من السيرفر:", response.data);
 
-      localStorage.setItem("company_name", values.company_name);
-      localStorage.setItem("email", values.email);
+      localStorage.setItem("company_name", values.name);
+      // localStorage.setItem("company_email", values.email);
       localStorage.setItem("company_ceo", values.ceo);
       localStorage.setItem("company_industry", values.industry);
       localStorage.setItem("company_location", values.location);
@@ -173,7 +181,7 @@ export default function CompanyProfile() {
       localStorage.setItem("company_insights", values.insights);
 
       setCompanyName(values.company_name);
-      setEmail(values.email);
+      // setEmail(values.email);
       setCeo(values.ceo);
       setIndustry(values.industry);
       setLocation(values.location);
@@ -233,7 +241,7 @@ export default function CompanyProfile() {
               </button>
             </div>
           </div>
-          <div className="border-b-2 border-[#E8E8E8] mt-3 mb-4"></div>
+          <div className="border-b-2 border-[#0b0a0a] mt-3 mb-4"></div>
           <div>
             <p className="text-[#616161] font-normal text-sm mb-8">
               Update Your Profile
@@ -254,6 +262,7 @@ export default function CompanyProfile() {
                           {companyName}
                         </p>
                         <p className="text-[#7D7D7D] font-normal text-sm">
+                          {/*email*/}
                           {email}
                         </p>
                       </div>
@@ -313,27 +322,7 @@ export default function CompanyProfile() {
                         />
                       </div>
                     </div>
-                    <div className="mb-5 mt-5">
-                      <label
-                        htmlFor=""
-                        className="font-sf_pro_text text-sm font-bold"
-                      >
-                        Business Email
-                      </label>
-                      <input
-                        disabled
-                        value={formik.values.email}
-                        type="text"
-                        id="email"
-                        name="email"
-                        className="mt-2 bg-gray-50 border border-gray-300 text-gray-500 text-lg rounded-xl 
-                      focus:ring-[#0C2E82] focus:border-[#0C2E82] block h-[35px] w-[90%] p-2 
-                      dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-[#0C2E82] 
-                      dark:focus:border-[#0C2E82]"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </div>
+
                     <div className="mb-5">
                       <label
                         htmlFor=""
