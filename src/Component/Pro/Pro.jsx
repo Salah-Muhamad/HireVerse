@@ -25,7 +25,7 @@ export default function Pro() {
             Upgrade your plan for more features
           </p>
 
-          {/* Toggle */}
+          
           <div className='relative flex bg-[#F2F2F4] w-[350px] justify-between ml-24 mt-6 h-14 rounded-lg font-sf_pro_text font-medium text-lg overflow-hidden'>
             <div
               className={`absolute top-1 left-1 w-[160px] h-10 bg-white rounded-lg transition-all duration-300 ${
@@ -54,7 +54,7 @@ export default function Pro() {
 
       <div className="two flex items-center justify-center">
         <div className='flex gap-20'>
-          {/* Basic Plan */}
+          
           <div className='w-[405px] h-[480px] rounded-xl bg-[#F8FAFC] p-9 font-sf_pro_text font-bold text-2xl'>
             <p className='mb-6'>Basic Plan</p>
             <p>{pricing[billing].basic}
@@ -77,7 +77,7 @@ export default function Pro() {
             </button>
           </div>
 
-          {/* Pro Plan */}
+          
           <div className='w-[430px] h-[480px] rounded-xl bg-[#F8FAFC] p-9 font-sf_pro_text font-bold text-2xl relative'>
             <p className='mb-6'>Pro Plan</p>
             <p>{pricing[billing].pro}
