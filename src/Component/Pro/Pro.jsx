@@ -26,7 +26,7 @@ export default function Pro() {
           </p>
 
           
-          <div className='relative flex bg-[#F2F2F4] w-[350px] justify-between ml-24 mt-6 h-14 rounded-lg font-sf_pro_text font-medium text-lg overflow-hidden'>
+          <div className='relative flex bg-[#F2F2F4] w-[350px] justify-between ml-24 mt-6 h-12 rounded-lg font-sf_pro_text font-medium text-lg overflow-hidden'>
             <div
               className={`absolute top-1 left-1 w-[160px] h-10 bg-white rounded-lg transition-all duration-300 ${
                 billing === "monthly" ? "translate-x-0" : "translate-x-[170px]"
