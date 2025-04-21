@@ -110,10 +110,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="type"
-                    value="freelance"
+                    value="Freelance"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.type === "freelance"}
+                    checked={formik.values.type === "Freelance"}
                     className="mr-2"
                   />
                   Freelance
@@ -122,10 +122,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="type"
-                    value="full_time"
+                    value="Full time"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.type === "full_time"}
+                    checked={formik.values.type === "Full time"}
                     className="mr-2"
                   />
                   Full-time
@@ -134,10 +134,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="type"
-                    value="part_time"
+                    value="Part time"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.type === "part_time"}
+                    checked={formik.values.type === "Part time"}
                     className="mr-2"
                   />
                   Part-time
@@ -159,10 +159,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="experience_level"
-                    value="junior"
+                    value="Junior"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.experience_level === "junior"}
+                    checked={formik.values.experience_level === "Junior"}
                     className="mr-2"
                   />
                   Junior
@@ -171,10 +171,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="experience_level"
-                    value="mid-level"
+                    value="Mid level"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.experience_level === "mid-level"}
+                    checked={formik.values.experience_level === "Mid level"}
                     className="mr-2"
                   />
                   Mid-Level
@@ -183,10 +183,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="experience_level"
-                    value="senior"
+                    value="Senior"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.experience_level === "senior"}
+                    checked={formik.values.experience_level === "Senior"}
                     className="mr-2"
                   />
                   Senior
@@ -209,10 +209,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="work_location"
-                    value="remote"
+                    value="Remote"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.work_location === "remote"}
+                    checked={formik.values.work_location === "Remote"}
                     className="mr-2"
                   />
                   Remote
@@ -221,10 +221,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="work_location"
-                    value="onsite"
+                    value="Onsite"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.work_location === "onsite"}
+                    checked={formik.values.work_location === "Onsite"}
                     className="mr-2"
                   />
                   On-site
@@ -233,10 +233,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="work_location"
-                    value="hybrid"
+                    value="Hybrid"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.work_location === "hybrid"}
+                    checked={formik.values.work_location === "Hybrid"}
                     className="mr-2"
                   />
                   Hybrid
@@ -259,10 +259,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="work_hours"
-                    value="flexible_schedule"
+                    value="Flexible schedule"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.work_hours === "flexible_schedule"}
+                    checked={formik.values.work_hours === "Flexible schedule"}
                     className="mr-2"
                   />
                   Flexible Schedule
@@ -271,10 +271,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="work_hours"
-                    value="fixed_schedule"
+                    value="Fixed schedule"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.work_hours === "fixed_schedule"}
+                    checked={formik.values.work_hours === "Fixed schedule"}
                     className="mr-2"
                   />
                   Fixed Schedule

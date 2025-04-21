@@ -31,7 +31,9 @@ import CreteJob3 from "./Component/CreateJob3/CreteJob3.jsx";
 import CompanyProfile from "./Component/CompanyProfile/CompanyProfile.jsx";
 import DeleteCompanyAccount from "./Component/DeleteCompanyAccount/DeleteCompanyAccount.jsx";
 import ChangeCompanyPassword from "./Component/ChangeCompanyPassword/ChangeCompanyPassword.jsx";
+import CompanyDashboard from "./Component/CompanyDashboard/CompanyDashboard.jsx";
 import { PostJobProvider } from "./Context/PostJobContext";  // تأكد من الباث والاسم الصحيح
+import ShowCv from "./Component/ShowCv/ShowCv.jsx";
 
 
 
@@ -85,6 +87,13 @@ function App() {
         {path:'ProfileSettings',element:<ProfileSettings/>},
         {path:'CompanyProfile',element:<CompanyProfile/>},
         {path:'ChangeCompanyPassword',element:<ChangeCompanyPassword/>},
+        {
+          path:'CompanyDashboard/:jobId',element:<CompanyDashboard/> ,
+          children:[
+            {path:':AppId',element:<ShowCv/>}
+          ]
+        },
+        // {path:'CompanyDashboard/:jobId/:ش',element:<CompanyDashboard/>},
         {path:'CreateJob1',element:<CreateJob1/>},
         {path:'CreateJob2',element:<CreateJob2/>},
         {path:'CreateJob3',element:<CreteJob3/>},

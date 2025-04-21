@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import AA from "../../assets/Images/AA.svg";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CompanyJobs({ companyJob , onDelete }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,9 +58,9 @@ export default function CompanyJobs({ companyJob , onDelete }) {
 
       {isMenuOpen && (
         <div className="absolute right-0 top-12 bg-white border rounded-md shadow-lg w-32 z-10">
-          <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex gap-4">
+          <Link to={`/CompanyDashboard/${companyJob.jobId}`} className="w-full text-left px-4 py-2 hover:bg-gray-100 flex gap-4">
             <ListCollapse /> Details
-          </button>
+          </Link>
           <button 
             className="w-full text-left px-4 py-2 hover:bg-gray-100 flex gap-4 text-red-600"
             onClick={() => {
