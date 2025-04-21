@@ -25,10 +25,18 @@ export default function Navbar() {
   const [companyEmail, setCompanyEmail] = useState("");
 
   const avatarUrl = localStorage.getItem("avatarUrl");
-
+  
+  
+  
   const Avatar =
-    avatarUrl && avatarUrl !== "null"
-      ? `https://hireverse.ddns.net/api/storage/${avatarUrl}`
+  avatarUrl && avatarUrl !== "null"
+  ? `https://hireverse.ddns.net/api/storage/${avatarUrl}`
+  : photo2;
+  
+  const companyLogo = localStorage.getItem("company_logo");
+  const CompanyLogo =
+    companyLogo && companyLogo !== "null"
+      ? `https://hireverse.ddns.net/api/storage/${companyLogo}`
       : photo2;
   useEffect(() => {
     const firstName = localStorage.getItem("first_name");
@@ -157,7 +165,7 @@ export default function Navbar() {
                     >
                       <div className="flex justify-center items-center gap-2">
                         <img
-                          src={photo2}
+                          src={CompanyLogo}
                           className="w-12 h-12 rounded-full"
                           alt="Avatar"
                         />
@@ -177,7 +185,7 @@ export default function Navbar() {
                           <li className="px-4 py-2  cursor-pointer border-b-2">
                             <div className="flex gap-2">
                               <img
-                                src={photo2}
+                                src={CompanyLogo}
                                 className="w-12 h-12 rounded-full"
                                 alt=""
                               />
@@ -196,7 +204,7 @@ export default function Navbar() {
                               <img src={Plan} alt="" />
                             </li>
                           </NavLink>
-                          <NavLink to={"/"}>
+                          <NavLink to={"/CompanyProfile"}>
                             <li className="px-4 py-2 hover:text-gray-400 cursor-pointer  border-b-2">
                               <img src={Settings} alt="" />
                             </li>

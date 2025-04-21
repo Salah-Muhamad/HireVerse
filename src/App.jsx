@@ -28,8 +28,15 @@ import { Toaster } from "react-hot-toast";
 import CreateJob1 from "./Component/CreteJob1/CreateJob1.jsx";
 import CreateJob2 from "./Component/CreateJob2/CreateJob2.jsx";
 import CreteJob3 from "./Component/CreateJob3/CreteJob3.jsx";
+import CompanyProfile from "./Component/CompanyProfile/CompanyProfile.jsx";
+import DeleteCompanyAccount from "./Component/DeleteCompanyAccount/DeleteCompanyAccount.jsx";
+import ChangeCompanyPassword from "./Component/ChangeCompanyPassword/ChangeCompanyPassword.jsx";
+import CompanyDashboard from "./Component/CompanyDashboard/CompanyDashboard.jsx";
 import { PostJobProvider } from "./Context/PostJobContext";  // تأكد من الباث والاسم الصحيح
 import ProJsx from "./Component/Pro/Pro.jsx";
+
+import ShowCv from "./Component/ShowCv/ShowCv.jsx";
+
 
 
 
@@ -47,6 +54,7 @@ function App() {
         { path: "JobsPage", element: <JobsPage /> },
         { path: "ApplicantJobs", element: <ApplicantJobs /> },
         { path: "DeleteAccount", element: <DeleteAccount /> },
+        { path: "DeleteCompanyAccount", element: <DeleteCompanyAccount /> },
         { path: "UpdatePassword", element: <UpdatePassword /> },
         { path: "CompanyDetails/:id", element: <CompanyDetails /> },
         {
@@ -80,10 +88,22 @@ function App() {
         { path: 'ForgotPassword', element: <ForgotPassword /> },
         { path: '*', element: <NotFound /> },
         {path:'ProfileSettings',element:<ProfileSettings/>},
+        {path:'CompanyProfile',element:<CompanyProfile/>},
+        {path:'ChangeCompanyPassword',element:<ChangeCompanyPassword/>},
+        {
+          path:'CompanyDashboard/:jobId',element:<CompanyDashboard/> ,
+          children:[
+            {path:':AppId',element:<ShowCv/>}
+          ]
+        },
+        // {path:'CompanyDashboard/:jobId/:ش',element:<CompanyDashboard/>},
         {path:'CreateJob1',element:<CreateJob1/>},
         {path:'CreateJob2',element:<CreateJob2/>},
         {path:'CreateJob3',element:<CreteJob3/>},
+
         {path:'pro',element:<ProJsx/>}
+
+        
 
       ],
     },
