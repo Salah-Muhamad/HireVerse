@@ -35,6 +35,7 @@ export default function CompanyLogin() {
       );
       localStorage.setItem("companyToken", data.data.token);
       localStorage.setItem("company_name", data.data.company.name);
+      localStorage.setItem("id", data.data.company.id);
       localStorage.setItem("company_email", data.data.company.email);
       localStorage.setItem("company_location", data.data.company.location);
       localStorage.setItem(

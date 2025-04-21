@@ -16,6 +16,7 @@ export default function Layout() {
     "/CompanyLogin",
     "/ForgotPassword",
     "/UpdatePassword",
+    "/ChangeCompanyPassword",
     "/VerifyEmail",
     "/login",
     "/Login",
@@ -24,6 +25,7 @@ export default function Layout() {
     "/SignUpApplicant",
     "/ProfileSettings",
     "/CompanyProfile",
+    "/DeleteCompanyAccount",
   ];
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
   let { setUserData } = useContext(UserContext);

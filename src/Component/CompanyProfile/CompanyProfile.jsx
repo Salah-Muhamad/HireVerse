@@ -130,12 +130,6 @@ export default function CompanyProfile() {
       }
     }
 
-    // const avatarUrl = localStorage.getItem("company_logo");
-    // if (avatarUrl && avatarUrl !== "null") {
-    //   setPhoto(`https://hireverse.ddns.net/api/storage/${avatarUrl}`);
-    // } else {
-    //   setPhoto(photo2);
-    // }
   }, []);
 
   const formik = useFormik({
@@ -209,7 +203,7 @@ export default function CompanyProfile() {
           </div>
           <div className="flex gap-4 mb-8 ml-2">
             <img src={lock} alt="" />
-            <Link to={"/UpdatePassword"}>
+            <Link to={"/ChangeCompanyPassword"}>
               <p>Password</p>
             </Link>
           </div>
@@ -217,7 +211,7 @@ export default function CompanyProfile() {
           <div className="border-b-2 border-[#E8E8E8] mt-3 mb-10"></div>
           <div className="flex gap-4 mb-6">
             <img src={del} alt="" />
-            <Link to={"/DeleteAccount"}>
+            <Link to={"/DeleteCompanyAccount"}>
               <p className="text-[#F02E2E]">Delete account</p>
             </Link>
           </div>
