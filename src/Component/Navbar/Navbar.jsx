@@ -154,7 +154,7 @@ export default function Navbar() {
                   <Link className="flex items-center ">
                   <img src={Notification} alt="Notification" /> 
                   </Link>
-                  <Link to={"/"}  className="flex items-center ">
+                  <Link to={"/pro"}  className="flex items-center ">
                     {" "}
                     <img src={GoPro} alt="GoPro" />
                   </Link>{" "}

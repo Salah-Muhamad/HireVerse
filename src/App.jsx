@@ -33,7 +33,10 @@ import DeleteCompanyAccount from "./Component/DeleteCompanyAccount/DeleteCompany
 import ChangeCompanyPassword from "./Component/ChangeCompanyPassword/ChangeCompanyPassword.jsx";
 import CompanyDashboard from "./Component/CompanyDashboard/CompanyDashboard.jsx";
 import { PostJobProvider } from "./Context/PostJobContext";  // تأكد من الباث والاسم الصحيح
+import ProJsx from "./Component/Pro/Pro.jsx";
+
 import ShowCv from "./Component/ShowCv/ShowCv.jsx";
+
 
 
 
@@ -97,7 +100,11 @@ function App() {
         {path:'CreateJob1',element:<CreateJob1/>},
         {path:'CreateJob2',element:<CreateJob2/>},
         {path:'CreateJob3',element:<CreteJob3/>},
+
+        {path:'pro',element:<ProJsx/>}
+
         
+
       ],
     },
   ]);
