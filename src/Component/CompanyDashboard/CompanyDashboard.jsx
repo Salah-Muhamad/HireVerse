@@ -8,6 +8,8 @@ import AppDate from "../../assets/Images/AppDate.svg";
 import CvStatus from "../../assets/Images/CvStatus.svg";
 import Move from "../../assets/Images/Move.svg";
 import axios from "axios";
+import { CircleLoader, PacmanLoader } from "react-spinners";
+
 export default function CompanyDashboard() {
   const [loading, setLoading] = useState(false);
   const [jobData, setJobData] = useState(null);
@@ -33,7 +35,7 @@ export default function CompanyDashboard() {
             },
           }
         );
-        console.log(response.data.jobs)
+        console.log(response.data.jobs);
         const jobDetails = response.data.jobs.find((job) => job.jobId == jobId);
         console.log(jobDetails);
         if (jobDetails) {
@@ -70,14 +72,19 @@ export default function CompanyDashboard() {
     getApplicantsDetails();
   }, [jobId]);
   if (loading || !jobData) {
-    return <div>Loading...</div>;
+    return (
+      <div className="w-full h-screen bg-[#EFF2F7] flex justify-center items-center">
+        <CircleLoader />
+      </div>
+    );
   }
-  if (!jobData) {
-    return <div>Job not found</div>;
-  }
+  // if (!jobData) {
+  //   return <div>Job not found</div>;
+  // }
   return (
     <>
-      <Outlet />
+          <Outlet />
+
       <div className="bg-[#EFF2F7] h-screen font-sf_pro_text ">
         <h1 className="text-3xl font-semibold pt-40 ps-24">
           {jobData.attributes.jobTitle}
@@ -152,24 +159,21 @@ export default function CompanyDashboard() {
                 <td className="px-4 py-3 border border-gray-300">
                   {applicant.attributes.status === "Pending" ||
                   applicant.attributes.status === "CV Processing" ? (
-                    <>
-                    {applicant.attributes.status}
-                    </>
+                    <>{applicant.attributes.status}</>
                   ) : (
                     <span className="text-green-500">
                       {applicant.attributes.cvScore}
                     </span>
                   )}
                 </td>
-                <td>
-                    Accepted
-                </td>
-                <Link to={`/CompanyDashboard/${jobId}/${applicant.applicantId}`}>
+                <td>Accepted</td>
                 <td className="px-4 py-3 border border-gray-300">
-                  <img src={Next2} alt="" />
-                </td>
+                <Link
+                  to={`/CompanyDashboard/${jobId}/${applicant.applicantId}`}
+                >
+                    <img src={Next2} alt="" />
                 </Link>
-                
+                  </td>
               </tr>
             ))}
           </tbody>

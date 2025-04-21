@@ -122,10 +122,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="type"
-                    value="Full time"
+                    value="Full-time"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.type === "Full time"}
+                    checked={formik.values.type === "Full-time"}
                     className="mr-2"
                   />
                   Full-time
@@ -134,10 +134,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="type"
-                    value="Part time"
+                    value="Part-time"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.type === "Part time"}
+                    checked={formik.values.type === "Part-time"}
                     className="mr-2"
                   />
                   Part-time
@@ -171,10 +171,10 @@ export default function CreateJob1() {
                   <input
                     type="radio"
                     name="experience_level"
-                    value="Mid level"
+                    value="Mid-level"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.experience_level === "Mid level"}
+                    checked={formik.values.experience_level === "Mid-level"}
                     className="mr-2"
                   />
                   Mid-Level

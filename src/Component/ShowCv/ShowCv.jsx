@@ -2,13 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import { Download } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default function CVViewer() {
     const [activeTab, setActiveTab] = useState("cv");
 const [applicant, setApplicant] = useState("")
 const [loading, setLoading] = useState(false)
+const navigate = useNavigate()
     const {jobId, AppId} = useParams();
 
     useEffect(() => {
@@ -47,25 +48,28 @@ const [loading, setLoading] = useState(false)
         );
       }
       
+      function navigateTo() {
+        navigate(-1)
+      }
 console.log(`https://hireverse.ddns.net/api/storage/${applicant.cv}`)
       return (
-    <div className="w-full h-screen fixed bg-black/70 inset-0 z-50">
-      <div className="max-w-4xl  mx-auto p-6 bg-white shadow-md rounded-md mt-10">
+    <div className="w-full h-screen fixed bg-black/70 inset-0 z-50 flex justify-center items-center" onClick={navigateTo} >
+      <div className="  m-auto p-6 bg-white shadow-md rounded-md mt-16 w-[80%] ">
         <div className="flex items-center gap-4 border-b pb-4">
-          <img
+          {/* <img
             src="https://via.placeholder.com/80"
             alt="Profile"
             className="w-20 h-20 rounded-full object-cover"
-          />
+          /> */}
           <div>
-            <h2 className="text-xl font-semibold">Mohamed Ahmed</h2>
-            <p className="text-gray-500">Full Stack Developer</p>
-            <p className="text-sm text-gray-400 mt-1">mohammad@email.com</p>
-            <p className="text-sm text-gray-500 mt-1 max-w-md">
+            <h2 className="text-xl font-semibold">{applicant.attributes.applicantName}</h2>
+            {/* <p className="text-gray-500">Full Stack Developer</p> */}
+            <p className="text-sm text-gray-400 mt-1">{applicant.attributes.applicantEmail}</p>
+            {/* <p className="text-sm text-gray-500 mt-1 max-w-md">
               Ab reiciendis vero. Accusantium blanditiis odio vel molestiae id
               sit quasi saepe. Necessitatibus optio et omnis perspiciatis sit
               repellendus.
-            </p>
+            </p> */}
             <div className="flex gap-3 mt-2 text-blue-600">
               <a href="#">
                 <i className="fa-brands fa-linkedin"></i>
@@ -97,7 +101,10 @@ console.log(`https://hireverse.ddns.net/api/storage/${applicant.cv}`)
 
           {/* Tab Content */}
           {activeTab === "cv" && (
-            <iframe src={`https://hireverse.ddns.net/api/storage/${applicant.attributes.cv}`} frameborder="0" className="w-full min-h-[1000px]"></iframe>
+            <>
+            <iframe src={`https://hireverse.ddns.net/api/storage/${applicant.attributes.cv}`} className="w-[90%] h-[350px]"></iframe>
+            
+            </>
           )}
 
           {activeTab === "interview" && (
