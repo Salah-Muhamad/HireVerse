@@ -35,6 +35,7 @@ export default function CompanyLogin() {
       );
       localStorage.setItem("companyToken", data.data.token);
       localStorage.setItem("company_name", data.data.company.name);
+      localStorage.setItem("id", data.data.company.id);
       localStorage.setItem("company_email", data.data.company.email);
       localStorage.setItem("company_location", data.data.company.location);
       localStorage.setItem(
@@ -51,6 +52,8 @@ export default function CompanyLogin() {
       );
       localStorage.setItem("company_insights", data.data.company.insights);
       localStorage.setItem("company_ceo", data.data.company.ceo);
+      localStorage.setItem("company_industry", data.data.company.industry);
+      localStorage.setItem("company_logo", data.data.company.logo);
 
       console.log(data);
 

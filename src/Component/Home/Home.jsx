@@ -66,6 +66,11 @@ export default function Home() {
   const [stats1, setStats1] = useState("");
   const [stats2, setStats2] = useState("");
   const [stats3, setStats3] = useState("");
+  const companyLogo = localStorage.getItem("company_logo");
+  const CompanyLogo =
+    companyLogo && companyLogo !== "null"
+      ? `https://hireverse.ddns.net/api/storage/${companyLogo}`
+      : photo2;
 
   async function getCompanies() {
     try {
@@ -628,7 +633,7 @@ export default function Home() {
       {companyData && (
         <div className="bg-[#EFF2F7] pb-20 pt-40  font-sf_pro_text">
           <div className="flex items-center gap-4 ps-24">
-            <img src={photo2} alt="" className="w-20" />
+            <img src={CompanyLogo} alt="" className="w-20" />
             <div className="text-2xl font-semibold flex gap-2">
               {companyName} <img src={BlueCorrect} alt="" />
             </div>
