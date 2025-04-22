@@ -92,7 +92,7 @@ export default function CompanyDashboard() {
         <div className="flex gap-7 pt-10 ps-24">
           <Link>Applicants</Link>
           <Link>Interview</Link>
-          <Link>Final Acceptance</Link>
+          <Link to='/finalacceptance'>Final Acceptance</Link>
         </div>
 
         <div className="flex justify-between me-24">
