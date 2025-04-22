@@ -10,7 +10,7 @@ import Move from "../../assets/Images/Move.svg";
 import axios from "axios";
 import { CircleLoader, PacmanLoader } from "react-spinners";
 
-export default function Fina() {
+export default function FinalAcceptancePro() {
 
   return (
     <>
