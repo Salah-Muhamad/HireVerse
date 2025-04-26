@@ -9,6 +9,7 @@ import CvStatus from "../../assets/Images/CvStatus.svg";
 import Move from "../../assets/Images/Move.svg";
 import axios from "axios";
 import { CircleLoader } from "react-spinners";
+import { Check, X } from "lucide-react";
 
 export default function CompanyDashboard() {
   const [loading, setLoading] = useState(false);
@@ -82,11 +83,15 @@ export default function CompanyDashboard() {
 
     // Check if all applicants have cvScore
     const allApplicantsFiltered = applicantData.every(
-      (applicant) => applicant.attributes.cvScore !== undefined && applicant.attributes.cvScore !== null
+      (applicant) =>
+        applicant.attributes.cvScore !== undefined &&
+        applicant.attributes.cvScore !== null
     );
 
     if (!allApplicantsFiltered) {
-      alert("Some CVs haven't been filtered yet! Please wait for all CVs to be processed.");
+      alert(
+        "Some CVs haven't been filtered yet! Please wait for all CVs to be processed."
+      );
       return;
     }
 
@@ -108,7 +113,10 @@ export default function CompanyDashboard() {
     });
 
     // Save the updated applicants to Local Storage
-    localStorage.setItem(`applicants-${jobId}`, JSON.stringify(updatedApplicants));
+    localStorage.setItem(
+      `applicants-${jobId}`,
+      JSON.stringify(updatedApplicants)
+    );
 
     // Update the state
     setApplicantData(updatedApplicants);
@@ -125,10 +133,13 @@ export default function CompanyDashboard() {
         }
       );
       console.log("Min score updated successfully:", data);
-      alert("Min score updated successfully!");
+      // alert("Min score updated successfully!");
     } catch (error) {
-      console.error("Error updating min score:", error.response?.data || error.message);
-      alert(error.response?.data?.message || "Failed to update minimum score!");
+      console.error(
+        "Error updating min score:",
+        error.response?.data || error.message
+      );
+      // alert(error.response?.data?.message || "Failed to update minimum score!");
     }
   };
 
@@ -219,17 +230,56 @@ export default function CompanyDashboard() {
                     {applicant.attributes.appliedAt}
                   </td>
                   <td className="px-4 py-3 border border-gray-300">
-                    {applicant.attributes.cvScore !== undefined && applicant.attributes.cvScore !== null ? (
-                      <span className="text-green-500">{applicant.attributes.cvScore}</span>
+                    {applicant.attributes.status === "Pending" ||
+                    applicant.attributes.status === "CV processing" ? (
+                      <>
+                        {" "}
+                        <span
+                          className={`inline-flex font-semibold items-center px-3 py-1 rounded-full pr-2 text-lg  gap-1
+      ${
+        applicant.attributes.status === "CV processing"
+          ? "bg-yellow-100 text-yellow-800"
+          : "bg-blue-100 text-blue-800"
+      }
+    `}
+                        >
+                          <span className="h-2 w-2 rounded-full bg-current mr-2 ms-2"></span>
+                          {applicant.attributes.status}
+                        </span>
+                      </>
                     ) : (
-                      <span className="text-gray-500">{applicant.attributes.status}</span>
+                      <span className={` font-bold
+                      ${
+                        applicant.statusText === "Accepted" ? "text-green-700" : "text-red-700"
+                      }
+                      `}>
+                        {applicant.attributes.cvScore} %
+                      </span>
                     )}
                   </td>
-                  <td className={`px-4 py-3 border border-gray-300 font-bold ${applicant.statusColor}`}>
-                    {applicant.statusText}
+                  <td
+                    className={`px-4 py-3 border border-gray-300 font-bold ${applicant.statusColor}`}
+                  >
+                    <span
+                      className={`inline-flex font-semibold items-center px-4 py-1 rounded-full  text-lg  gap-1
+      ${
+        applicant.statusText === "Accepted"
+          ? "bg-green-100 text-green-800"
+          : "bg-red-100 text-red-800"
+      }
+    `}
+                    >
+                      <span >{
+                        applicant.statusText === "Accepted" ? <Check strokeWidth={0.75} /> : <X strokeWidth={0.75} />
+                        }</span>
+                      {applicant.statusText}
+
+                    </span>
                   </td>
                   <td className="px-4 py-3 border border-gray-300">
-                    <Link to={`/CompanyDashboard/${jobId}/${applicant.applicantId}`}>
+                    <Link
+                      to={`/CompanyDashboard/${jobId}/${applicant.applicantId}`}
+                    >
                       <img src={Next2} alt="" />
                     </Link>
                   </td>
