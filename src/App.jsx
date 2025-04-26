@@ -36,6 +36,7 @@ import { PostJobProvider } from "./Context/PostJobContext";  // تأكد من ا
 import ProJsx from "./Component/Pro/Pro.jsx";
 
 import ShowCv from "./Component/ShowCv/ShowCv.jsx";
+import FinalAcceptancePro from "./Component/FinalAcceptancePro/FinalAcceptancePro.jsx";
 
 
 
@@ -94,6 +95,7 @@ function App() {
           path:'CompanyDashboard/:jobId',element:<CompanyDashboard/> ,
           children:[
             {path:':AppId',element:<ShowCv/>}
+            
           ]
         },
         // {path:'CompanyDashboard/:jobId/:ش',element:<CompanyDashboard/>},
@@ -101,9 +103,13 @@ function App() {
         {path:'CreateJob2',element:<CreateJob2/>},
         {path:'CreateJob3',element:<CreteJob3/>},
 
+        {path:':finalacceptance',element:<FinalAcceptancePro/>}
+
+
         {path:'pro',element:<ProJsx/>}
 
         
+
 
       ],
     },
