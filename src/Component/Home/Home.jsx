@@ -664,7 +664,7 @@ export default function Home() {
             <div className="text-[18px] font-semibold">
               Get Access to Exclusive Tools
             </div>
-            <Link>
+            <Link to='/pro'>
               <button className="bg-[#F4A120] w-[104px] h-[40px] text-white rounded-[5px]">
                 Go Pro
               </button>
