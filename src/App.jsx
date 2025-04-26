@@ -103,7 +103,7 @@ function App() {
         {path:'CreateJob2',element:<CreateJob2/>},
         {path:'CreateJob3',element:<CreteJob3/>},
 
-        {path:':finalacceptance',element:<FinalAcceptancePro/>}
+        {path:':finalacceptance',element:<FinalAcceptancePro/>} ,
 
 
         {path:'pro',element:<ProJsx/>}
