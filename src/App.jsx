@@ -37,6 +37,7 @@ import ProJsx from "./Component/Pro/Pro.jsx";
 
 import ShowCv from "./Component/ShowCv/ShowCv.jsx";
 import FinalAcceptancePro from "./Component/FinalAcceptancePro/FinalAcceptancePro.jsx";
+import InterviewTest from "./Component/IntervewTest/InterviewTest.jsx";
 
 
 
@@ -57,6 +58,7 @@ function App() {
         { path: "DeleteAccount", element: <DeleteAccount /> },
         { path: "DeleteCompanyAccount", element: <DeleteCompanyAccount /> },
         { path: "UpdatePassword", element: <UpdatePassword /> },
+        { path: "InterviewTest", element: <InterviewTest /> },
         { path: "CompanyDetails/:id", element: <CompanyDetails /> },
         {
           path: "JobDetails/:id",
