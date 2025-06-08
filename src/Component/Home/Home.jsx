@@ -87,8 +87,8 @@ export default function Home() {
   async function getJobs() {
     try {
       let { data } = await axios.get(`https://hireverse.ddns.net/api/jobs`);
-      // console.log(data.data);
-      setJobs(data.data);
+      // console.log(data.jobs);
+      setJobs(data.jobs);
     } catch (err) {
       console.log(err);
     }
@@ -113,6 +113,7 @@ export default function Home() {
     }
   }
   useEffect(() => {
+    console.log(jobs)
     getCompanies();
     getJobs();
     getCompanyJobs();
@@ -592,7 +593,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="grid grid-cols-3 ms-10">
-                {jobs.slice(0, 9).map((job, index) => (
+                {jobs.slice(0,9).map((job, index) => (
                   <Jobs key={index} job={job} />
                 ))}
               </div>
