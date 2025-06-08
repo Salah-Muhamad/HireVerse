@@ -62,6 +62,7 @@ export default function Home() {
   const [companyName, setCompanyName] = useState("");
   const [companies, setCompanies] = useState([]);
   const [jobs, setJobs] = useState([]);
+  const [recommendedJobs, setRecommendedJobs] = useState([])
   const [companyJobs, setCompanyJobs] = useState([]);
   const [stats1, setStats1] = useState("");
   const [stats2, setStats2] = useState("");
@@ -86,9 +87,16 @@ export default function Home() {
 
   async function getJobs() {
     try {
-      let { data } = await axios.get(`https://hireverse.ddns.net/api/jobs`);
-      // console.log(data.jobs);
+      let { data } = await axios.get(`https://hireverse.ddns.net/api/jobs` ,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+        }
+      );
+      console.log(data);
       setJobs(data.jobs);
+      setRecommendedJobs(data.recommendedJobs);
     } catch (err) {
       console.log(err);
     }
@@ -177,69 +185,18 @@ export default function Home() {
                     <span className="text-[#0146B1]">You</span>
                   </h2>
                   <div className="grid grid-cols-3">
-                    <RecommendedJobs
-                      title={"Full Stack Developer"}
-                      companyName={"Microsoft"}
-                      salary={"80,000 $"}
-                      location={"On-site"}
-                      jobType={"Full-time"}
-                    />
-                    <RecommendedJobs
-                      title={"Full Stack Developer"}
-                      companyName={"Microsoft"}
-                      salary={"80,000 $"}
-                      location={"On-site"}
-                      jobType={"Full-time"}
-                    />
-                    <RecommendedJobs
-                      title={"Full Stack Developer"}
-                      companyName={"Microsoft"}
-                      salary={"80,000 $"}
-                      location={"On-site"}
-                      jobType={"Full-time"}
-                    />
-                    <RecommendedJobs
-                      title={"Full Stack Developer"}
-                      companyName={"Microsoft"}
-                      salary={"80,000 $"}
-                      location={"On-site"}
-                      jobType={"Full-time"}
-                    />
-                    <RecommendedJobs
-                      title={"Full Stack Developer"}
-                      companyName={"Microsoft"}
-                      salary={"80,000 $"}
-                      location={"On-site"}
-                      jobType={"Full-time"}
-                    />
-                    <RecommendedJobs
-                      title={"Full Stack Developer"}
-                      companyName={"Microsoft"}
-                      salary={"80,000 $"}
-                      location={"On-site"}
-                      jobType={"Full-time"}
-                    />
-                    <RecommendedJobs
-                      title={"Full Stack Developer"}
-                      companyName={"Microsoft"}
-                      salary={"80,000 $"}
-                      location={"On-site"}
-                      jobType={"Full-time"}
-                    />
-                    <RecommendedJobs
-                      title={"Full Stack Developer"}
-                      companyName={"Microsoft"}
-                      salary={"80,000 $"}
-                      location={"On-site"}
-                      jobType={"Full-time"}
-                    />
-                    <RecommendedJobs
-                      title={"Full Stack Developer"}
-                      companyName={"Microsoft"}
-                      salary={"80,000 $"}
-                      location={"On-site"}
-                      jobType={"Full-time"}
-                    />
+                    {recommendedJobs.slice(0, 6).map((job, index) => (
+                      <RecommendedJobs
+                        key={index}
+                        title={job.attributes.title}
+                        companyName={job.attributes.companyName}
+                        salary={job.attributes.salary} 
+                        location={job.attributes.workLocation}
+                        jobType={job.attributes.type}
+                        id={job.id}
+                      />
+                    ))}
+                    
                   </div>
                 </div>
 

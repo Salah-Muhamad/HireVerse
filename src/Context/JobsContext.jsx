@@ -30,7 +30,7 @@ function JobsProvider({ children }) {
         `https://hireverse.ddns.net/api/jobs${params ? `?${params}` : ""}`
       );
       //   console.log(data.data);
-      setJobs(data.data);
+      setJobs(data.jobs);
     } catch (err) {
       console.log(err);
     }
