@@ -29,6 +29,7 @@ import CreateJob1 from "./Component/CreteJob1/CreateJob1.jsx";
 import CreateJob2 from "./Component/CreateJob2/CreateJob2.jsx";
 import CreteJob3 from "./Component/CreateJob3/CreteJob3.jsx";
 import CompanyProfile from "./Component/CompanyProfile/CompanyProfile.jsx";
+import Profile from "./Component/Profile/Profile.jsx";
 import DeleteCompanyAccount from "./Component/DeleteCompanyAccount/DeleteCompanyAccount.jsx";
 import ChangeCompanyPassword from "./Component/ChangeCompanyPassword/ChangeCompanyPassword.jsx";
 import CompanyDashboard from "./Component/CompanyDashboard/CompanyDashboard.jsx";
@@ -89,6 +90,7 @@ function App() {
         { path: 'ForgotPassword', element: <ForgotPassword /> },
         { path: '*', element: <NotFound /> },
         {path:'ProfileSettings',element:<ProfileSettings/>},
+        {path:'Profile/:id',element:<Profile/>},
         {path:'CompanyProfile',element:<CompanyProfile/>},
         {path:'ChangeCompanyPassword',element:<ChangeCompanyPassword/>},
         {

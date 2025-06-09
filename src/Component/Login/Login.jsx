@@ -33,6 +33,7 @@ export default function Login() {
         values
       );
       localStorage.setItem("userToken" , data.data.token)
+      localStorage.setItem("id", data.data.applicant.id);
       localStorage.setItem("first_name", data.data.applicant.attributes.firstName);
       localStorage.setItem("last_name", data.data.applicant.attributes.lastName);
       localStorage.setItem("email", data.data.applicant.attributes.email);
