@@ -27,7 +27,7 @@ export default function Navbar() {
   const avatarUrl = localStorage.getItem("avatarUrl");
   
   
-  
+  const id = JSON.parse(localStorage.getItem('id'));
   const Avatar =
   avatarUrl && avatarUrl !== "null"
   ? `https://hireverse.ddns.net/api/storage/${avatarUrl}`
@@ -227,16 +227,19 @@ export default function Navbar() {
               <div className="flex gap-8">
                 <img src={Notification} alt="Notification" />
                 <div className="relative inline-block text-left">
-                  <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="bg-transparent px-4 py-2 rounded-md"
-                  >
-                    <div className="flex justify-center items-center gap-2">
+                      <div className="flex">
+                        <Link to={`/Profile/${id}`}>
                       <img
                         src={Avatar}
                         className="w-12 h-12 rounded-full"
                         alt="Avatar"
                       />
+                      </Link>
+                  <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="bg-transparent px-4 py-2 rounded-md"
+                  >
+                    <div className="flex justify-center items-center gap-2">
                       <span className="font-semibold">{userName}</span>
                       <img
                         src={ArrowDown}
@@ -247,6 +250,7 @@ export default function Navbar() {
                       />
                     </div>
                   </button>
+                      </div>
                   {isOpen && (
                     <div className="absolute mt-2  bg-white border px-1 rounded-lg shadow-xl">
                       <ul className="py-2">
