@@ -1,32 +1,28 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { BeatLoader } from "react-spinners";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ArrowUpFromLine, CirclePause } from "lucide-react";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import { useNavigate } from "react-router-dom";
 
 const Interview = () => {
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [countdown, setCountdown] = useState(5);
+  const [recordedBlob, setRecordedBlob] = useState(null);
   const videoRef = useRef(null);
   const chunksRef = useRef([]);
+  const currentQuestion = questions[currentIndex];
+  const navigate = useNavigate();
 
-  // ✅ قراءة السؤال بصوت
-  const speakText = (text) => {
-    if (!window.speechSynthesis) {
-      alert("المتصفح لا يدعم القراءة الصوتية");
-      return;
-    }
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "ar-SA"; // لو الأسئلة إنجليزي، غيّر لـ "en-US"
-    utterance.rate = 1;
-    window.speechSynthesis.speak(utterance);
-  };
-
-  // ✅ جلب الأسئلة
-  async function getQuestions() {
+  // 📥 Fetch questions
+  const getQuestions = async () => {
     try {
-      let { data } = await axios.get(
+      const { data } = await axios.get(
         "https://hireverse.ddns.net/api/interviews/1/questions",
         {
           headers: {
@@ -35,19 +31,48 @@ const Interview = () => {
         }
       );
       setQuestions(data);
-      console.log("📥 الأسئلة:", data);
     } catch (error) {
-      console.error("❌ خطأ أثناء تحميل الأسئلة:", error);
+      toast.error("Failed to load questions.");
     }
-  }
+  };
 
   useEffect(() => {
     getQuestions();
   }, []);
 
-  const currentQuestion = questions[currentIndex];
+  // ⏱ Countdown on question change
+  useEffect(() => {
+    if (currentQuestion) {
+      setCountdown(5);
+      setRecordedBlob(null);
 
-  // ✅ تسجيل الفيديو
+      const interval = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev === 1) {
+            clearInterval(interval);
+            startRecording();
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [currentQuestion]);
+
+  // 🔊 Text to speech
+  const speakText = (text) => {
+    if (!window.speechSynthesis) {
+      toast.error("Your browser does not support speech synthesis.");
+      return;
+    }
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "ar-SA";
+    utterance.rate = 1;
+    window.speechSynthesis.speak(utterance);
+  };
+
+  // 🎥 Start recording
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -60,40 +85,45 @@ const Interview = () => {
       chunksRef.current = [];
 
       recorder.ondataavailable = (e) => chunksRef.current.push(e.data);
-      recorder.onstop = async () => {
+      recorder.onstop = () => {
         const blob = new Blob(chunksRef.current, { type: "video/webm" });
-        await uploadAnswer(blob);
+        setRecordedBlob(blob);
         chunksRef.current = [];
+
+        const tracks = videoRef.current.srcObject?.getTracks();
+        if (tracks) tracks.forEach((track) => track.stop());
       };
 
       recorder.start();
       setMediaRecorder(recorder);
     } catch (error) {
-      console.error("❌ خطأ في الوصول للكاميرا أو المايك:", error);
-      alert("تأكد من صلاحيات الكاميرا والمايك.");
+      toast.error("Please allow access to camera and microphone.");
     }
   };
 
-  // ✅ إيقاف التسجيل
+  // 🛑 Stop recording
   const stopRecording = () => {
     if (mediaRecorder) {
       mediaRecorder.stop();
-      const tracks = videoRef.current.srcObject?.getTracks();
-      if (tracks) tracks.forEach((track) => track.stop());
     }
   };
 
-  // ✅ رفع الفيديو
-  const uploadAnswer = async (blob) => {
+  // 📤 Upload answer
+  const uploadAnswer = async () => {
+    if (!recordedBlob) {
+      toast.error("No recording available to upload.");
+      return;
+    }
+
     setLoading(true);
     const formData = new FormData();
-    formData.append("applicant_answer", blob);
+    formData.append("applicant_answer", recordedBlob);
     formData.append("question_id", currentQuestion.id);
     formData.append("_method", "PATCH");
 
     try {
-      const response = await axios.post(
-        "https://hireverse.ddns.net/api/questions/1/answer",
+      await axios.post(
+        `https://hireverse.ddns.net/api/questions/${currentQuestion.id}/answer`,
         formData,
         {
           headers: {
@@ -103,46 +133,72 @@ const Interview = () => {
         }
       );
 
-      console.log("✅ Response from upload:", response.data);
+      toast.success("Answer uploaded successfully!");
+      setRecordedBlob(null);
       moveToNextQuestion();
     } catch (err) {
-      console.error("❌ Error uploading answer:", err);
-      alert("حصلت مشكلة أثناء رفع الفيديو.");
+      toast.error("Failed to upload your answer.");
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ الانتقال للسؤال التالي
   const moveToNextQuestion = () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     } else {
-      alert("خلصت كل الأسئلة، شكرًا ليك 🎉");
+      toast.success("You have completed all questions. Thank you! 🎉");
+      setTimeout(() => {
+        navigate("/results"); 
+      }, 2000); 
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-start py-10 px-4">
-      <div className="w-full max-w-3xl bg-white shadow-xl rounded-2xl p-6">
+      <div className="w-[75%] bg-white shadow-xl rounded-2xl p-6">
         <h2 className="text-2xl font-bold mb-4">Question {currentIndex + 1}</h2>
 
         <div className="flex items-center justify-between mb-6">
           <p className="text-lg text-gray-700 flex-1">
             {currentQuestion?.question_text ||
               currentQuestion?.question ||
-              "جارٍ تحميل السؤال..."}
+              "Loading question..."}
           </p>
           <button
             onClick={() =>
-              speakText(currentQuestion?.question_text || currentQuestion?.question)
+              speakText(
+                currentQuestion?.question_text || currentQuestion?.question
+              )
             }
             className="ml-4 text-blue-600 hover:text-blue-800 text-2xl"
-            title="اسمع السؤال"
+            title="Play question"
           >
             🔊
           </button>
         </div>
+
+        {countdown > 0 && (
+          <div className="flex justify-center mb-6">
+            <CountdownCircleTimer
+              isPlaying
+              duration={5}
+              colors="#0146B1"
+              size={100}
+              strokeWidth={8}
+              onComplete={() => {
+                startRecording(); // Start recording after countdown
+                return { shouldRepeat: false };
+              }}
+            >
+              {({ remainingTime }) => (
+                <div className="text-xl font-bold text-[#0146B1]">
+                  {remainingTime}
+                </div>
+              )}
+            </CountdownCircleTimer>
+          </div>
+        )}
 
         <div className="mb-6">
           <video
@@ -155,19 +211,24 @@ const Interview = () => {
 
         <div className="flex gap-4">
           <button
-            onClick={startRecording}
-            disabled={loading}
-            className="bg-[#0146B1] hover:bg-[#1b4077] text-white px-4 py-2 rounded-xl transition disabled:opacity-50"
-          >
-            Start Recording
-          </button>
-
-          <button
             onClick={stopRecording}
             disabled={loading || !mediaRecorder}
             className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition disabled:opacity-50"
           >
-            Stop Recording
+            <div className="flex gap-4">
+              Stop Recordin
+              <CirclePause />
+            </div>
+          </button>
+
+          <button
+            onClick={uploadAnswer}
+            disabled={loading || !recordedBlob}
+            className="bg-[#0146B1] text-white px-4 py-2 rounded-xl transition disabled:opacity-50"
+          >
+            <div className="flex gap-4">
+              Upload <ArrowUpFromLine />
+            </div>
           </button>
         </div>
 
@@ -177,6 +238,8 @@ const Interview = () => {
           </div>
         )}
       </div>
+
+      <ToastContainer />
     </div>
   );
 };
