@@ -26,6 +26,10 @@ export default function Layout() {
     "/ProfileSettings",
     "/CompanyProfile",
     "/DeleteCompanyAccount",
+    "/Instructions" ,
+    "/instructions" ,
+    "/Interview",
+    "interview"
   ];
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
   let { setUserData } = useContext(UserContext);

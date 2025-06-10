@@ -30,6 +30,8 @@ import CreateJob2 from "./Component/CreateJob2/CreateJob2.jsx";
 import CreteJob3 from "./Component/CreateJob3/CreteJob3.jsx";
 import CompanyProfile from "./Component/CompanyProfile/CompanyProfile.jsx";
 import Profile from "./Component/Profile/Profile.jsx";
+import Interview from "./Component/Interview/Interview.jsx";
+import Instructions from "./Component/Instructions/Instructions.jsx";
 import DeleteCompanyAccount from "./Component/DeleteCompanyAccount/DeleteCompanyAccount.jsx";
 import ChangeCompanyPassword from "./Component/ChangeCompanyPassword/ChangeCompanyPassword.jsx";
 import CompanyDashboard from "./Component/CompanyDashboard/CompanyDashboard.jsx";
@@ -56,6 +58,7 @@ function App() {
         { path: "JobsPage", element: <JobsPage /> },
         { path: "ApplicantJobs", element: <ApplicantJobs /> },
         { path: "DeleteAccount", element: <DeleteAccount /> },
+        { path: "Interview", element: <Interview /> },
         { path: "DeleteCompanyAccount", element: <DeleteCompanyAccount /> },
         { path: "UpdatePassword", element: <UpdatePassword /> },
         { path: "CompanyDetails/:id", element: <CompanyDetails /> },
@@ -75,6 +78,7 @@ function App() {
         { path: "ForgotPassword", element: <ForgotPassword /> },
         { path: "*", element: <NotFound /> },
         { path: 'About', element: <About /> },
+        { path: 'Instructions', element: <Instructions /> },
         { path: 'Companies', element: <Companies /> },
         { path: 'ApplyJob', element: <ApplyJob /> },
         { path: 'JobsPage', element: <JobsPage /> },
