@@ -63,7 +63,9 @@ export default function Instructions() {
           </ol>
 
           <div className="mt-5 text-xl flex justify-between items-center">
+            <Link to="/ApplicantJobs">
             <button className="w-48 h-12 rounded-2xl border-2 border-gray-400">Back</button>
+            </Link>
             <Link to="/Interview">
             <button className="w-48 h-12 bg-[#0146B1] text-white rounded-2xl ">Go To Interview</button>
             </Link>
