@@ -32,6 +32,7 @@ import CompanyProfile from "./Component/CompanyProfile/CompanyProfile.jsx";
 import Profile from "./Component/Profile/Profile.jsx";
 import Interview from "./Component/Interview/Interview.jsx";
 import Instructions from "./Component/Instructions/Instructions.jsx";
+import InterviewNotification from "./Component/InterviewNotification/InterviewNotification.jsx";
 import DeleteCompanyAccount from "./Component/DeleteCompanyAccount/DeleteCompanyAccount.jsx";
 import ChangeCompanyPassword from "./Component/ChangeCompanyPassword/ChangeCompanyPassword.jsx";
 import CompanyDashboard from "./Component/CompanyDashboard/CompanyDashboard.jsx";
@@ -55,8 +56,9 @@ function App() {
         { index: true, element: <Home /> },
         { path: "About", element: <About /> },
         { path: "Companies", element: <Companies /> },
-        { path: "JobsPage", element: <JobsPage /> },
         { path: "ApplicantJobs", element: <ApplicantJobs /> },
+        { path: "JobsPage", element: <JobsPage /> },
+        { path: "InterviewNotification", element: <InterviewNotification /> },
         { path: "DeleteAccount", element: <DeleteAccount /> },
         { path: "Interview", element: <Interview /> },
         { path: "DeleteCompanyAccount", element: <DeleteCompanyAccount /> },
