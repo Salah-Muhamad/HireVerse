@@ -31,7 +31,7 @@ export default function ApplyJob() {
     let file = "";
     if (!cvFile && cvUrl) {
       const { data } = await axios.get(
-        `https://hireverse.ddns.net/api/storage/${cvUrl}`
+        `https://myawshierbucket.s3.me-south-1.amazonaws.com/${cvUrl}`
       );
       // setCvFile(data);
       file = new File([data], `cv${new Date().getTime()}.pdf`, {
