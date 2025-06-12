@@ -11,10 +11,12 @@ import LogOut from "../../assets/Images/LogOut.svg";
 import Notification from "../../assets/Images/Notification.svg";
 import ArrowDown from "../../assets/Images/ArrowDown.svg";
 import Search from "../../assets/Images/Search2.svg";
-import { NavLink, useNavigate , Link } from "react-router-dom";
+import { NavLink, useNavigate, Link } from "react-router-dom";
 import Register from "../Register/Register";
 import { UserContext } from "../../Context/UserContext";
 import { CompanyContext } from "../../Context/CompanyContext";
+import InterviewNotification from "../InterviewNotification/InterviewNotification";
+import axios from "axios";
 export default function Navbar() {
   let { userData, setUserData } = useContext(UserContext);
   let { companyData, setCompanyData } = useContext(CompanyContext);
@@ -23,16 +25,19 @@ export default function Navbar() {
   const [email, setEmail] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyEmail, setCompanyEmail] = useState("");
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const avatarUrl = localStorage.getItem("avatarUrl");
-  
-  
-  const id = JSON.parse(localStorage.getItem('id'));
+
+  const id = JSON.parse(localStorage.getItem("id"));
   const Avatar =
+
   avatarUrl && avatarUrl !== "null"
   ? `https://myawshierbucket.s3.me-south-1.amazonaws.com/${avatarUrl}`
   : photo2;
   
+
   const companyLogo = localStorage.getItem("company_logo");
   const CompanyLogo =
     companyLogo && companyLogo !== "null"
@@ -68,6 +73,49 @@ export default function Navbar() {
     setCompanyData(null);
     navigate("/");
   }
+
+  // Close notification list when clicking outside
+  useEffect(() => {
+    if (!showNotifications) return;
+    function handleClick(e) {
+      if (
+        !e.target.closest(".notification-dropdown") &&
+        !e.target.closest(".notification-bell-btn")
+      ) {
+        setShowNotifications(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [showNotifications]);
+
+  // Fetch notifications and count unread
+  useEffect(() => {
+    // return;
+    async function fetchNotifications() {
+      try {
+        const token = localStorage.getItem("userToken");
+        if (!token) return;
+        const { data } = await axios.get(
+          "https://hireverse.ddns.net/api/notifications",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(data)
+        // Assume data is an array of notifications with a 'read' property
+        const notifications = data?.notifications || [];
+        const count = notifications.filter((n) => n.is_read === false).length;
+        setUnreadCount(count);
+      } catch (err) {
+        setUnreadCount(0);
+      }
+    }
+    fetchNotifications();
+  }, [showNotifications, userData]);
+
   return (
     <>
       {
@@ -147,14 +195,13 @@ export default function Navbar() {
               </div>
             )}
 
-            {companyData  && (
-
+            {companyData && (
               <div>
                 <div className="flex gap-8">
                   <Link className="flex items-center ">
-                  <img src={Notification} alt="Notification" /> 
+                    <img src={Notification} alt="Notification" />
                   </Link>
-                  <Link to={"/pro"}  className="flex items-center ">
+                  <Link to={"/pro"} className="flex items-center ">
                     {" "}
                     <img src={GoPro} alt="GoPro" />
                   </Link>{" "}
@@ -224,33 +271,69 @@ export default function Navbar() {
             )}
 
             {userData && (
-              <div className="flex gap-8">
-                <img src={Notification} alt="Notification" />
+              <div className="flex gap-8 items-center">
+                <div className="relative">
+                  <div className="flex items-center">
+                    <button
+                      className="notification-bell-btn relative"
+                      onClick={() => setShowNotifications((prev) => !prev)}
+                    >
+                      <img src={Notification} alt="Notification" />
+                      {unreadCount > 0 && (
+                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow">
+                          {unreadCount}
+                        </span>
+                      )}
+                      {/* Optionally, add a dot for unread */}
+                      {/* <span className="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full"></span> */}
+                    </button>
+                  </div>
+                  {showNotifications && (
+                    <div
+                      className="notification-dropdown absolute top-full right-1/2 transform translate-x-1/2 mt-6 z-50 transition-all duration-200 opacity-100 scale-100"
+                      style={{
+                        minWidth: "420px",
+                        // animation: "fadeDrop .25s cubic-bezier(.4,0,.2,1)",
+                      }}
+                    >
+                      <InterviewNotification />
+                    </div>
+                  )}
+                  {/* Animation keyframes */}
+                  <style>
+                    {`
+                      @keyframes fadeDrop {
+                        0% { opacity: 0; transform: translateY(-10px) scale(0.98);}
+                        100% { opacity: 1; transform: translateY(0) scale(1);}
+                      }
+                    `}
+                  </style>
+                </div>{" "}
                 <div className="relative inline-block text-left">
-                      <div className="flex">
-                        <Link to={`/Profile/${id}`}>
+                  <div className="flex">
+                    <Link to={`/Profile/${id}`}>
                       <img
                         src={Avatar}
                         className="w-12 h-12 rounded-full"
                         alt="Avatar"
                       />
-                      </Link>
-                  <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="bg-transparent px-4 py-2 rounded-md"
-                  >
-                    <div className="flex justify-center items-center gap-2">
-                      <span className="font-semibold">{userName}</span>
-                      <img
-                        src={ArrowDown}
-                        alt="Arrow"
-                        className={`transition-transform duration-300 ${
-                          isOpen ? "rotate-180" : "rotate-0"
-                        }`}
-                      />
-                    </div>
-                  </button>
+                    </Link>
+                    <button
+                      onClick={() => setIsOpen(!isOpen)}
+                      className="bg-transparent px-4 py-2 rounded-md"
+                    >
+                      <div className="flex justify-center items-center gap-2">
+                        <span className="font-semibold">{userName}</span>
+                        <img
+                          src={ArrowDown}
+                          alt="Arrow"
+                          className={`transition-transform duration-300 ${
+                            isOpen ? "rotate-180" : "rotate-0"
+                          }`}
+                        />
                       </div>
+                    </button>
+                  </div>
                   {isOpen && (
                     <div className="absolute mt-2  bg-white border px-1 rounded-lg shadow-xl">
                       <ul className="py-2">
