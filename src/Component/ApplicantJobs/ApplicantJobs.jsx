@@ -26,7 +26,6 @@ export default function ApplicantJobs() {
           },
         }
       );
-
       const jobDetails = data.data.map((item) => item.attributes);
       setApplicantJobDetails(jobDetails);
     } catch (err) {
@@ -44,7 +43,6 @@ export default function ApplicantJobs() {
           },
         }
       );
-
       setUpcomingInterviews(data.upcoming_interviews);
     } catch (err) {
       console.log("Error fetching interviews:", err);
@@ -181,13 +179,13 @@ export default function ApplicantJobs() {
                     {idx + 1}
                   </td>
                   <td className="text-center font-sf_pro_text px-4 py-3 border border-gray-300">
-                    {interview.jobTitle}
+                    {interview.job_title}
                   </td>
                   <td className="text-center font-sf_pro_text px-4 py-3 border border-gray-300">
-                    {interview.companyName}
+                    {interview.company_name}
                   </td>
                   <td className="text-center font-sf_pro_text px-4 py-3 border border-gray-300">
-                    from {interview.startTime} to {interview.endTime}
+                    {interview.deadline}
                   </td>
                   <td>
                     <Link to="/Instructions">
