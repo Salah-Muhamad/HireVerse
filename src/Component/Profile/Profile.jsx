@@ -34,7 +34,7 @@ export default function Profile() {
         </h1>
         <div className="flex items-center mb-4 border-b-2 border-gray-300 pb-8  me-24">
           {userData.avatarUrl ? (
-            <img src={`https://hireverse.ddns.net/api/storage/${userData.avatarUrl}`} className="w-[100px] h-[100px] rounded-full" alt="" />
+            <img src={`https://myawshierbucket.s3.me-south-1.amazonaws.com/${userData.avatarUrl}`} className="w-[100px] h-[100px] rounded-full" alt="" />
           ) : (
             <img src={photo2} className="w-[100px]" alt="" />
           )}

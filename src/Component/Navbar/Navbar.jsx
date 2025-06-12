@@ -32,14 +32,16 @@ export default function Navbar() {
 
   const id = JSON.parse(localStorage.getItem("id"));
   const Avatar =
-    avatarUrl && avatarUrl !== "null"
-      ? `https://hireverse.ddns.net/api/storage/${avatarUrl}`
-      : photo2;
+
+  avatarUrl && avatarUrl !== "null"
+  ? `https://myawshierbucket.s3.me-south-1.amazonaws.com/${avatarUrl}`
+  : photo2;
+  
 
   const companyLogo = localStorage.getItem("company_logo");
   const CompanyLogo =
     companyLogo && companyLogo !== "null"
-      ? `https://hireverse.ddns.net/api/storage/${companyLogo}`
+      ? `https://myawshierbucket.s3.me-south-1.amazonaws.com/${companyLogo}`
       : photo2;
   useEffect(() => {
     const firstName = localStorage.getItem("first_name");

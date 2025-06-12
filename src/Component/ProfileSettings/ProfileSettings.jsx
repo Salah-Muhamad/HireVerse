@@ -26,7 +26,7 @@ export default function ProfileSettings() {
   const avatarUrl = localStorage.getItem("avatarUrl");
   const [photo, setPhoto] = useState(
     avatarUrl && avatarUrl !== "null"
-      ? `https://hireverse.ddns.net/api/storage/${avatarUrl}`
+      ? `https://myawshierbucket.s3.me-south-1.amazonaws.com/${avatarUrl}`
       : photo2
   );
   console.log(photo)
