@@ -58,7 +58,7 @@ function App() {
         { path: "Companies", element: <Companies /> },
         { path: "ApplicantJobs", element: <ApplicantJobs /> },
         { path: "JobsPage", element: <JobsPage /> },
-        { path: "InterviewNotification", element: <InterviewNotification /> },
+        // { path: "InterviewNotification", element: <InterviewNotification /> },
         { path: "DeleteAccount", element: <DeleteAccount /> },
         { path: "Interview", element: <Interview /> },
         { path: "DeleteCompanyAccount", element: <DeleteCompanyAccount /> },
