@@ -70,7 +70,7 @@ export default function Home() {
   const companyLogo = localStorage.getItem("company_logo");
   const CompanyLogo =
     companyLogo && companyLogo !== "null"
-      ? `https://hireverse.ddns.net/api/storage/${companyLogo}`
+      ? `https://myawshierbucket.s3.me-south-1.amazonaws.com/${companyLogo}`
       : photo2;
 
   async function getCompanies() {
@@ -181,7 +181,7 @@ export default function Home() {
                 {/* Recommended Jobs */}
                 <div className="px-24 mt-10">
                   <h2 className="font-semibold font-sf_pro_text text-2xl">
-                    Recommend Jobs for{" "}
+                    Recommend <span className="text-[#0146B1]">Jobs</span> for{" "}
                     <span className="text-[#0146B1]">You</span>
                   </h2>
                   <div className="grid grid-cols-3">
@@ -591,7 +591,7 @@ export default function Home() {
       {companyData && (
         <div className="bg-[#EFF2F7] pb-20 pt-40  font-sf_pro_text">
           <div className="flex items-center gap-4 ps-24">
-            <img src={CompanyLogo} alt="" className="w-20" />
+            <img src={CompanyLogo} alt="" className="w-20 rounded-full" />
             <div className="text-2xl font-semibold flex gap-2">
               {companyName} <img src={BlueCorrect} alt="" />
             </div>

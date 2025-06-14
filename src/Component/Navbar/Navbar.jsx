@@ -17,6 +17,7 @@ import { UserContext } from "../../Context/UserContext";
 import { CompanyContext } from "../../Context/CompanyContext";
 import InterviewNotification from "../InterviewNotification/InterviewNotification";
 import axios from "axios";
+import { CircleUser } from "lucide-react";
 export default function Navbar() {
   let { userData, setUserData } = useContext(UserContext);
   let { companyData, setCompanyData } = useContext(CompanyContext);
@@ -311,7 +312,7 @@ export default function Navbar() {
                 </div>{" "}
                 <div className="relative inline-block text-left">
                   <div className="flex">
-                    <Link to={`/Profile/${id}`}>
+                    <Link >
                       <img
                         src={Avatar}
                         className="w-12 h-12 rounded-full"
@@ -354,6 +355,9 @@ export default function Navbar() {
                             </div>
                           </div>
                         </li>
+                        <NavLink to={`/Profile/${id}`} className="text-gray-600 font-semibold text-sm flex gap-2 items-center px-4 py-2  cursor-pointer">
+                          <CircleUser className="text-black" /><li >Profile</li>
+                        </NavLink>
                         <NavLink to={"/ApplicantJobs"}>
                           <li className="px-4 py-4 hover:text-gray-400 cursor-pointer">
                             <img src={MyJobs} alt="" />
