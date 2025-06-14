@@ -165,7 +165,8 @@ export default function InterviewNotification() {
       <div className="w-[420px] bg-gradient-to-br from-blue-50 via-white to-blue-100 border border-blue-200 shadow-2xl rounded-2xl p-8">
         <div className="mx-auto">
           <h2 className="text-2xl font-extrabold mb-6 text-center text-blue-900 tracking-wide flex items-center justify-center gap-2">
-            <span className="text-3xl animate-bounce">📢</span>  Notifications
+            <span className="text-3xl animate-bounce">📢</span> 
+              <span className="text-lg">Notifications</span>
           </h2>
           {loading ? (
             <div className="flex justify-center items-center py-10">
