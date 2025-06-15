@@ -51,7 +51,7 @@ const navigate = useNavigate()
       function navigateTo() {
         navigate(-1)
       }
-console.log(`https://hireverse.ddns.net/api/storage/${applicant.cv}`)
+console.log(`https://myawshierbucket.s3.me-south-1.amazonaws.com/${applicant.cv}`)
       return (
     <div className="w-full h-screen fixed bg-black/70 inset-0 z-50 flex justify-center items-center" onClick={navigateTo} >
       <div className="  m-auto p-6 bg-white shadow-md rounded-md mt-16 w-[80%] ">
@@ -102,7 +102,7 @@ console.log(`https://hireverse.ddns.net/api/storage/${applicant.cv}`)
           {/* Tab Content */}
           {activeTab === "cv" && (
             <>
-            <iframe src={`https://hireverse.ddns.net/api/storage/${applicant.attributes.cv}`} className="w-[90%] h-[350px]"></iframe>
+            <iframe src={`https://myawshierbucket.s3.me-south-1.amazonaws.com/${applicant.attributes.cv}`} className="w-[90%] h-[350px]"></iframe>
             
             </>
           )}

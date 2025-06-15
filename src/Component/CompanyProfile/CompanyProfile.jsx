@@ -64,7 +64,7 @@ export default function CompanyProfile() {
       localStorage.setItem("company_logo", newAvatarUrl);
 
       // تحديث الصورة مباشرة
-      setPhoto(`https://hireverse.ddns.net/api/storage/${newAvatarUrl}`);
+      setPhoto(`https://myawshierbucket.s3.me-south-1.amazonaws.com/${newAvatarUrl}`);
 
       console.log("Server response:", newAvatarUrl);
     } catch (error) {
@@ -124,7 +124,7 @@ export default function CompanyProfile() {
 
       const avatarUrl = localStorage.getItem("company_logo");
       if (avatarUrl && avatarUrl !== "null") {
-        setPhoto(`https://hireverse.ddns.net/api/storage/${avatarUrl}`);
+        setPhoto(`https://myawshierbucket.s3.me-south-1.amazonaws.com/${avatarUrl}`);
       } else {
         setPhoto(photo2); // photo2 لازم تكون معرفة فوق
       }

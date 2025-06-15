@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Check, X } from "lucide-react";
 import Search2 from "../../assets/Images/Search2.svg";
 import Next2 from "../../assets/Images/Next2.svg";
 import Name from "../../assets/Images/Name.svg";
@@ -6,206 +8,249 @@ import Email from "../../assets/Images/Email.svg";
 import AppDate from "../../assets/Images/AppDate.svg";
 import CvStatus from "../../assets/Images/CvStatus.svg";
 import Move from "../../assets/Images/Move.svg";
-import { Check, X } from "lucide-react";
-import { useParams, Link } from "react-router-dom";
-import axios from "axios";
+import { CircleLoader } from "react-spinners";
+import { useParams } from "react-router-dom";
 
 export default function CompanyDashboard() {
-  const [activeTab, setActiveTab] = useState("Applicants");
-  const [minScore, setMinScore] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [jobData, setJobData] = useState(null);
   const [applicantData, setApplicantData] = useState([]);
+  const [minScore, setMinScore] = useState("");
+  const [activeTab, setActiveTab] = useState("Applicants");
+
   const { jobId } = useParams();
 
   useEffect(() => {
-    const storedApplicants = localStorage.getItem(`applicants-${jobId}`);
-    if (storedApplicants) {
-      setApplicantData(JSON.parse(storedApplicants));
-    }
+    const fetchJobDetails = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `https://hireverse.ddns.net/api/company/jobs`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("companyToken")}`,
+            },
+          }
+        );
+        const jobDetails = response.data.jobs.find((job) => job.jobId == jobId);
+        if (jobDetails) {
+          setJobData(jobDetails);
+        } else {
+          console.error("Job not found");
+        }
+      } catch (error) {
+        console.error("Error fetching job details:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobDetails();
   }, [jobId]);
 
-  const handleApplyMinScore = () => {
-    if (!minScore) return alert("Please enter a score");
-    const updated = applicantData.map((a) => {
-      const score = Number(a.attributes.cvScore);
-      const accepted = score >= Number(minScore);
+  useEffect(() => {
+    const fetchApplicants = async () => {
+      try {
+        const { data } = await axios.get(
+          `https://hireverse.ddns.net/api/company/jobs/${jobId}/applicants`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("companyToken")}`,
+            },
+          }
+        );
+        const applicantsWithPending = data.data.map((applicant) => ({
+          ...applicant,
+          statusText: "Pending",
+        }));
+        setApplicantData(applicantsWithPending);
+      } catch (error) {
+        console.error("Error fetching applicants details:", error);
+      }
+    };
+
+    fetchApplicants();
+  }, [jobId]);
+
+  const handleApplyMinScore = async () => {
+    if (!minScore) {
+      alert("Please enter a minimum score first!");
+      return;
+    }
+
+    const allApplicantsFiltered = applicantData.every(
+      (applicant) =>
+        applicant.attributes.cvScore !== undefined &&
+        applicant.attributes.cvScore !== null
+    );
+
+    if (!allApplicantsFiltered) {
+      alert(
+        "Some CVs haven't been filtered yet! Please wait for all CVs to be processed."
+      );
+      return;
+    }
+
+    const updatedApplicants = applicantData.map((applicant) => {
+      const cvScore = applicant.attributes.cvScore;
+      let statusText = "Pending";
+      if (cvScore !== undefined && cvScore !== null) {
+        if (Number(cvScore) >= Number(minScore)) {
+          statusText = "Accepted";
+        } else {
+          statusText = "Rejected";
+        }
+      }
       return {
-        ...a,
-        statusText: accepted ? "Accepted" : "Rejected",
+        ...applicant,
+        statusText,
       };
     });
-    setApplicantData(updated);
-    localStorage.setItem(`applicants-${jobId}`, JSON.stringify(updated));
+
+    localStorage.setItem(`applicants-${jobId}`, JSON.stringify(updatedApplicants));
+    setApplicantData(updatedApplicants);
+
+    try {
+      await axios.patch(
+        `https://hireverse.ddns.net/api/company/jobs/${jobId}/min-score`,
+        { min_score: Number(minScore) },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("companyToken")}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error updating min score:", error.response?.data || error.message);
+    }
   };
 
-  const renderTabs = () => (
-    <div className="flex gap-7 pt-10 ps-24 text-lg font-medium">
-      <button
-        onClick={() => setActiveTab("Applicants")}
-        className={`pb-2 ${
-          activeTab === "Applicants"
-            ? "text-blue-700 border-b-4 border-blue-700"
-            : "text-gray-600"
-        }`}
-      >
-        Applicants
-      </button>
-      <button
-        onClick={() => setActiveTab("Interview")}
-        className={`pb-2 ${
-          activeTab === "Interview"
-            ? "text-blue-700 border-b-4 border-blue-700"
-            : "text-gray-600"
-        }`}
-      >
-        Interview
-      </button>
-      <button
-        onClick={() => setActiveTab("Final Acceptance")}
-        className={`pb-2 ${
-          activeTab === "Final Acceptance"
-            ? "text-blue-700 border-b-4 border-blue-700"
-            : "text-gray-600"
-        }`}
-      >
-        Final Acceptance
-      </button>
-    </div>
-  );
-
-  const renderApplicantsTable = () => (
-    <>
-      <div className="flex justify-between me-24 mt-6">
-        <div className="w-96 ms-24 bg-white h-12 border-2 rounded-lg flex items-center ps-4 font-bai_jamjuree font-medium">
-          <img src={Search2} alt="search" />
-          <input
-            type="text"
-            className="p-2 rounded-md focus:outline-none"
-            placeholder="Search"
-          />
-        </div>
-        <div className="flex gap-4">
-          <div className="w-96 bg-white h-12 border-2 rounded-lg flex items-center ps-4 font-bai_jamjuree font-medium">
-            <input
-              type="number"
-              className="p-2 rounded-md focus:outline-none"
-              placeholder="ex: 90"
-              value={minScore}
-              onChange={(e) => setMinScore(e.target.value)}
-            />
-          </div>
-          <button
-            onClick={handleApplyMinScore}
-            className="bg-[#0C2E82] w-[103px] h-11 rounded-lg text-white font-bai_jamjuree font-medium"
-          >
-            Apply
-          </button>
-        </div>
+  if (loading || !jobData) {
+    return (
+      <div className="w-full h-screen bg-[#EFF2F7] flex justify-center items-center">
+        <CircleLoader />
       </div>
-
-      <table className="min-w-[90%] border border-gray-300 m-auto mt-10">
-        <thead className="sticky top-0 ltr:text-left rtl:text-right border-b border-gray-300 bg-[#E9ECF0]">
-          <tr className="*:font-medium *:text-gray-900 *:border *:border-gray-300 text-center">
-            <th className="w-10"></th>
-            <th className="text-center font-sf_pro_text px-4 py-3 border border-gray-300"><img src={Name} alt="Name" /></th>
-            <th className="text-center font-sf_pro_text px-4 py-3 border border-gray-300"><img src={Email} alt="Email" /></th>
-            <th className="text-center font-sf_pro_text px-4 py-3 border border-gray-300"><img src={AppDate} alt="AppDate" /></th>
-            <th className="text-center font-sf_pro_text px-4 py-3 border border-gray-300"><img src={CvStatus} alt="CvStatus" /></th>
-            <th className="text-center font-sf_pro_text px-4 py-3 border border-gray-300"><img src={Move} alt="Move" /></th>
-            <th className="w-10 text-center font-sf_pro_text px-4 py-3 border border-gray-300"></th>
-          </tr>
-        </thead>
-        <tbody className="divide-y bg-white divide-gray-300 text-center">
-          {applicantData.map((applicant, idx) => (
-            <tr key={idx} className="*:text-gray-900">
-              <td className="font-bold">{idx + 1}</td>
-              <td className="text-center font-sf_pro_text px-4 py-3 border border-gray-300">{applicant.attributes.applicantName}</td>
-              <td className="text-center font-sf_pro_text px-4 py-3 border border-gray-300">{applicant.attributes.applicantEmail}</td>
-              <td className="text-center font-sf_pro_text px-4 py-3 border border-gray-300">{applicant.attributes.appliedAt}</td>
-              <td className="text-center font-sf_pro_text px-4 py-3 border border-gray-300">
-                {["Pending", "CV processing"].includes(applicant.attributes.status) ? (
-                  <span
-                    className={`inline-flex font-semibold items-center px-3 py-1 rounded-full text-lg gap-1 ${
-                      applicant.attributes.status === "CV processing"
-                        ? "bg-yellow-100 text-yellow-800"
-                        : "bg-blue-100 text-blue-800"
-                    }`}
-                  >
-                    <span className="h-2 w-2 rounded-full bg-current"></span>
-                    {applicant.attributes.status}
-                  </span>
-                ) : (
-                  <span
-                    className={`font-bold ${
-                      applicant.statusText === "Accepted"
-                        ? "text-green-700"
-                        : "text-red-700"
-                    }`}
-                  >
-                    {applicant.attributes.cvScore} %
-                  </span>
-                )}
-              </td>
-              <td>
-                <span
-                  className={`inline-flex font-semibold items-center px-4 py-1 rounded-full text-lg gap-1 ${
-                    applicant.statusText === "Accepted"
-                      ? "bg-green-100 text-green-800"
-                      : "bg-red-100 text-red-800"
-                  }`}
-                >
-                  {applicant.statusText === "Accepted" ? <Check size={16} /> : <X size={16} />}
-                  {applicant.statusText}
-                </span>
-              </td>
-              <td>
-                <Link to={`/CompanyDashboard/${jobId}/${applicant.applicantId}`}>
-                  <img src={Next2} alt="Next" />
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
-  );
+    );
+  }
 
   return (
     <div className="bg-[#EFF2F7] min-h-screen font-sf_pro_text">
-      <h1 className="text-3xl font-semibold pt-40 ps-24">Job Title</h1>
-      {renderTabs()}
-      <div className="pt-6">
-        {activeTab === "Applicants" && renderApplicantsTable()}
-        {activeTab === "Interview" && (
-          <div className="ps-24 text-gray-700 mt-10 text-xl">Interview content goes here.</div>
+      <h1 className="text-3xl font-semibold pt-40 ps-24">
+        {jobData.attributes.jobTitle}
+      </h1>
+
+      <div className="flex gap-7 pt-10 ps-24">
+        <button
+          onClick={() => setActiveTab("Applicants")}
+          className={`${
+            activeTab === "Applicants" ? "font-bold underline text-blue-800" : "text-gray-700"
+          }`}
+        >
+          Applicants
+        </button>
+
+        <button
+          onClick={() => setActiveTab("FinalAcceptance")}
+          className={`${
+            activeTab === "FinalAcceptance" ? "font-bold underline text-blue-800" : "text-gray-700"
+          }`}
+        >
+          Final Acceptance
+        </button>
+      </div>
+
+      <div className="mt-6">
+        {activeTab === "Applicants" && (
+          <div>
+            <div className="flex justify-between me-24">
+              <div className="w-96 ms-24 mt-4 bg-white h-12 border-2 rounded-lg flex items-center ps-4 font-bai_jamjuree font-medium">
+                <img src={Search2} alt="" />
+                <input
+                  type="text"
+                  className="p-2 rounded-md focus:outline-none"
+                  placeholder="Search"
+                />
+              </div>
+              <div className="flex gap-4">
+                <div className="w-96 ms-24 bg-white h-12 border-2 rounded-lg flex items-center ps-4 font-bai_jamjuree font-medium">
+                  <input
+                    type="number"
+                    className="p-2 rounded-md focus:outline-none"
+                    placeholder="ex :90"
+                    value={minScore}
+                    onChange={(e) => setMinScore(e.target.value)}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="bg-[#0C2E82] w-[103px] h-11 rounded-lg text-white font-bai_jamjuree font-medium"
+                  onClick={handleApplyMinScore}
+                >
+                  Apply
+                </button>
+              </div>
+            </div>
+
+            <table className="w-[90%] border border-gray-300 m-auto mt-10 table-fixed">
+  <thead className="sticky top-0 border-b border-gray-300 bg-[#E9ECF0]">
+    <tr className="*:font-medium *:text-gray-900 *:border *:border-gray-300 *:py-3">
+      <th className="w-12">#</th>
+      <th className="w-1/5"><img src={Name} alt="Name" /></th>
+      <th className="w-1/5"><img src={Email} alt="Email" /></th>
+      <th className="w-1/5"><img src={AppDate} alt="Date" /></th>
+      <th className="w-1/6"><img src={CvStatus} alt="CV Status" /></th>
+      <th className="w-1/6"><img src={Move} alt="Move" /></th>
+      {/* <th className="w-10"></th> */}
+    </tr>
+  </thead>
+  <tbody className="divide-y bg-white divide-gray-300 text-center">
+    {applicantData.map((applicant, idx) => (
+      <tr key={idx} className="*:text-gray-900 *:py-4">
+        <td>{idx + 1}</td>
+        <td className="truncate">{applicant.attributes.applicantName || "N/A"}</td>
+        <td className="truncate">{applicant.attributes.applicantEmail || "N/A"}</td>
+        <td className="truncate">{applicant.attributes.appliedAt || "N/A"}</td>
+        <td>
+          <span
+            className={`font-bold ${
+              applicant.statusText === "Accepted"
+                ? "text-green-700"
+                : applicant.statusText === "Rejected"
+                ? "text-red-700"
+                : "text-black"
+            }`}
+          >
+            {applicant.attributes.cvScore} %
+          </span>
+        </td>
+        <td>
+          <span
+            className={`inline-flex font-semibold items-center px-3 py-1 rounded-full text-sm gap-1
+              ${
+                applicant.statusText === "Accepted"
+                  ? "bg-green-100 text-green-800"
+                  : applicant.statusText === "Rejected"
+                  ? "bg-red-100 text-red-800"
+                  : "bg-gray-100 text-gray-800"
+              }
+            `}
+          >
+            {applicant.statusText}
+          </span>
+        </td>
+        {/* <td><img src={Next2} alt="Next" className="inline-block" /></td> */}
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+          </div>
         )}
-        {activeTab === "Final Acceptance" && (
-          <table className="min-w-[90%] border border-gray-300 m-auto mt-10">
-        <thead className="sticky top-0 ltr:text-left rtl:text-right border-b border-gray-300 bg-[#E9ECF0]">
-          <tr className="*:font-medium *:text-gray-900 *:border *:border-gray-300 text-center">
-            <th className="w-10"></th>
-            <th className="text-center font-sf_pro_text px-4 py-3 border border-gray-300"><img src={Name} alt="Name" /></th>
-            <th className="text-center font-sf_pro_text px-4 py-3 border border-gray-300"><img src={Email} alt="Email" /></th>
-            <th className="text-center font-sf_pro_text px-4 py-3 border border-gray-300"><img src={AppDate} alt="AppDate" /></th>
-            
-            <th className="w-10 text-center font-sf_pro_text px-4 py-3 border border-gray-300"></th>
-          </tr>
-        </thead>
-        <tbody className="divide-y bg-white divide-gray-300 text-center">
-          {applicantData.map((applicant, idx) => (
-            <tr key={idx} className="*:text-gray-900">
-              <td className="font-bold">{idx + 1}</td>
-              <td className="text-center font-sf_pro_text px-4 py-3 border border-gray-300">{applicant.attributes.applicantName}</td>
-              <td className="text-center font-sf_pro_text px-4 py-3 border border-gray-300">{applicant.attributes.applicantEmail}</td>
-              <td className="text-center font-sf_pro_text px-4 py-3 border border-gray-300">{applicant.attributes.appliedAt}</td>
-              <td>
-                <Link to={`/CompanyDashboard/${jobId}/${applicant.applicantId}`}>
-                  <img src={Next2} alt="Next" />
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+
+
+        {activeTab === "FinalAcceptance" && (
+          <div className="ps-24 text-lg">Final Acceptance content here...</div>
         )}
       </div>
     </div>

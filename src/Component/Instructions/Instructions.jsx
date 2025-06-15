@@ -66,7 +66,7 @@ export default function Instructions() {
             <Link to="/ApplicantJobs">
             <button className="w-48 h-12 rounded-2xl border-2 border-gray-400">Back</button>
             </Link>
-            <Link to="/Interview">
+            <Link to="/Calibration">
             <button className="w-48 h-12 bg-[#0146B1] text-white rounded-2xl ">Go To Interview</button>
             </Link>
           </div>

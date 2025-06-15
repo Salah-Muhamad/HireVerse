@@ -44,13 +44,6 @@ export default function Filteration() {
               { name: "Full-time", value: "full_time" },
             ]}
           />
-          {/* <DropDown
-                onOptionSelect = {updateFilter}
-              title={"Range Salary"}
-              options={["under $100", "$100 to $500", "$500 -$1k"] 
-                
-              }
-            /> */}
           <DropDown
             onOptionSelect={updateFilter}
             property={"experience_level"}

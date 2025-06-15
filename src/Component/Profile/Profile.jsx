@@ -28,49 +28,80 @@ export default function Profile() {
   }, [id]);
   return (
     <>
+      {/* <div>
+  <iframe
+    src={`https://myawshierbucket.s3.me-south-1.amazonaws.com/${userData.cvUrl}`}
+    width="100%"
+    height="600px"
+    title="User CV"
+  ></iframe>
+</div> */}
+
       <div className="bg-secondary pt-44 pb-20 ps-24 m-auto h-[100vh]">
         <h1 className="text-4xl text-[#0146B1] font-bold mb-10 border-b-2 border-gray-300 pb-8 me-24">
           Profile
         </h1>
-        <div className="flex items-center mb-4 border-b-2 border-gray-300 pb-8  me-24">
-          {userData.avatarUrl ? (
-            <img src={`https://myawshierbucket.s3.me-south-1.amazonaws.com/${userData.avatarUrl}`} className="w-[100px] h-[100px] rounded-full" alt="" />
-          ) : (
-            <img src={photo2} className="w-[100px]" alt="" />
-          )}
-          <div>
-            {
-              userData.firstName && userData.lastName ? (
+
+        <div className="flex justify-between items-center mb-4 border-b-2 border-gray-300 pb-8  me-24">
+          <div className="flex items-center ">
+            {userData.avatarUrl ? (
+              <img
+                src={`https://myawshierbucket.s3.me-south-1.amazonaws.com/${userData.avatarUrl}`}
+                className="w-[100px] h-[100px] rounded-full"
+                alt=""
+              />
+            ) : (
+              <img src={photo2} className="w-[100px]" alt="" />
+            )}
+            <div>
+              {userData.firstName && userData.lastName ? (
                 <h1 className="text-2xl font-bold ps-4">
                   {userData.firstName} {userData.lastName}
                 </h1>
               ) : (
                 <h1 className="text-2xl font-bold ps-4">No Name Provided</h1>
-              )
-            }
+              )}
 
-{
-  userData.jobTitle ? (
-              <p className="text-gray-600 ps-4">{userData.jobTitle}</p>
-            ) : (
-              <p className="text-gray-600 ps-4">No Job Title Provided</p>
-            )
-}
-{
-              userData.email ? (
+              {userData.jobTitle ? (
+                <p className="text-gray-600 ps-4">{userData.jobTitle}</p>
+              ) : (
+                <p className="text-gray-600 ps-4">No Job Title Provided</p>
+              )}
+              {userData.email ? (
                 <p className="text-gray-600 ps-4">{userData.email}</p>
               ) : (
                 <p className="text-gray-600 ps-4">No Email Provided</p>
-              )
-}   
-         <div className="flex items-center gap-4 ps-4 mt-2">
-              <Link to={userData.linkedinUrl} target="_blank">
-                <Linkedin color="#162492" />
-              </Link>
-              <Link to={userData.githubUrl} target="_blank">
-              <Github color="#2c2d35" />
-              </Link>
+              )}
+              <div className="flex items-center gap-4 ps-4 mt-2">
+                <Link to={userData.linkedinUrl} target="_blank">
+                  <Linkedin color="#162492" />
+                </Link>
+                <Link to={userData.githubUrl} target="_blank">
+                  <Github color="#2c2d35" />
+                </Link>
+              </div>
             </div>
+          </div>
+          <div>
+            <button
+              onClick={() =>
+                window.open(
+                  `https://myawshierbucket.s3.me-south-1.amazonaws.com/${userData.cvUrl}`,
+                  "_blank"
+                )
+              }
+              style={{
+                padding: "10px 20px",
+                fontSize: "16px",
+                borderRadius: "8px",
+                border: "none",
+                backgroundColor: "#0C2E82",
+                color: "#fff",
+                cursor: "pointer",
+              }}
+            >
+              Show CV
+            </button>
           </div>
         </div>
 

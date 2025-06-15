@@ -3,6 +3,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import { UserContext } from "../../Context/UserContext";
 import { CompanyContext } from "../../Context/CompanyContext";
+import Footer from "../Footer/Footer";
 
 export default function Layout() {
   const location = useLocation();
@@ -48,6 +49,7 @@ export default function Layout() {
     <div>
       {!shouldHideNavbar && <Navbar />}
       <Outlet />
+      {!shouldHideNavbar && <Footer />  }
     </div>
   );
 }

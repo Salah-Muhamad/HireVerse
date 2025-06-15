@@ -122,19 +122,36 @@ export default function ApplicantJobs() {
                   </td>
                   <td className="px-4 py-3 border border-gray-300">
                     <span
-                      className={`inline-flex items-center px-3 py-1 rounded-full w-[131px] text-lg font-medium gap-1
+                      className={`inline-flex items-center px-6 py-1 rounded-full  text-lg font-medium gap-1
                         ${
-                          job.status === "accepted"
+                          job.status === "accepted" || job.status === "Accepted"
                             ? "bg-green-100 text-green-800"
-                            : job.status === "rejected"
+                            : job.status === "rejected" ||
+                              job.status === "Rejected"
                             ? "bg-red-100 text-red-800"
-                            : job.status === "Pending"
+                            : job.status === "Pending" ||
+                              job.status === "pending"
                             ? "bg-yellow-100 text-yellow-800"
-                            : job.status === "interviewed"
+                            : job.status === "interviewed" ||
+                              job.status === "Interviewed"
                             ? "bg-purple-100 text-purple-800"
-                            : job.status === "cv_eligible"
+                            : job.status === "CV eligible"
                             ? "bg-blue-100 text-blue-800"
-                            : "bg-gray-100 text-gray-800"
+                            : job.status === "cv_ineligible"
+                            ? "bg-gray-100 text-gray-800"
+                            : job.status === "CV processing" ||
+                              job.status === "cv_processing"
+                            ? "bg-orange-100 text-orange-800"
+                            : job.status === "CV processed" ||
+                              job.status === "cv_processed"
+                            ? "bg-teal-100 text-teal-800"
+                            : job.status === "CV rejected" ||
+                              job.status === "cv_rejected"
+                            ? "bg-pink-100 text-pink-800"
+                            : job.status === "Interview scheduled" ||
+                              job.status === "interview_scheduled"
+                            ? "bg-indigo-100 text-indigo-800"
+                            : ""
                         }`}
                     >
                       <span className="h-2 w-2 rounded-full bg-current"></span>
@@ -142,7 +159,7 @@ export default function ApplicantJobs() {
                     </span>
                   </td>
                   <td className="px-4 py-3 border border-gray-300">
-                    {job.applied}
+                    {job.appliedAt}
                   </td>
                   <td className="w-10 text-center">
                     <img className="ms-3" src={Next2} alt="Next" />
