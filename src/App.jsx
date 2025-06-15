@@ -32,6 +32,7 @@ import CompanyProfile from "./Component/CompanyProfile/CompanyProfile.jsx";
 import Profile from "./Component/Profile/Profile.jsx";
 import Interview from "./Component/Interview/Interview.jsx";
 import Instructions from "./Component/Instructions/Instructions.jsx";
+import Calibration from "./Component/Calibration/Calibration.jsx";
 import InterviewNotification from "./Component/InterviewNotification/InterviewNotification.jsx";
 import DeleteCompanyAccount from "./Component/DeleteCompanyAccount/DeleteCompanyAccount.jsx";
 import ChangeCompanyPassword from "./Component/ChangeCompanyPassword/ChangeCompanyPassword.jsx";
@@ -85,6 +86,7 @@ function App() {
         { path: 'ApplyJob', element: <ApplyJob /> },
         { path: 'JobsPage', element: <JobsPage /> },
         { path: 'ApplicantJobs', element: <ApplicantJobs /> },
+        { path: 'Calibration', element: <Calibration /> },
         { path: 'CompanyDetails/:id', element:<CompanyDetails/> },
         { path: 'JobDetails/:id', element: <JobDetails /> },
         { path: 'Login', element: <Login /> },

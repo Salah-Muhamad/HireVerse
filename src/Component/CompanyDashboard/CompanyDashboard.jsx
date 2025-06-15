@@ -200,7 +200,7 @@ export default function CompanyDashboard() {
       <th className="w-1/5"><img src={AppDate} alt="Date" /></th>
       <th className="w-1/6"><img src={CvStatus} alt="CV Status" /></th>
       <th className="w-1/6"><img src={Move} alt="Move" /></th>
-      <th className="w-10"></th>
+      {/* <th className="w-10"></th> */}
     </tr>
   </thead>
   <tbody className="divide-y bg-white divide-gray-300 text-center">
@@ -238,7 +238,7 @@ export default function CompanyDashboard() {
             {applicant.statusText}
           </span>
         </td>
-        <td><img src={Next2} alt="Next" className="inline-block" /></td>
+        {/* <td><img src={Next2} alt="Next" className="inline-block" /></td> */}
       </tr>
     ))}
   </tbody>
