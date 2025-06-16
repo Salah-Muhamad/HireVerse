@@ -4,8 +4,8 @@ import Footer1 from "../../assets/Images/Footer.svg";
 
 export default function Footer() {
   return (
-    <div>
-      <img src={Footer1} alt="" />
+    <div className=''>
+      {/* <img src={Footer1} alt="" /> */}
     </div>
   )
 }

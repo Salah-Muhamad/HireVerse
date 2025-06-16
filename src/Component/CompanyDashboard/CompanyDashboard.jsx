@@ -10,6 +10,7 @@ import CvStatus from "../../assets/Images/CvStatus.svg";
 import Move from "../../assets/Images/Move.svg";
 import { CircleLoader } from "react-spinners";
 import { useParams } from "react-router-dom";
+import FinalAcceptancePro from "../FinalAcceptancePro/FinalAcceptancePro";
 
 export default function CompanyDashboard() {
   const [loading, setLoading] = useState(false);
@@ -250,7 +251,8 @@ export default function CompanyDashboard() {
 
 
         {activeTab === "FinalAcceptance" && (
-          <div className="ps-24 text-lg">Final Acceptance content here...</div>
+          // <div className="ps-24 text-lg">Final Acceptance content here...</div>
+          <FinalAcceptancePro/>
         )}
       </div>
     </div>

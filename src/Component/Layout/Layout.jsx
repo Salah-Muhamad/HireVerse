@@ -7,6 +7,7 @@ import Footer from "../Footer/Footer";
 
 export default function Layout() {
   const location = useLocation();
+
   const hideNavbarRoutes = [
     "/CreateJob2",
     "/CreateJob3",
@@ -27,15 +28,19 @@ export default function Layout() {
     "/ProfileSettings",
     "/CompanyProfile",
     "/DeleteCompanyAccount",
-    "/Instructions" ,
-    "/instructions" ,
+    "/Instructions",
+    "/instructions",
     "/Interview",
     "interview"
   ];
+
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
+  const shouldHideFooter = location.pathname === "/JobsPage"; // شرط الفوتر بس
+
   let { setUserData } = useContext(UserContext);
   let { setCompanyData } = useContext(CompanyContext);
   let navigate = useNavigate();
+
   useEffect(() => {
     if (localStorage.getItem("userToken")) {
       setUserData(localStorage.getItem("userToken"));
@@ -45,11 +50,16 @@ export default function Layout() {
       navigate("/");
     }
   }, []);
+
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       {!shouldHideNavbar && <Navbar />}
-      <Outlet />
-      {!shouldHideNavbar && <Footer />  }
+
+      <main className="flex-grow">
+        <Outlet />
+      </main>
+
+      {!shouldHideFooter && <Footer />}
     </div>
   );
 }

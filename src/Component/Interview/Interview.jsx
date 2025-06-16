@@ -23,7 +23,7 @@ const Interview = () => {
   const getQuestions = async () => {
     try {
       const { data } = await axios.get(
-        "https://hireverse.ddns.net/api/interviews/1/questions",
+        "https://hireverse.ddns.net/api/interviews/83/questions",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("userToken")}`,
@@ -155,7 +155,7 @@ const Interview = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-start py-10 px-4">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-start py-10 px-4 mt-12">
       <div className="w-[75%] bg-white shadow-xl rounded-2xl p-6">
         <h2 className="text-2xl font-bold mb-4">Question {currentIndex + 1}</h2>
 

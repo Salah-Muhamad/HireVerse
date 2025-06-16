@@ -55,8 +55,9 @@ export default function Pro() {
       <div className="two flex items-center justify-center">
         <div className='flex gap-20'>
           
-          <div className='w-[405px] h-[480px] rounded-xl bg-[#F8FAFC] p-9 font-sf_pro_text font-bold text-2xl'>
-            <p className='mb-6'>Basic Plan</p>
+          <div className='w-[405px] h-[480px] rounded-xl flex flex-col justify-around bg-[#F8FAFC] p-9 font-sf_pro_text font-bold text-2xl'>
+            <div>
+              <p className='mb-6'>Basic Plan</p>
             <p>{pricing[billing].basic}
               <span className='text-[#909090] font-sf_pro_text font-semibold text-lg'> {pricing[billing].label}</span>
             </p>
@@ -64,14 +65,15 @@ export default function Pro() {
               <img src={truee} alt="" />
               <p>Job Posting</p>
             </div>
-            <div className='flex gap-2 mt-8 font-medium text-xl'>
+            </div>
+            {/* <div className='flex gap-2 mt-8 font-medium text-xl'>
               <img src={truee} alt="" />
               <p>Manual CV Review</p>
             </div>
             <div className='flex gap-2 mt-8 font-medium text-xl mb-16'>
               <img src={truee} alt="" />
               <p>Direct Hiring Decisions</p>
-            </div>
+            </div> */}
             <button className='text-center bg-[#0C2E82] w-[310px] h-12 text-[#FFFFFF] font-medium text-base rounded-lg'>
               Choose Plan
             </button>

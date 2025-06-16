@@ -139,9 +139,8 @@ export default function ApplicantJobs() {
                             ? "bg-blue-100 text-blue-800"
                             : job.status === "cv_ineligible"
                             ? "bg-gray-100 text-gray-800"
-                            : job.status === "CV processing" ||
-                              job.status === "cv_processing"
-                            ? "bg-orange-100 text-orange-800"
+                            : job.status === "CV processing" 
+                            ? "bg-[#FFE5B4] text-[#B87333]"
                             : job.status === "CV processed" ||
                               job.status === "cv_processed"
                             ? "bg-teal-100 text-teal-800"
@@ -161,9 +160,7 @@ export default function ApplicantJobs() {
                   <td className="px-4 py-3 border border-gray-300">
                     {job.appliedAt}
                   </td>
-                  <td className="w-10 text-center">
-                    <img className="ms-3" src={Next2} alt="Next" />
-                  </td>
+                  
                 </tr>
               ))}
             </tbody>
