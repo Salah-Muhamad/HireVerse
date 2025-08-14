@@ -1,58 +1,51 @@
-import React, { useContext, useEffect, useState } from "react";
-import OrangePart from "../../assets/Images/Vector.svg";
-import Person from "../../assets/Images/person.svg";
-import Person2 from "../../assets/Images/person2.svg";
-import Bullets from "../../assets/Images/Group 1.svg";
-import Frame from "../../assets/Images/Frame 24.svg";
+import { useContext, useEffect, useState } from "react";
+import Apply from "../../assets/Images/Apply.svg";
 import Bag from "../../assets/Images/bag.svg";
 import Building from "../../assets/Images/building.svg";
+import Frame from "../../assets/Images/Frame 24.svg";
+import Bullets from "../../assets/Images/Group 1.svg";
 import MiniGroup from "../../assets/Images/MiniGroup.svg";
-import Apply from "../../assets/Images/Apply.svg";
+import Person from "../../assets/Images/Person.svg";
+import Person2 from "../../assets/Images/Person2.svg";
 import Search from "../../assets/Images/Search.svg";
 import Search2 from "../../assets/Images/Search2.svg";
+import OrangePart from "../../assets/Images/Vector.svg";
 
-import UpArrow from "../../assets/Images/UpArrow.svg";
-import DownArrow from "../../assets/Images/DownArrow.svg";
-import UploadCv from "../../assets/Images/UploadCv.svg";
 import AddAccount from "../../assets/Images/AddAccount.svg";
-import Line from "../../assets/Images/line.svg";
-import Feature1 from "../../assets/Images/Feature1.svg";
-import Feature2 from "../../assets/Images/Feature2.svg";
-import Correct from "../../assets/Images/correct.svg";
-import Microsoft from "../../assets/Images/Microsoft.svg";
-import Google from "../../assets/Images/Google.svg";
-import Tesla from "../../assets/Images/Tesla.svg";
-import Amazon from "../../assets/Images/Amazon.svg";
-import Apple from "../../assets/Images/Apple.svg";
-import Location from "../../assets/Images/MapPin.svg";
+import Applied from "../../assets/Images/Applied.svg";
 import ArrowUpRight from "../../assets/Images/arrow-up-right.svg";
 import CenterFrame from "../../assets/Images/ArrowFrame.svg";
-import Wordpress from "../../assets/Images/Wordpress.svg";
-import FindJobs from "../../assets/Images/FindJobs.svg";
 import Completed from "../../assets/Images/Completed.svg";
-import Applied from "../../assets/Images/Applied.svg";
+import Correct from "../../assets/Images/correct.svg";
+import DownArrow from "../../assets/Images/DownArrow.svg";
+import Feature1 from "../../assets/Images/Feature1.svg";
+import Feature2 from "../../assets/Images/Feature2.svg";
+import FindJobs from "../../assets/Images/FindJobs.svg";
+import Line from "../../assets/Images/line.svg";
+import Location from "../../assets/Images/MapPin.svg";
 import Pending from "../../assets/Images/Pending.svg";
 import Responded from "../../assets/Images/Responded.svg";
+import UpArrow from "../../assets/Images/UpArrow.svg";
+import UploadCv from "../../assets/Images/UploadCv.svg";
 
-import PublishedJobs from "../../assets/Images/PublishedJobs.svg";
 import AcceptedCandidates from "../../assets/Images/AcceptedCandidates.svg";
 import Applicants from "../../assets/Images/Applicants.svg";
 import BlueCorrect from "../../assets/Images/BlueCorrect.svg";
 import photo2 from "../../assets/Images/Prof.jpeg";
+import PublishedJobs from "../../assets/Images/PublishedJobs.svg";
 
-import App from "../../App";
-import TopCompanies from "../TopCompanies/TopCompanies";
-import RecommendedJobs from "../RecommendedJobs/RecommendedJobs";
+import axios from "axios";
 import ApplicantDetails from "../ApplicantDetails/ApplicantDetails";
 import CompanySta from "../CompanySta/CompanySta";
 import Jobs from "../Jobs/Jobs";
-import axios from "axios";
+import RecommendedJobs from "../RecommendedJobs/RecommendedJobs";
+import TopCompanies from "../TopCompanies/TopCompanies";
 
 import { Link } from "react-router-dom";
 
-import { UserContext } from "../../Context/UserContext";
 import { NavLink } from "react-router-dom";
 import { CompanyContext } from "../../Context/CompanyContext";
+import { UserContext } from "../../Context/UserContext";
 import CompanyJobs from "../CompanyJobs/CompanyJobs";
 
 export default function Home() {
