@@ -1,12 +1,9 @@
-import React from "react";
-import background from "../../assets/Images/aboutbackground.svg";
-import people from "../../assets/Images/people.svg";
-import aboutvector1 from "../../assets/Images/aboutvector1.svg";
-import realpeople from "../../assets/Images/realpeople.svg";
 import line from "../../assets/Images/Line 43.svg";
 import bashaelbalad from "../../assets/Images/bashaelbalad.svg";
-import "../About/about.css";
+import people from "../../assets/Images/people.svg";
+import realpeople from "../../assets/Images/realpeople.svg";
 import AboutImageCard from "../AboutImageCard/AboutImageCard";
+import "./About.css";
 export default function About() {
   return (
     <div>
